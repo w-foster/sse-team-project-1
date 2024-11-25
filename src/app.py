@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request
-import requests
+from flask import Flask, render_template
+
+# remember to add Flask request & import requests
 
 
 app = Flask(__name__)
