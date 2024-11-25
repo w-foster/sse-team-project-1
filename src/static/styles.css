@@ -1,0 +1,61 @@
+/* Basic body styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+/* Sticky Left Sidebar */
+.sticky-sidebar {
+    position: sticky;
+    top: 0;
+    width: 200px; /* Adjust width as needed */
+    height: 100vh; /* Full height of the viewport */
+    background-color: #333;
+    z-index: 1000;
+    padding-top: 20px; /* Space from top */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tabs {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.tab {
+    width: 100%;
+    padding: 15px;
+    text-align: center;
+}
+
+.tab a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    display: block;
+}
+
+.tab a:hover {
+    background-color: #575757;
+}
+
+/* Page content area */
+.content {
+    flex-grow: 1;
+    padding: 20px;
+    margin-left: 220px; /* Space for the sidebar */
+}
+
+section {
+    margin: 40px 0;
+}
+
+section h2 {
+    padding-top: 20px;
+}
+
