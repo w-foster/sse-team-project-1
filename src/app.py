@@ -1,7 +1,8 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
 from supabase import create_client
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../frontend/runescape-tracker/build')  # Update the static folder path
+
 
 # CHANGE THIS TO TSURU ENV VARS LATER!
 SUPABASE_URL = "https://lacstwcjmfdrnebmmpdl.supabase.co"
@@ -15,6 +16,12 @@ def index():
     return str(response)
     # return render_template('index.html')
 
+@app.route("/react")
+def react():
+    return send_from_directory(app.static_folder, "index.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
