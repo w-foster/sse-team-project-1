@@ -1,7 +1,7 @@
 from flask import Flask, render_template, send_from_directory
 from supabase import create_client
 
-app = Flask(__name__, static_folder='../frontend/runescape-tracker/build')  # Update the static folder path
+app = Flask(__name__, static_folder='../frontend/runescape-tracker/build', static_url_path='')  # Update the static folder path
 
 
 # CHANGE THIS TO TSURU ENV VARS LATER!
@@ -20,6 +20,10 @@ def index():
 def serve_react():
     return send_from_directory(app.static_folder, "index.html")
 
+# Serve static files (e.g., JavaScript, CSS)
+@app.route('/static/<path:path>')
+def serve_static(path):
+    return send_from_directory(f"{app.static_folder}/static", path)
 
 if __name__ == "__main__":
     app.run(debug=True)
