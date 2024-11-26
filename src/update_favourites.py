@@ -1,6 +1,4 @@
 from supabase import create_client
-import requests
-import json
 
 # CHANGE THIS TO TSURU ENV VARS LATER!
 SUPABASE_URL = "https://lacstwcjmfdrnebmmpdl.supabase.co"
