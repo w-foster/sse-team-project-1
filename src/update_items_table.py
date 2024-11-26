@@ -20,8 +20,7 @@ try:
         if "limit" in item:
             item["buylimit"] = item.pop("limit")
 
-    response = supabase.table('mapping_data').upsert(data).execute()
+    response = supabase.table("mapping_data").upsert(data).execute()
 
 except requests.exceptions.RequestException as e:
     print(f"Error: {e}")
-

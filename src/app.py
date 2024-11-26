@@ -9,11 +9,11 @@ SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJ
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 
-@app.route('/')
+@app.route("/")
 def index():
-    response = supabase.table('favourites').select('user_id').execute()
+    response = supabase.table("favourites").select("user_id").execute()
     return str(response)
-    #return render_template('index.html')
+    # return render_template('index.html')
 
 
 if __name__ == "__main__":
