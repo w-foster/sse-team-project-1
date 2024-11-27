@@ -11,5 +11,10 @@ def get_favourites_data(user_id):
     )
     # Return raw data
     # (error handling + data processing done by caller)
-    return response
+    print(str(response))
+    #return response
     
+# Example usage:
+if __name__ == "__main__":
+    data = get_favourites_data(420)
+    print(data)
