@@ -3,10 +3,10 @@ import AutocompleteIntroduction from './Search';
 import './SearchBar.css';
 
 export default function SearchBar({ className }) {
-  const [selectedId, setSelectedId] = useState(null); // State to store the selected ID
+  const [selectedItem, setSelectedItem] = useState(null); // State to store the selected ID
 
-  const handleOptionSelect = (id) => {
-    setSelectedId(id); // Update the state with the selected ID
+  const handleOptionSelect = (item) => {
+    setSelectedItem(item); // Update the state with the selected ID
   };
 
   return (
@@ -16,7 +16,7 @@ export default function SearchBar({ className }) {
       </div>
       <div className="right">
         <AutocompleteIntroduction onOptionSelect={handleOptionSelect} />
-        {selectedId !== null && <p className="id">Item ID: {selectedId}</p>}
+        {selectedItem !== null && <p className="id">Item Name: {selectedItem.label}, Item ID: {selectedItem.id}</p>}
       </div>
     </div>
   );

@@ -114,7 +114,7 @@ Autocomplete.propTypes = {
 export default function AutocompleteIntroduction({ onOptionSelect }) {
   const handleOptionSelect = (event, value) => {
     if (value) {
-      onOptionSelect(value.id); // Pass the selected item's ID to the parent
+      onOptionSelect(value); // Pass the selected item's ID to the parent
     } else {
       onOptionSelect(null); // Handle case where no option is selected
     }
