@@ -35,8 +35,11 @@ def get_favourites():
     if supabase_response.get('error'):
         return jsonify({'error': supabase_response['error']}), 500
     
-    data = jsonify(supabase_response.get('data', []))
-    return data
+    # Extract 'data' (array of objects)
+    item_data = supabase_response['data']
+    # Build array of item_ids and return jsonified version
+    item_ids = [item['item_id'] for item in item_data]
+    return jsonify(item_ids)
 
 if __name__ == "__main__":
     app.run(debug=True)
