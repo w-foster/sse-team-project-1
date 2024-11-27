@@ -3,7 +3,7 @@ from flask import jsonify
 import re
 import json
 
-file_path = '../frontend/runescape-tracker/src/SearchBar/ItemList.js'
+file_path = 'frontend/runescape-tracker/src/SearchBar/ItemList.js'
 with open(file_path, 'r') as f:
     content = f.read()
     
