@@ -5,9 +5,10 @@ import ListItemButton from '@mui/joy/ListItemButton';
 import IconButton from '@mui/joy/IconButton';
 import Add from '@mui/icons-material/Add';
 import Delete from '@mui/icons-material/Delete';
+import { Icon } from '@mui/material';
 
 // MUI name: SecondaryList
-export default function FavouritesList({ favourites }) {
+export default function FavouritesList({ favourites, removeFavourite }) {
   return (
     <List sx={{ maxWidth: 300 }}>
       <ListItem
@@ -30,7 +31,18 @@ export default function FavouritesList({ favourites }) {
       </ListItem>
 
       {favourites.map((item) => (
-        <ListItem>
+        <ListItem 
+            endAction={
+                <IconButton 
+                    aria-label="Delete" 
+                    size="sm" 
+                    color="danger"
+                    onClick={removeFavourite}
+                >
+                    <Delete />
+                </IconButton>
+            }
+        >
             <ListItemButton>{item}</ListItemButton>
         </ListItem>
       ))}
