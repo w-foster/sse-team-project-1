@@ -11,6 +11,9 @@ function App() {
       <SearchBar className="debug-searchbar"/>
       <Sidebar className="debug-sidebar"/>
       <Dashboard className="debug-dashboard"/>
+
+
+      <p>Example of importing a MUI component:</p>
       <BasicRating/> 
     </div>
   );
