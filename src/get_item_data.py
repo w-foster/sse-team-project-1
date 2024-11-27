@@ -2,7 +2,7 @@ import requests
 from flask import jsonify
 import re
 import json
-from headers import headers
+from headers import headers # import headers
 
 file_path = 'frontend/runescape-tracker/src/SearchBar/ItemList.js'
 with open(file_path, 'r') as f:

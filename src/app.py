@@ -80,7 +80,7 @@ def items():
 # Route to handle incoming price data requests from React
 @app.route('/react/api/price', methods=['GET'])
 def get_price_data():
-    item_id = request.args.get('item_id')
+    item_id = request.args.get('item_id', type=int)
     
     if not item_id:
         return jsonify({"error": "Item ID is required"}), 400
