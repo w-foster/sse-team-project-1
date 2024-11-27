@@ -25,8 +25,7 @@ try:
     filtered_data = [{"id": item["id"], "name": item["name"]} for item in data]
 
     with open("frontend/runescape-tracker/src/SearchBar/ItemList.js", "w") as js_file:
-        js_file.write(f"const itemList = {json.dumps(filtered_data, indent=2)};\n")
-        js_file.write("export default mappingData;\n")  # Optional: Export the data if needed
+        js_file.write(f"export const itemList = {json.dumps(filtered_data, indent=2)};\n")
 
     print("Data has been written to ItemList.js")
 
