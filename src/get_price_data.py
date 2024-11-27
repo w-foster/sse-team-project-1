@@ -72,6 +72,12 @@ def get_price_and_volume(data: List[Dict[str, float]]):
     return avgHighPrice, avgLowPrice, highPriceVolume, lowPriceVolume
 
 
+def filter_none_values(t_series, x_series, y_series, z_series, w_series):
+    # Filter out None values from all series
+    return [(t, x, y, z, w) for t, x, y, z, w in zip(t_series, x_series, y_series, z_series, w_series) 
+            if x is not None and y is not None and z is not None and w is not None]
+
+
 def get_graph_data(item_id: int, timestep: str = "5m"):
     """
     Retrieves and formats the graph data for a given item and timestep.
@@ -91,17 +97,27 @@ def get_graph_data(item_id: int, timestep: str = "5m"):
 
     time_series = get_time_series(timestep)
     avgHighPrice, avgLowPrice, highPriceVolume, lowPriceVolume = get_price_and_volume(data)
+
+    time_series_length = len(time_series)
+
+    avgHighPrice = avgHighPrice[:time_series_length]
+    avgLowPrice = avgLowPrice[:time_series_length]
+    highPriceVolume = highPriceVolume[:time_series_length]
+    lowPriceVolume = lowPriceVolume[:time_series_length]
+
+    filtered_data = filter_none_values(time_series, avgHighPrice, avgLowPrice, highPriceVolume, lowPriceVolume)
+    filtered_time_series, filtered_avgHighPrice, filtered_avgLowPrice, filtered_highPriceVolume, filtered_lowPriceVolume = zip(*filtered_data) if filtered_data else ([], [], [], [], [])
     
     return {
-        "time_series": time_series,
-        "avgHighPrice": avgHighPrice,
-        "avgLowPrice": avgLowPrice,
-        "highPriceVolume": highPriceVolume,
-        "lowPriceVolume": lowPriceVolume
+        "time_series": filtered_time_series,
+        "avgHighPrice": filtered_avgHighPrice,
+        "avgLowPrice": filtered_avgLowPrice,
+        "highPriceVolume": filtered_highPriceVolume,
+        "lowPriceVolume": filtered_lowPriceVolume
     }
 
 
 # Example usage:
 if __name__ == "__main__":
     data = get_graph_data(4151, "5m")
-    print(data)
+    print(len(data["time_series"]), len(data["avgHighPrice"]), len(data["avgLowPrice"]), len(data["highPriceVolume"]), len(data["lowPriceVolume"]))

@@ -1,13 +1,11 @@
 import ItemGrid from './ItemGrid'
+import BasicLineChart from './Graph'
 
-export default function Dashboard({ className, favourites, addFavourite, removeFavourite }) {
+export default function Dashboard({ className }) {
     return (
         <div className={className}>
             Dashboard
-            <ItemGrid 
-                addFavourite={addFavourite} 
-                removeFavourite={removeFavourite}
-                favourites={favourites} />
+            <ItemGrid />
         </div>
     );
 }
