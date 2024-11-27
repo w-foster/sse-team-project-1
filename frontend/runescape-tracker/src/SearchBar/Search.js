@@ -7,6 +7,7 @@ import { styled } from '@mui/system';
 import { unstable_useForkRef as useForkRef } from '@mui/utils';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ClearIcon from '@mui/icons-material/Clear';
+import { itemList } from './ItemList';
 
 const Autocomplete = React.forwardRef(function Autocomplete(props, ref) {
   const {
@@ -320,10 +321,3 @@ const StyledNoOptions = styled('li')`
   padding: 8px;
   cursor: default;
 `;
-
-const itemList = [
-  { label: 'Andy', id: 2 },
-  { label: 'Will', id: 3 },
-  { label: 'Lucas', id: 4 },
-  { label: 'Yile', id: 5 },
-];

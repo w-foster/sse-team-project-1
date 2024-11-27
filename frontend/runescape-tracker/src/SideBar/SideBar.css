@@ -1,0 +1,27 @@
+/* Ensure the sidebar is fixed on the left */
+.container {
+    position: fixed;          /* Fix the sidebar to the left of the screen */
+    top: 20%;                   /* Align to the top of the viewport */
+    left: 0;                  /* Align to the left of the viewport */
+    width: 50%;             /* Set the width of the sidebar */
+    background-color: white;
+    height: 80%;             /* Make the sidebar take up the full height of the screen */
+    padding: 20px;            /* Add some padding inside */
+    z-index: 1000;            /* Ensure it's above other content */
+    overflow-y: auto;         /* Enable scrolling if the content is taller than the screen */
+  }
+
+  .sidebar h1 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .sidebar .favourites-list, .sidebar .sign-in-form {
+    margin-bottom: 20px;
+  }
+  
+  /* Optionally, add some hover effects or transitions */
+  .sidebar:hover {
+    background-color: #444;
+  }
+  

@@ -72,7 +72,7 @@ def get_price_and_volume(data: List[Dict[str, float]]):
     return avgHighPrice, avgLowPrice, highPriceVolume, lowPriceVolume
 
 
-def get_graph_data(item_id: int, timestep: str):
+def get_graph_data(item_id: int, timestep: str = "5m"):
     """
     Retrieves and formats the graph data for a given item and timestep.
 
