@@ -7,7 +7,7 @@ import Add from '@mui/icons-material/Add';
 import Delete from '@mui/icons-material/Delete';
 
 // MUI name: SecondaryList
-export default function FavouritesList() {
+export default function FavouritesList({ favourites }) {
   return (
     <List sx={{ maxWidth: 300 }}>
       <ListItem
@@ -28,6 +28,13 @@ export default function FavouritesList() {
       >
         <ListItemButton>Item 2</ListItemButton>
       </ListItem>
+
+      {favourites.map((item) => (
+        <ListItem>
+            <ListItemButton>{item}</ListItemButton>
+        </ListItem>
+      ))}
+
     </List>
   );
 }

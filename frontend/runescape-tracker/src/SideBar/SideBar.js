@@ -8,7 +8,8 @@ export default function SideBar({ className, favourites }) {
             {favourites.map((f) => (
                 <p>{f}</p>
             ))}
-            <FavouritesList />
+            <FavouritesList 
+                favourites={favourites} />
             <SignInForm />
         </div>
     );
