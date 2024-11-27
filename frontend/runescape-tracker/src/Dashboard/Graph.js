@@ -16,7 +16,7 @@ export default function BasicLineChart({ selectedItemID }) {
       const fetchPriceData = async () => {
         try {
           // Call Flask API with the selected item ID
-          const response = await fetch('${url}/api/price?item_id=${selectedItemID}');
+          const response = await fetch(`${url}/api/price?item_id=${selectedItemID}`);
           
           // Check if the response is successful
           if (!response.ok) {
