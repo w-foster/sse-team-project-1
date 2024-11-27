@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import BasicRating from './BasicRating';
 import Dashboard from './Dashboard/Dashboard';
@@ -16,7 +16,9 @@ function App() {
   // Flask API call helper functions
   async function fetchFavourites() {
     try {
-      const response = await fetch(`${url}/api/favourites?user_id=${currentUserId}`)
+      const response = await fetch(`${url}/api/favourites?user_id=${currentUserId}`, {
+        method: 'GET'
+      });
       const data = await response.json();
       setFavourites(data);  // assumes response is array of item_ids
     }
@@ -61,9 +63,8 @@ function App() {
       // Optimistic update (faster for UI)
       setFavourites((prev) => prev.filter((id) => id !== itemId));
       // Update DB afterwards
-      await fetch(`${url}/api/favourites/`, {
+      await fetch(`${url}/api/favourites/${itemId}?user_id=${currentUserId}`, {
         method: 'DELETE',
-        body: JSON.stringify({ user_id: currentUserId, item_id: itemId }),
       });
     } catch (error) {
       console.error("Error removing favourite:", error);

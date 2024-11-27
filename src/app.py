@@ -41,6 +41,35 @@ def get_favourites():
     item_ids = [item['item_id'] for item in item_data]
     return jsonify(item_ids)
 
+# Add a row to DB containing a user_id and a new favourite item_id
+@app.route('/react/api/favourites', methods=['POST'])
+def add_favourite():
+    data = request.json
+
+    if not data or "user_id" not in data or "item_id" not in data:
+        return jsonify({'error': 'user_id and item_id are required'}), 400
+    
+    user_id = data['user_id']
+    item_id = data['item_id']
+
+    # add to database
+
+    return jsonify({'message': 'Favourite added to DB successfully'}), 201
+
+# Remove a row from DB, according to user_id and item_id specified
+@app.route('/react/api/favourites/<int:item_id>', methods=['DELETE'])
+def remove_favourite(item_id):
+    user_id = request.args.get('user_id')
+
+    if not user_id or not item_id:
+        return jsonify({'error': 'user_id and item_id are required'}), 400
+
+    # remove from database
+
+    return jsonify({'message': 'Favourite removed from DB successfully'}), 201
+
+
+
 if __name__ == "__main__":
     app.run(debug=True)
 
