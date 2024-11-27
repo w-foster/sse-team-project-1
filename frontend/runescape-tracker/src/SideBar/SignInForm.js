@@ -19,7 +19,8 @@ const signIn = async (provider, formData) => {
   return promise;
 };
 
-export default function CredentialsSignInPage() {
+// MUI name: CredentialsSignInPage
+export default function SignInForm() {
   const theme = useTheme();
   return (
     // preview-start
