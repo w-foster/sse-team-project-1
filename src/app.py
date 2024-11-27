@@ -74,7 +74,7 @@ def remove_favourite(item_id):
 
 
 # Add the /react/items endpoint using the get_api_data function from get_item_data.py
-@app.route('/api/items', methods=['GET'])
+@app.route('/react/api/items', methods=['GET'])
 def items():
     return jsonify(get_api_data_items())
 
