@@ -1,9 +1,11 @@
 from flask import Flask, render_template, send_from_directory, request, jsonify
 from db_client import supabase
 from get_favourites_data import get_favourites_data
-
+from get_item_data import get_api_data_items
+from flask_cors import CORS
 
 app = Flask(__name__, static_folder='../frontend/runescape-tracker/build', static_url_path='')  # Update the static folder path
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 
@@ -68,7 +70,10 @@ def remove_favourite(item_id):
 
     return jsonify({'message': 'Favourite removed from DB successfully'}), 201
 
-
+# Add the /react/items endpoint using the get_api_data function from get_item_data.py
+@app.route('/api/items', methods=['GET'])
+def items():
+    return jsonify(get_api_data_items())
 
 if __name__ == "__main__":
     app.run(debug=True)
