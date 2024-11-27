@@ -3,9 +3,10 @@ from db_client import supabase
 from get_favourites_data import get_favourites_data
 from get_item_data import get_api_data_items
 from update_favourites import insert_favourite, delete_favourite
-
+from flask_cors import CORS
 
 app = Flask(__name__, static_folder='../frontend/runescape-tracker/build', static_url_path='')  # Update the static folder path
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 
 

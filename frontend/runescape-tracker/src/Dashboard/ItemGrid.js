@@ -9,7 +9,7 @@ export default function ItemGrid() {
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:5000/api/items')
+    fetch('https://runescape-tracker.impaas.uk/api/items')
       .then((response) => response.json())
       .then((data) => {
         console.log('Fetched data:', data); // Log the data
