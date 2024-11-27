@@ -1,6 +1,6 @@
 
 
-export default function Sidebar({ className }) {
+export default function SideBar({ className }) {
     return (
         <div className={className}>
             Sidebar
