@@ -2,6 +2,7 @@ import requests
 from flask import jsonify
 import re
 import json
+from headers import headers
 
 file_path = '../frontend/runescape-tracker/src/SearchBar/ItemList.js'
 with open(file_path, 'r') as f:
@@ -19,7 +20,7 @@ with open(file_path, 'r') as f:
 def get_api_data_items():
     api_url = 'https://prices.runescape.wiki/api/v1/osrs/latest'
     try:
-        response = requests.get(api_url)
+        response = requests.get(api_url, headers=headers)
         print("API call made, status code:", response.status_code)
         response.raise_for_status()
         data = response.json()
