@@ -7,7 +7,9 @@ import Sidebar from './SideBar/SideBar';
 
 
 function App() {
-  const url = "https://runescape-tracker.impaas.uk/react"
+  const url = process.env.NODE_ENV === "development"
+  ? "http://127.0.0.1:5000/react"
+  : "https://runescape-tracker.impaas.uk/react";
   const currentUserId = 420;  // for now
   // State hooks
   const [selectedItem, setSelectedItem] = useState(null);
@@ -88,10 +90,12 @@ function App() {
       <Sidebar 
         className="debug-sidebar"
         favourites={favourites}
+        addFavourite={addFavourite}
         removeFavourite={removeFavourite} />
 
       <Dashboard 
         className="debug-dashboard"
+        favourites={favourites}
         addFavourite={addFavourite}
         removeFavourite={removeFavourite} />
 
