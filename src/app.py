@@ -32,8 +32,8 @@ def get_favourites():
     
     # Call helper function to get favourites data from DB
     supabase_response = get_favourites_data(user_id)
-    if supabase_response.get('error'):
-        return jsonify({'error': supabase_response['error']}), 500
+    
+    # HANDLE ERROR HERE SOMEHOW ? not with .get('error) it broke it 
     
     # Extract 'data' (array of objects)
     item_data = supabase_response['data']
