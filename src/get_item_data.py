@@ -1,7 +1,20 @@
 import requests
 from flask import jsonify
+import re
+import json
 
-
+file_path = '../frontend/runescape-tracker/src/SearchBar/ItemList.js'
+with open(file_path, 'r') as f:
+    content = f.read()
+    
+    # Extract the JSON-like part from the JavaScript file
+    match = re.search(r"=\s*(\[.*\]);", content, re.DOTALL)
+    if match:
+        json_content = match.group(1)  # Extract the array
+        item_list = json.loads(json_content)
+        print("Parsed Item List:", item_list)
+    else:
+        print("Could not parse JavaScript file!")
 
 def get_api_data_items():
     api_url = 'https://prices.runescape.wiki/api/v1/osrs/latest'
@@ -18,7 +31,13 @@ def get_api_data_items():
 
         final_data = add_other_data(filtered_data)
 
-        print("Filtered data:", filtered_data)  # Debug filtered data
+        item_dict = {str(item['id']): item['name'] for item in item_list}
+
+    # Add the "name" field to API data based on the item ID
+        for item in final_data:
+            item_id = item.get('id')
+            item['name'] = item_dict.get(item_id, "Unknown Item")  # Default to "Unknown Item" if no match is found
+            print(final_data[:100])
         return final_data
     except requests.exceptions.RequestException as e:
         print(f"Error: {e}")
@@ -32,15 +51,11 @@ def add_other_data(data):
         low = item.get("low")
         if high is not None and low is not None and low > 0:
                 # Calculate percentage change
-                item["margin_percentage"] = ((high - low) / low) * 100
-                # Calculate margin
-                item["margin"] = high - low
+                item["margin_percentage"] = round(((high - low) / low) * 100,2)
         else:
                 # Handle cases where high or low is missing or invalid
                 item["margin_percentage"] = None
-                item["margin"] = None
     return data
 
 if __name__ == "__main__":
-    print("Script is running...")
-    get_api_data_items()
+     get_api_data_items()
