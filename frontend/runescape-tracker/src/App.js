@@ -7,9 +7,13 @@ import Sidebar from './SideBar/SideBar';
 
 
 function App() {
+
   const url = process.env.NODE_ENV === "development"
   ? "http://127.0.0.1:5000/react"
   : "https://runescape-tracker.impaas.uk/react";
+  //const url = "http://127.0.0.1:5000/react"
+  console.log("API Base URL:", url);
+
   const currentUserId = 420;  // for now
   // State hooks
   const [selectedItem, setSelectedItem] = useState(null);

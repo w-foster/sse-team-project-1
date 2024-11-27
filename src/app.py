@@ -6,7 +6,7 @@ from update_favourites import insert_favourite, delete_favourite
 from flask_cors import CORS
 
 app = Flask(__name__, static_folder='../frontend/runescape-tracker/build', static_url_path='')  # Update the static folder path
-CORS(app, resources={r"/api/*": {"origins": "*"}})
+CORS(app, resources={r"/react/api/*": {"origins": "http://localhost:3000"}})
 
 
 
