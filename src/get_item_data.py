@@ -4,18 +4,14 @@ import re
 import json
 from headers import headers
 
-file_path = '../frontend/runescape-tracker/src/SearchBar/ItemList.js'
+file_path = 'frontend/runescape-tracker/src/SearchBar/ItemList.js'
 with open(file_path, 'r') as f:
     content = f.read()
     
     # Extract the JSON-like part from the JavaScript file
     match = re.search(r"=\s*(\[.*\]);", content, re.DOTALL)
-    if match:
-        json_content = match.group(1)  # Extract the array
-        item_list = json.loads(json_content)
-        print("Parsed Item List:", item_list)
-    else:
-        print("Could not parse JavaScript file!")
+    json_content = match.group(1)  # Extract the array
+    item_list = json.loads(json_content)
 
 def get_api_data_items():
     api_url = 'https://prices.runescape.wiki/api/v1/osrs/latest'
@@ -38,7 +34,6 @@ def get_api_data_items():
         for item in final_data:
             item_id = item.get('id')
             item['name'] = item_dict.get(item_id, "Unknown Item")  # Default to "Unknown Item" if no match is found
-            print(final_data[:100])
         return final_data
     except requests.exceptions.RequestException as e:
         print(f"Error: {e}")
