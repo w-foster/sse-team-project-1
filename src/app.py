@@ -1,13 +1,9 @@
-from flask import Flask, render_template, send_from_directory
-from supabase import create_client
+from flask import Flask, render_template, send_from_directory, request, jsonify
+from db_client import supabase
+
 
 app = Flask(__name__, static_folder='../frontend/runescape-tracker/build', static_url_path='')  # Update the static folder path
 
-
-# CHANGE THIS TO TSURU ENV VARS LATER!
-SUPABASE_URL = "https://lacstwcjmfdrnebmmpdl.supabase.co"
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxhY3N0d2NqbWZkcm5lYm1tcGRsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzI1NTE1NzgsImV4cCI6MjA0ODEyNzU3OH0.tankWlViseqQUzaR5wxQfuJoc8WxTLl28jBOotlBPbY"
-supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 
 @app.route("/")
@@ -24,6 +20,11 @@ def serve_react():
 @app.route('/static/<path:path>')
 def serve_static(path):
     return send_from_directory(f"{app.static_folder}/static", path)
+
+# Get favourite item data for the logged in user
+@app.route('/react/api/favourites', methods=['GET'])
+def get_favourites():
+    return None
 
 if __name__ == "__main__":
     app.run(debug=True)
