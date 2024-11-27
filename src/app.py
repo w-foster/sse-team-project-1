@@ -2,6 +2,7 @@ from flask import Flask, render_template, send_from_directory, request, jsonify
 from db_client import supabase
 from get_favourites_data import get_favourites_data
 from get_item_data import get_api_data_items
+from update_favourites import insert_favourite, delete_favourite
 
 
 app = Flask(__name__, static_folder='../frontend/runescape-tracker/build', static_url_path='')  # Update the static folder path
@@ -53,7 +54,7 @@ def add_favourite():
     user_id = data['user_id']
     item_id = data['item_id']
 
-    # add to database
+    insert_favourite(user_id, item_id)
 
     return jsonify({'message': 'Favourite added to DB successfully'}), 201
 
@@ -65,9 +66,11 @@ def remove_favourite(item_id):
     if not user_id or not item_id:
         return jsonify({'error': 'user_id and item_id are required'}), 400
 
-    # remove from database
+    delete_favourite(user_id, item_id)
 
     return jsonify({'message': 'Favourite removed from DB successfully'}), 201
+
+
 
 # Add the /react/items endpoint using the get_api_data function from get_item_data.py
 @app.route('/api/items', methods=['GET'])
