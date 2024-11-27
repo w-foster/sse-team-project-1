@@ -16,7 +16,7 @@ export default function SearchBar({ className }) {
       </div>
       <div className="right">
         <AutocompleteIntroduction onOptionSelect={handleOptionSelect} />
-        {selectedItem !== null && <p className="id">Item Name: {selectedItem.label}, Item ID: {selectedItem.id}</p>}
+        {selectedItem !== null && <p className="id">Item Name: {selectedItem.name}, Item ID: {selectedItem.id}</p>}
       </div>
     </div>
   );

@@ -81,7 +81,7 @@ const Autocomplete = React.forwardRef(function Autocomplete(props, ref) {
             {groupedOptions.map((option, index) => {
               const optionProps = getOptionProps({ option, index });
 
-              return <StyledOption {...optionProps}>{option.label}</StyledOption>;
+              return <StyledOption {...optionProps}>{option.name}</StyledOption>;
             })}
 
             {groupedOptions.length === 0 && (
@@ -124,7 +124,7 @@ export default function AutocompleteIntroduction({ onOptionSelect }) {
   return (
     <Autocomplete
       options={itemList}
-      getOptionLabel={(option) => option.label} // Displays the label in the dropdown
+      getOptionLabel={(option) => option.name} // Displays the label in the dropdown
       onChange={handleOptionSelect} // Called when an option is selected
     />
   );
