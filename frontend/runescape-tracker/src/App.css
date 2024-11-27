@@ -2,7 +2,20 @@
   text-align: center;
 }
 
+.debug-sidebar {
+  border: 3px solid lightcoral;
+  padding: 7.5vh;
+}
 
+.debug-searchbar {
+  border: 3px solid lightskyblue;
+  padding: 7.5vh;
+}
+
+.debug-dashboard {
+  border: 3px solid lightgreen;
+  padding: 7.5vh;
+}
 
 
 
