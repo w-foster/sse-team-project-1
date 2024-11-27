@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import AutocompleteIntroduction from './Search';
+import './SearchBar.css';
 
 export default function SearchBar({ className }) {
   const [selectedId, setSelectedId] = useState(null); // State to store the selected ID
@@ -9,10 +10,14 @@ export default function SearchBar({ className }) {
   };
 
   return (
-    <div className={className}>
-        <p>Search bar</p>
+    <div className={`container ${className}`}>
+      <div className="left">
+        <p>RuneScape Price Tracker</p>
+      </div>
+      <div className="right">
         <AutocompleteIntroduction onOptionSelect={handleOptionSelect} />
-        {selectedId !== null && <p>Item ID: {selectedId}</p>} {/* Display the ID */}
+        {selectedId !== null && <p className="id">Item ID: {selectedId}</p>}
+      </div>
     </div>
   );
 }
