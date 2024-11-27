@@ -104,5 +104,4 @@ def get_graph_data(item_id: int, timestep: str):
 # Example usage:
 if __name__ == "__main__":
     data = get_graph_data(4151, "5m")
-    if data:
-        print(data)
+    print(data)
