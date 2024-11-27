@@ -30,7 +30,8 @@ def delete_favourite(user_id, item_id):
     # handle supabase error here (not with .get)
     return response
 
+# TEST HERE: (last test: successful)
 if __name__ == "__main__":
     print("Deleting 420's 9999")
-    delete_favourite(420, 9999)
+    insert_favourite(420, 9999)
 
