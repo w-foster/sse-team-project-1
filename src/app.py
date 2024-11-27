@@ -1,5 +1,6 @@
 from flask import Flask, render_template, send_from_directory, request, jsonify
 from db_client import supabase
+from get_favourites_data import get_favourites_data
 
 
 app = Flask(__name__, static_folder='../frontend/runescape-tracker/build', static_url_path='')  # Update the static folder path
@@ -24,7 +25,18 @@ def serve_static(path):
 # Get favourite item data for the logged in user
 @app.route('/react/api/favourites', methods=['GET'])
 def get_favourites():
-    return None
+    # Store user_id from query params
+    user_id = request.args.get('user_id')
+    if not user_id:
+        return jsonify({'error': 'user_id is reqiured'}), 400
+    
+    # Call helper function to get favourites data from DB
+    supabase_response = get_favourites_data(user_id)
+    if supabase_response.get('error'):
+        return jsonify({'error': supabase_response['error']}), 500
+    
+    data = jsonify(supabase_response.get('data', []))
+    return data
 
 if __name__ == "__main__":
     app.run(debug=True)
