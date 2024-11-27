@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AutocompleteIntroduction from './Search';
 import './SearchBar.css';
 
-export default function SearchBar({ className }) {
-  const [selectedItem, setSelectedItem] = useState(null); // State to store the selected ID
-
+export default function SearchBar({ className, onItemSelect }) {
   const handleOptionSelect = (item) => {
-    setSelectedItem(item); // Update the state with the selected ID
+    onItemSelect(item); // Pass the selected item to App.js via callback
   };
 
   return (
@@ -16,7 +14,6 @@ export default function SearchBar({ className }) {
       </div>
       <div className="right">
         <AutocompleteIntroduction onOptionSelect={handleOptionSelect} />
-        {selectedItem !== null && <p className="id">Item Name: {selectedItem.name}, Item ID: {selectedItem.id}</p>}
       </div>
     </div>
   );
