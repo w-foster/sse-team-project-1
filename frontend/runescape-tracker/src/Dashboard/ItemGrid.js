@@ -4,9 +4,10 @@ import { IconButton } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 
-export default function ItemGrid() {
+export default function ItemGrid({ favourites, addFavourite, removeFavourite }) {
   // Define mock rows (data for the grid)
   const [rows, setRows] = useState([]);
+
 
   useEffect(() => {
     const url = process.env.NODE_ENV === "development"
@@ -22,12 +23,29 @@ export default function ItemGrid() {
   }, []);
   
   // Function to handle toggling favorites
-  const handleToggleFavorite = (id) => {
-    setRows((prevRows) =>
-      prevRows.map((row) =>
-        row.id === id ? { ...row, favorite: !row.favorite } : row
-      )
-    );
+  const handleToggleFavorite = async (id, isFavorite) => {
+    try {
+      // Optimistic update for the UI (immediate)
+      setRows((prevRows) =>
+        prevRows.map((row) =>
+          row.id === id ? { ...row, favorite: !row.favorite } : row
+        )
+      );
+      // Update DB
+      if (isFavorite) {
+        await removeFavourite(id);
+      } else {
+        await addFavourite(id);
+      }
+    } // Rollback if error
+    catch (error) {
+      setRows((prevRows) => 
+        prevRows.map((row) => (
+          row.id === id ? { ...row, favorite: isFavorite } : row
+        )
+      ));
+      console.error('Error toggling favourite', error);
+    }
   };
 
   // Define the grid columns
@@ -40,7 +58,7 @@ export default function ItemGrid() {
         const isFavorite = params.row.favorite;
         return (
           <IconButton
-            onClick={() => handleToggleFavorite(params.row.id)}
+            onClick={() => handleToggleFavorite(params.row.id, isFavorite)}
             color="primary"
           >
             {isFavorite ? <StarIcon /> : <StarOutlineIcon />}
