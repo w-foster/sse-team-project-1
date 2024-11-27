@@ -30,6 +30,7 @@ function App() {
   // === Effect Hooks ===
   // Fetch favourites once upon rendering App
   useEffect(() => {
+    console.log('useEffect called, fetching favourites...')
     fetchFavourites();
   }, []);
 
