@@ -4,6 +4,7 @@ from get_favourites_data import get_favourites_data
 from get_item_data import get_api_data_items
 from update_favourites import insert_favourite, delete_favourite
 from flask_cors import CORS
+from get_price_data import get_graph_data
 
 app = Flask(__name__, static_folder='../frontend/runescape-tracker/build', static_url_path='')  # Update the static folder path
 CORS(app, resources={r"/react/api/*": {"origins": "http://localhost:3000"}})
@@ -71,12 +72,26 @@ def remove_favourite(item_id):
 
     return jsonify({'message': 'Favourite removed from DB successfully'}), 201
 
-
-
 # Add the /react/items endpoint using the get_api_data function from get_item_data.py
 @app.route('/react/api/items', methods=['GET'])
 def items():
     return jsonify(get_api_data_items())
+
+# Route to handle incoming price data requests from React
+@app.route('/react/api/price', methods=['GET'])
+def get_price_data():
+    item_id = request.args.get('item_id', type=int)
+    
+    if not item_id:
+        return jsonify({"error": "Item ID is required"}), 400
+    
+    # Get price data for the item
+    price_data = get_graph_data(item_id)
+    
+    if price_data is None:
+        return jsonify({"error": "Unable to fetch price data for the given item"}), 500
+    
+    return jsonify(price_data)
 
 if __name__ == "__main__":
     app.run(debug=True)
