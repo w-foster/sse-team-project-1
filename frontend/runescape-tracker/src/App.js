@@ -99,7 +99,7 @@ function App() {
 
       <Dashboard 
         className="debug-dashboard"
-        selectedItemID={selectedItem ? selectedItem.id : 2}
+        selectedItemID={selectedItem ? parseInt(selectedItem.id, 10) : 2}
         favourites={favourites}
         addFavourite={addFavourite}
         removeFavourite={removeFavourite} />

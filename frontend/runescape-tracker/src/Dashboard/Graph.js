@@ -60,7 +60,7 @@ export default function BasicLineChart({ selectedItemID }) {
       <LineChart
         xAxis={[{ data: xAxisData }]}
         series={[{ data: seriesData }]}
-        width={500}
+        width="80%"
         height={300}
       />
     );
