@@ -37,7 +37,7 @@ export default function FavouritesList({ favourites, removeFavourite }) {
                     aria-label="Delete" 
                     size="sm" 
                     color="danger"
-                    onClick={removeFavourite}
+                    onClick={removeFavourite(item)}
                 >
                     <Delete />
                 </IconButton>
