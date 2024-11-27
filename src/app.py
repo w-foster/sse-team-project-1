@@ -2,10 +2,9 @@ from flask import Flask, render_template, send_from_directory, request, jsonify
 from db_client import supabase
 from get_favourites_data import get_favourites_data
 from get_item_data import get_api_data_items
-from flask_cors import CORS
+
 
 app = Flask(__name__, static_folder='../frontend/runescape-tracker/build', static_url_path='')  # Update the static folder path
-CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 
