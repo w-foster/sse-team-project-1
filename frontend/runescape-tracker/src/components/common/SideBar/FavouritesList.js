@@ -36,6 +36,10 @@ export default function FavouritesList({ favourites, removeFavourite, onClickIte
       
       {favourites.map((itemId) => {
         const itemName = idToNameMap.get(Number(itemId)) || `Item ID: ${itemId}`;
+        const itemObject = {
+          name: itemName,
+          id: itemId,
+        }
         return (
           <ListItem 
               key={itemId}
@@ -50,7 +54,7 @@ export default function FavouritesList({ favourites, removeFavourite, onClickIte
                   </IconButton>
               }
           >
-              <ListItemButton onClick={onClickItem(itemId)} >{itemName}</ListItemButton>
+              <ListItemButton onClick={() => onClickItem(itemObject)} >{itemName}</ListItemButton>
           </ListItem>
       )})}
 

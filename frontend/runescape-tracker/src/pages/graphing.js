@@ -111,7 +111,8 @@ function Graphing() {
         className="debug-sidebar"
         favourites={favourites}
         addFavourite={addFavourite}
-        removeFavourite={removeFavourite} />
+        removeFavourite={removeFavourite}
+        onClickItem={handleItemSelect} />
       <div className="debug-main-content">
         {/* Pass the selectedItem ID or the whole selectedItem object to Dashboard */}
         <BasicLineChart 
