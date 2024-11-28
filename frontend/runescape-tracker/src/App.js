@@ -92,15 +92,12 @@ function App() {
         removeFavourite={removeFavourite} />
       <div className="debug-main-content">
         <Dashboard
-          selectedItemID={selectedItem ? parseInt(selectedItem.id, 10) : 2}
-          itemName={selectedItem ? selectedItem.name : 'Cannonball'}
+          selectedItemID={selectedItem ? parseInt(selectedItem.id, 10) : -1}
+          itemName={selectedItem ? selectedItem.name : ''}
           favourites={favourites}
           addFavourite={addFavourite}
           removeFavourite={removeFavourite} />
 
-
-        <p>Example of importing a MUI component:</p>
-        <BasicRating/> 
       </div>
     </div>
   );
