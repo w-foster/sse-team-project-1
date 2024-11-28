@@ -36,7 +36,7 @@ export default function ItemGrid({ favourites, addFavourite, removeFavourite }) 
   // Function to handle toggling favorites
   const handleToggleFavorite = async (id, isFavorite) => {
     try {
-      // Optimistic update for the UI (immediate)
+      // //Optimistic update for the UI (immediate)
       // setRows((prevRows) =>
       //   prevRows.map((row) =>
       //     row.id === id ? { ...row, favorite: !row.favorite } : row
