@@ -66,7 +66,7 @@ function Graphing() {
   const handleItemSelect = (item) => {
     setSelectedItem(item);
     // Navigate to home and pass the selected itemId via query parameters
-    navigate(`/react?itemId=${item.id}`);
+    navigate(`/graphing?itemId=${item.id}`);
   };
 
   // Adds a favourite item (first to state, then to DB)
