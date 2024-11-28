@@ -2,6 +2,7 @@ from flask import Flask, render_template, send_from_directory, request, jsonify
 from db_client import supabase
 from get_favourites_data import get_favourites_data
 from get_item_data import get_api_data_items
+from get_hot_items import get_api_hot_items
 from update_favourites import insert_favourite, delete_favourite
 from flask_cors import CORS
 from get_price_data import get_graph_data
@@ -94,6 +95,10 @@ def get_price_data():
         return jsonify({"error": "Unable to fetch price data for the given item"}), 500
     
     return jsonify(all_price_data)
+
+@app.route('/react/api/hotitems', methods=['GET'])
+def items():
+    return jsonify(get_api_hot_items())
 
 if __name__ == "__main__":
     app.run(debug=True)
