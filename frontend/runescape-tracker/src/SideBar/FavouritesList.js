@@ -32,6 +32,7 @@ export default function FavouritesList({ favourites, removeFavourite }) {
 
       {favourites.map((item) => (
         <ListItem 
+            key={item}
             endAction={
                 <IconButton 
                     aria-label="Delete" 

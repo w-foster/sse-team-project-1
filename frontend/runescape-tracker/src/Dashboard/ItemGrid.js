@@ -5,7 +5,7 @@ import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 
 export default function ItemGrid({ favourites, addFavourite, removeFavourite }) {
-  // Define mock rows (data for the grid)
+  // Define mock rows (data for the grid) 
   const [rows, setRows] = useState([]);
 
 
@@ -17,10 +17,22 @@ export default function ItemGrid({ favourites, addFavourite, removeFavourite }) 
       .then((response) => response.json())
       .then((data) => {
         console.log('Fetched data:', data); // Log the data
+        const favouriteSet = new Set(favourites.map((id) => Number(id)));
         setRows(data); // Update the state
       })
       .catch((error) => console.error('Error fetching data:', error));
   }, []);
+
+  useEffect(() => {
+    console.log('favourites updated', favourites);
+    setRows((prevRows) => {
+      const favouriteSet = new Set(favourites.map((id) => Number(id)));
+      return prevRows.map((row) => ({
+        ...row,
+        favorite: favouriteSet.has(Number(row.id)),
+      }));
+    });
+  }, [favourites])
   
   // Function to handle toggling favorites
   const handleToggleFavorite = async (id, isFavorite) => {
