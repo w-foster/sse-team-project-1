@@ -96,7 +96,6 @@ function Home() {
   // Components to be rendered
   return (
     <div className="Home">
-      <SearchBar onItemSelect={handleItemSelect} page='home' className="debug-searchbar"/>
       <Sidebar 
         className="debug-sidebar"
         favourites={favourites}
@@ -106,8 +105,6 @@ function Home() {
       <div className="debug-main-content">
         {/* Pass the selectedItem ID or the whole selectedItem object to Dashboard */}
         <Dashboard
-          selectedItemID={selectedItem ? parseInt(selectedItem.id, 10) : -1}
-          itemName={selectedItem ? selectedItem.name : ''}
           favourites={favourites}
           addFavourite={addFavourite}
           removeFavourite={removeFavourite} />

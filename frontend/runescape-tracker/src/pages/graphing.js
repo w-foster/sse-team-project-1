@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Dashboard from '../components/Dashboard/Dashboard';
-import SearchBar from '../components/common/SearchBar/SearchBar';
 import Sidebar from '../components/common/SideBar/SideBar';
 import './styles/home.css';
 import BasicLineChart from '../components/Dashboard/Graph';
@@ -50,6 +48,7 @@ function Graphing() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const itemIdFromQuery = queryParams.get('itemId'); // Get itemId from query string
+  const nameFromQuery = queryParams.get('name'); // Get name from query string
 
   // === Effect Hooks ===
   useEffect(() => {
@@ -62,13 +61,6 @@ function Graphing() {
   }, [itemIdFromQuery]);  // Only run this effect when itemIdFromQuery changes
 
   // === Handlers ===
-  // Handler for item selection via search bar
-  const handleItemSelect = (item) => {
-    setSelectedItem(item);
-    // Navigate to home and pass the selected itemId via query parameters
-    navigate(`/graphing?itemId=${item.id}`);
-  };
-
   // Adds a favourite item (first to state, then to DB)
   const addFavourite = async (itemId) => {
     try {
@@ -106,18 +98,16 @@ function Graphing() {
   // Components to be rendered
   return (
     <div className="Home">
-      <SearchBar onItemSelect={handleItemSelect} page='home' className="debug-searchbar"/>
       <Sidebar 
         className="debug-sidebar"
         favourites={favourites}
         addFavourite={addFavourite}
-        removeFavourite={removeFavourite}
-        onClickItem={handleItemSelect} />
+        removeFavourite={removeFavourite} />
       <div className="debug-main-content">
         {/* Pass the selectedItem ID or the whole selectedItem object to Dashboard */}
         <BasicLineChart 
-            selectedItemID={selectedItem ? parseInt(selectedItem.id, 10) : 2}
-            itemName={selectedItem ? selectedItem.name : 'Cannonball'}
+            selectedItemID={itemIdFromQuery ? parseInt(itemIdFromQuery, 10) : 2}
+            itemName={nameFromQuery ? nameFromQuery : 'Cannonball'}
         />
       </div>
     </div>

@@ -1,12 +1,9 @@
 import ItemGrid from './ItemGrid'
-import BasicLineChart from './Graph'
 import HotItemGrid from './HotItems';
 
-export default function Dashboard({ className, selectedItemID, itemName, favourites, addFavourite, removeFavourite }) {
+export default function Dashboard({ className, favourites, addFavourite, removeFavourite }) {
     return (
         <div className={className}>
-            
-            {selectedItemID < 0 ? (
                 <>
                 <ItemGrid
                     favourites={favourites}
@@ -18,15 +15,7 @@ export default function Dashboard({ className, selectedItemID, itemName, favouri
                         <h2>Hot Items</h2>
                         <HotItemGrid />
                     </div>
-                </>
-
-            ) : (
-                <BasicLineChart 
-                    selectedItemID={selectedItemID} 
-                    itemName={itemName} 
-                />
-            )}
-            
+                </>            
         </div>
     );
 }
