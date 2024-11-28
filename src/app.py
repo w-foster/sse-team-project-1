@@ -9,17 +9,11 @@ from get_price_data import get_graph_data
 from get_item_text import get_item_description
 
 app = Flask(__name__, static_folder='../frontend/runescape-tracker/build', static_url_path='')  # Update the static folder path
-CORS(app, resources={r"/react/api/*": {"origins": "http://localhost:3000"}})
+CORS(app)
 
 
 
 @app.route("/")
-def index():
-    response = supabase.table("favourites").select("user_id").execute()
-    return str(response)
-    # return render_template('index.html')
-
-@app.route("/react")
 def serve_react():
     return send_from_directory(app.static_folder, "index.html")
 
@@ -28,8 +22,9 @@ def serve_react():
 def serve_static(path):
     return send_from_directory(f"{app.static_folder}/static", path)
 
+
 # Get favourite item data for the logged in user
-@app.route('/react/api/favourites', methods=['GET'])
+@app.route('/api/favourites', methods=['GET'])
 def get_favourites():
     # Store user_id from query params
     user_id = request.args.get('user_id')
@@ -48,7 +43,7 @@ def get_favourites():
     return jsonify(item_ids)
 
 # Add a row to DB containing a user_id and a new favourite item_id
-@app.route('/react/api/favourites', methods=['POST'])
+@app.route('/api/favourites', methods=['POST'])
 def add_favourite():
     data = request.json
 
@@ -63,7 +58,7 @@ def add_favourite():
     return jsonify({'message': 'Favourite added to DB successfully'}), 201
 
 # Remove a row from DB, according to user_id and item_id specified
-@app.route('/react/api/favourites/<int:item_id>', methods=['DELETE'])
+@app.route('/api/favourites/<int:item_id>', methods=['DELETE'])
 def remove_favourite(item_id):
     user_id = request.args.get('user_id')
 
@@ -74,13 +69,13 @@ def remove_favourite(item_id):
 
     return jsonify({'message': 'Favourite removed from DB successfully'}), 201
 
-# Add the /react/items endpoint using the get_api_data function from get_item_data.py
-@app.route('/react/api/items', methods=['GET'])
+# Add the /items endpoint using the get_api_data function from get_item_data.py
+@app.route('/api/items', methods=['GET'])
 def items():
     return jsonify(get_api_data_items())
 
 # Route to handle incoming price data requests from React
-@app.route('/react/api/price', methods=['GET'])
+@app.route('/api/price', methods=['GET'])
 def get_price_data():
     item_id = request.args.get('item_id', type=int)
     
@@ -97,13 +92,13 @@ def get_price_data():
     
     return jsonify(all_price_data)
 
-@app.route('/react/api/hotitems', methods=['GET'])
+@app.route('/api/hotitems', methods=['GET'])
 def hotitems():
     return jsonify(get_api_hot_items())
 
 
 # Route to handle item description
-@app.route('/react/api/item-description/<int:item_id>', methods=['GET'])
+@app.route('/api/item-description/<int:item_id>', methods=['GET'])
 def item_description(item_id):
     """
     Fetch and return the item description for the given item ID.

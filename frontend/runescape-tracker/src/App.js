@@ -1,102 +1,134 @@
-import React, { useState, useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
-
-import Home from "./pages/home";
-import About from "./pages/about";
-import Graphing from "./pages/graphing";
-
-import SearchBar from "./components/common/SearchBar/SearchBar";
-import SideBar from "./components/common/SideBar/SideBar";
-
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import "./App.css";
+// STANDARD COMPONENTS
+import SearchBar from './components-new/SearchBar/SearchBar';
+import SideBar from './components-new/SideBar/SideBar';
+// PAGE COMPONENTS
+import AboutPage from './pages-new/AboutPage';
+import NormalPage from './pages-new/NormalPage';
+import PerItemPage from './pages-new/PerItemPage';
+import AllItemsPage from './pages-new/AllItemsPage';
+// IMPORT ITEM LIST ONCE, PASSED DOWN AS PROP
+import { itemList } from './ItemList';
 
-// STARTING REFACTOR
 
 function App() {
-  const navigate = useNavigate();  // Hook to handle navigation
+	const url = process.env.NODE_ENV === "development"
+    ? "http://127.0.0.1:5000"
+    : "https://runescape-tracker.impaas.uk";
+	const currentUserId = 420;
 
-  // State hooks for favourites and selectedItem
-  const [favourites, setFavourites] = useState([]);
-  
-  const currentUserId = 420;  // Replace with actual user ID
+	// === STATE HOOKS ===
+	const [favourites, setFavourites] = useState([]);
 
-  const url = process.env.NODE_ENV === "development"
-    ? "http://127.0.0.1:5000/react"
-    : "https://runescape-tracker.impaas.uk/react";
-  
-  // Fetch favourites
-  const fetchFavourites = async () => {
-    try {
-      const response = await fetch(`${url}/api/favourites?user_id=${currentUserId}`);
-      const data = await response.json();
-      setFavourites(data);  // Assumes response is an array of item_ids
-    } catch (error) {
-      console.error("Error fetching favourites:", error);
-    }
-  };
 
-  useEffect(() => {
-    fetchFavourites();  // Load favourites when app loads
-  }, []);
+	// Flask API call helper functions
+	async function fetchFavourites() {
+		try {
+			const response = await fetch(`${url}/api/favourites?user_id=${currentUserId}`, {
+				method: 'GET'
+			});
+			const data = await response.json();
+			setFavourites(data);  // assumes response is array of item_ids
+		}
+		catch (error) {
+			console.error("Error fetching favourites:", error);
+		}
+	}
 
-  // Handle item selection from the SearchBar
-  const handleItemSelect = (item) => {
-    navigate(`/graphing?itemId=${item.id}&name=${item.name}`);
-  };
+	// === Effect Hooks ===
+	useEffect(() => {
+		console.log('useEffect called, fetching favourites...');
+		fetchFavourites();
+	}, []);
 
-  // Adds a favourite item (optimistic update)
-  const addFavourite = async (itemId) => {
-    try {
-      setFavourites((prev) => [...prev, itemId]);
-      await fetch(`${url}/api/favourites`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user_id: currentUserId, item_id: itemId }),
-      });
-    } catch (error) {
-      console.error("Error adding favourite:", error);
-      setFavourites((prev) => prev.filter((id) => id !== itemId));
-    }
-  };
+	// === Handlers === 
+	// Adds a favourite item (first to state, then to DB)
+	const addFavourite = async (itemId) => {
+	try {
+		// 'Optimistic' update (faster for UI)
+		setFavourites((prev) => [...prev, itemId]);
+		// Update the DB after
+		await fetch(`${url}/api/favourites`, {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json'},
+		body: JSON.stringify({ user_id: currentUserId, item_id: itemId}),
+		});
+	} catch (error) {
+		console.error('Error adding favourite:', error);
+		// Rollback favourites in State if error adding to DB
+		setFavourites((prev) => prev.filter((id) => id !== itemId));
+	}
+	};
 
-  // Removes a favourite item
-  const removeFavourite = async (itemId) => {
-    try {
-      setFavourites((prev) => prev.filter((id) => id !== itemId));
-      await fetch(`${url}/api/favourites/${itemId}?user_id=${currentUserId}`, {
-        method: "DELETE",
-      });
-    } catch (error) {
-      console.error("Error removing favourite:", error);
-      setFavourites((prev) => [...prev, itemId]);
-    }
-  };
+	// Remove a favourite item
+	const removeFavourite = async (itemId) => {
+	try {
+		// Optimistic update (faster for UI)
+		setFavourites((prev) => prev.filter((id) => id !== itemId));
+		// Update DB afterwards
+		await fetch(`${url}/api/favourites/${itemId}?user_id=${currentUserId}`, {
+		method: 'DELETE',
+		});
+	} catch (error) {
+		console.error("Error removing favourite:", error);
+		// Rollback State
+		setFavourites((prev) => [...prev, itemId]);
+	}
+	};
 
-  return (
-    <div className="App">
-      <SearchBar onItemSelect={handleItemSelect} className="debug-searchbar" />
-      <SideBar
-        className="debug-sidebar"
-        favourites={favourites}
-        addFavourite={addFavourite}
-        removeFavourite={removeFavourite}
-      />
-      
-      <Routes>
-        <Route path="/react" element={<Home 
-          favourites={favourites} 
-          addFavourite={addFavourite} 
-          removeFavourite={removeFavourite} 
-        />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/graphing" element={<Graphing 
-          favourites={favourites} 
-          addFavourite={addFavourite} 
-          removeFavourite={removeFavourite} 
-        />} />
-      </Routes>
-    </div>
-  );
+	/**
+	 * STRUCTURE: 
+	 */
+	return (
+		<div className="App">
+
+			<SearchBar className='search-bar'
+				itemList={itemList}
+			/>
+
+			<Routes>
+				<Route path="/" element={<Navigate to="/items" replace />} />
+				<Route
+					path="/about"
+					element={<AboutPage />}	 
+				/>
+				<Route
+					path="/items/*"
+					element={
+						<NormalPage
+							itemList={itemList}
+							favourites={favourites}
+							removeFavourite={removeFavourite}
+						/>
+					}	 
+				>
+					<Route
+						path=":itemId"
+						element={
+							<PerItemPage 
+								itemList={itemList}
+							/>
+						}
+					/>
+					{/* default route for /items */}
+					<Route
+						index
+						element={
+							<AllItemsPage 
+								itemList={itemList}
+								favourites={favourites}
+								addFavourite={addFavourite}
+								removeFavourite={removeFavourite}	
+							/>
+						}
+					/>
+				</Route>
+				
+			</Routes>
+		</div>
+	);
 }
 
 export default App;
