@@ -4,10 +4,12 @@ import NavBar from '../components/common/SearchBar/NavBar';
 
 function About() {
   return (
-    <div>
-      <NavBar active="about" />
+    <>
+    <NavBar active="about" />
+    <div className="debug-full-page">
       <h1>About Page</h1>
     </div>
+    </>
   );
 }
 

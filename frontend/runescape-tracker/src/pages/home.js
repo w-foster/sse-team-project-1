@@ -95,8 +95,8 @@ function Home() {
 
   // Components to be rendered
   return (
-    <div className="Home">
-      <NavBar active="home" />
+    <>
+    <NavBar active="home" />
       <Sidebar 
         className="debug-sidebar"
         favourites={favourites}
@@ -110,7 +110,7 @@ function Home() {
           addFavourite={addFavourite}
           removeFavourite={removeFavourite} />
       </div>
-    </div>
+    </>
   );
 }
 

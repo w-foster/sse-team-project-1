@@ -126,22 +126,22 @@ useEffect(() => {
 
   // Components to be rendered
   return (
-    <div className="Home">
-      <NavBar active="home" />
-      <Sidebar 
-        className="debug-sidebar"
-        favourites={favourites}
-        addFavourite={addFavourite}
-        removeFavourite={removeFavourite} />
-      <div className="debug-main-content">
-        {/* Pass the selectedItem ID or the whole selectedItem object to Dashboard */}
-        <BasicLineChart 
-            selectedItemID={itemIdFromQuery ? parseInt(itemIdFromQuery, 10) : 2}
-            itemName={nameFromQuery ? nameFromQuery : 'Cannonball'}
-        />
-      </div>
-      <MovingTextBar text={description} />
+    <>
+    <NavBar active="home" />
+    <Sidebar 
+      className="debug-sidebar"
+      favourites={favourites}
+      addFavourite={addFavourite}
+      removeFavourite={removeFavourite} />
+    <div className="debug-main-content">
+      {/* Pass the selectedItem ID or the whole selectedItem object to Dashboard */}
+      <BasicLineChart 
+          selectedItemID={itemIdFromQuery ? parseInt(itemIdFromQuery, 10) : 2}
+          itemName={nameFromQuery ? nameFromQuery : 'Cannonball'}
+      />
     </div>
+    <MovingTextBar text={description} />
+    </>
   );
 }
 
