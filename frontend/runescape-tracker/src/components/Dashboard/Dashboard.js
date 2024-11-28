@@ -11,11 +11,11 @@ export default function Dashboard({ className, favourites, addFavourite, removeF
                     removeFavourite={removeFavourite} 
                 />
                 {/* Hot Items List */}
-                <div style={{ marginTop: '20px' }}>
+                <div style={{ marginTop: '80px' }}>
                         <h2>Hot Items</h2>
                         <HotItemGrid />
                     </div>
-                </>            
+                </>
         </div>
     );
 }

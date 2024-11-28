@@ -62,6 +62,7 @@ function Graphing({ favourites, addFavourite, removeFavourite }) {
       {/* No Sidebar here, as it's handled by App.js */}
       <div className="debug-main-content">
         <BasicLineChart
+          className="debug-graph"
           selectedItemID={itemIdFromQuery ? parseInt(itemIdFromQuery, 10) : 2}
           itemName={nameFromQuery || 'Cannonball'}
         />

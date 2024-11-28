@@ -6,7 +6,7 @@ function About() {
   return (
     <>
     <NavBar active="about" />
-    <div className="debug-full-page">
+    <div className="debug-main-content">
       <h1>About Page</h1>
     </div>
     </>

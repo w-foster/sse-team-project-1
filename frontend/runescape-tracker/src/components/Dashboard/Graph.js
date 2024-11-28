@@ -144,7 +144,7 @@ export default function BasicLineChart({ selectedItemID, itemName }) {
 
   return (
     <>
-      <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '7%'}}>
         <h2>{itemName}</h2>
         <ToggleButtonGroup
           value={alignment}
@@ -186,8 +186,8 @@ export default function BasicLineChart({ selectedItemID, itemName }) {
               { data: highPrice, label: 'High Price', yAxisIndex: 0, line: { color: '#42a5f5' } },
               { data: lowPrice, label: 'Low Price', yAxisIndex: 0, line: { color: '#66bb6a' } }
             ]}
-            width={1400}
-            height={600}
+            width={window.innerWidth * 0.8}
+            height={window.innerHeight * 0.7}
           />
         ) : (
           <BarChart
@@ -197,8 +197,8 @@ export default function BasicLineChart({ selectedItemID, itemName }) {
               { data: highVolume, label: 'High Volume', stack: 'total', color: '#ff7043' },
               { data: lowVolume, label: 'Low Volume', stack: 'total', color: '#ffb74d' }
             ]}
-            width={1400}
-            height={600}
+            width={window.innerWidth * 0.8}
+            height={window.innerHeight * 0.7}
           />
         )}
       </div>
