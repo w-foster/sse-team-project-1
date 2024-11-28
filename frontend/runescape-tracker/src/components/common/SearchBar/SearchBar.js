@@ -2,7 +2,7 @@ import React from 'react';
 import AutocompleteIntroduction from './Search';
 import './styles/SearchBar.css';
 
-export default function SearchBar({ className, onItemSelect, page }) {
+export default function SearchBar({ className, onItemSelect }) {
   const handleOptionSelect = (item) => {
     onItemSelect(item); // Pass the selected item to App.js via callback
   };
