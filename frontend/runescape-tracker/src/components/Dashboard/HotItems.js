@@ -47,7 +47,7 @@ export default function HotItemGrid({}) {
     return (
       <div>
         {/* Data Grid */}
-        <div style={{ height: 300, width: "80%", margin: "0 auto" }}> {/* Smaller container width */}
+        <div style={{ height: '300px', width: '400px', margin: 'auto' }}>
           <DataGrid
             rows={rows}
             columns={columns}
