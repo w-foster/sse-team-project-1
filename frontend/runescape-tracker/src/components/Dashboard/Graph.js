@@ -50,8 +50,10 @@ const generateTimeSeries = (intervalCount, interval = '5m') => {
         break;
     }
 
-    if (interval === '5m' || interval === '1h') {
-      timeSeries.push(time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', day: 'numeric' }));
+    if (interval === '5m') {
+      timeSeries.push(time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+    } else if (interval === '1h') {
+      timeSeries.push(time.toLocaleDateString([], { hour: '2-digit', minute: '2-digit', weekday: 'short' }));
     } else if (interval === '24h') {
       timeSeries.push(time.toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric' }));
     }
