@@ -1,9 +1,9 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 // STANDARD COMPONENTS
 import SearchBar from './components-new/SearchBar/SearchBar';
-import SideBar from './components-new/SideBar/SideBar';
+import TitleBar from "./components-new/SearchBar/TitleBar";
 // PAGE COMPONENTS
 import AboutPage from './pages-new/AboutPage';
 import NormalPage from './pages-new/NormalPage';
@@ -18,6 +18,16 @@ function App() {
     ? "http://127.0.0.1:5000"
     : "https://runescape-tracker.impaas.uk";
 	const currentUserId = 420;
+
+	// Create mapping {item ID: item name}, to be passed around as a prop
+	const idToNameMap = React.useMemo(() => {
+		const map = new Map();
+		itemList.forEach((item) => {
+			map.set(Number(item.id), item.name);
+		});
+		return map;
+	}, []);
+
 
 	// === STATE HOOKS ===
 	const [favourites, setFavourites] = useState([]);
@@ -84,7 +94,7 @@ function App() {
 	return (
 		<div className="App">
 
-			<SearchBar className='search-bar'
+			<TitleBar className='search-bar'
 				itemList={itemList}
 			/>
 
@@ -109,6 +119,7 @@ function App() {
 						element={
 							<PerItemPage 
 								itemList={itemList}
+								idToNameMap={idToNameMap}
 							/>
 						}
 					/>

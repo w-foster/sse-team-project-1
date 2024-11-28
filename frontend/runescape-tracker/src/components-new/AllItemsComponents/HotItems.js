@@ -1,16 +1,19 @@
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid';
 
 
 export default function HotItemGrid({}) {
+    // Init navigate func
+    const navigate = useNavigate();
     // Define mock rows (data for the grid)
     const [rows, setRows] = useState([]);
   
     useEffect(() => {
       const url =
         process.env.NODE_ENV === "development"
-          ? "http://127.0.0.1:5000/react"
-          : "https://runescape-tracker.impaas.uk/react";
+          ? "http://127.0.0.1:5000"
+          : "https://runescape-tracker.impaas.uk";
       fetch(`${url}/api/hotitems`, { method: "GET" })
         .then((response) => response.json())
         .then((fetchedData) => {
@@ -44,6 +47,13 @@ export default function HotItemGrid({}) {
       { field: "avg_vol", headerName: "Vol", width: 50 }, // Narrow column
     ];
   
+
+    // Handler for clicking on a row and being redirected
+    const handleRowClick = (params) => {
+        const itemId = params.row.id;
+        navigate(`/items/${itemId}`);
+    };
+
     return (
       <div>
         {/* Data Grid */}
@@ -68,6 +78,7 @@ export default function HotItemGrid({}) {
             initialState={{
               pagination: { paginationModel: { pageSize: 10 } },
             }}
+            onRowClick={handleRowClick}
           />
         </div>
       </div>

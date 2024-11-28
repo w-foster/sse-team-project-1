@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid';
 import { IconButton } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 
 export default function ItemGrid({ favourites, addFavourite, removeFavourite }) {
+  const navigate = useNavigate(); // initialise navigate func
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
     const url = process.env.NODE_ENV === "development"
-      ? "http://127.0.0.1:5000/react"
-      : "https://runescape-tracker.impaas.uk/react";
+      ? "http://127.0.0.1:5000"
+      : "https://runescape-tracker.impaas.uk";
     fetch(`${url}/api/items`, { method: 'GET' })
       .then((response) => response.json())
       .then((fetchedData) => {
@@ -76,6 +78,13 @@ export default function ItemGrid({ favourites, addFavourite, removeFavourite }) 
     { field: 'margin_percentage', headerName: 'Margin Percentage', width: 150 },
   ];
 
+
+  // Handler for clicking on a row and being redirected
+  const handleRowClick = (params) => {
+    const itemId = params.row.id;
+    navigate(`/items/${itemId}`);
+  };
+
   return (
     <div style={{ width: '100%', height: 400 }}> {/* Set fixed height for grid container */}
       {/* Data Grid with pagination and no autoHeight */}
@@ -87,6 +96,7 @@ export default function ItemGrid({ favourites, addFavourite, removeFavourite }) 
         pagination
         density="compact"
         getRowClassName={(params) => params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'}
+        onRowClick={handleRowClick}
       />
     </div>
   );

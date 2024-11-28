@@ -41,7 +41,7 @@ def add_other_data(data):
 
 
 def add_name(data):
-    file_path = 'frontend/runescape-tracker/src/components/common/SearchBar/ItemList.js'
+    file_path = 'ItemList.js'
     with open(file_path, 'r') as f:
         content = f.read()
     

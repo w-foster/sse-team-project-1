@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import AutocompleteIntroduction from './Search';
-import './styles/SearchBar.css';
 
 export default function SearchBar({ className, itemList }) {
   const navigate = useNavigate();
@@ -13,17 +12,12 @@ export default function SearchBar({ className, itemList }) {
 };
 
   return (
-    <div className={`container ${className}`}>
-      <div className="left">
-        <p>RuneScape Price Tracker</p>
-      </div>
-      <div className="right">
+      <div className={className}>
         <AutocompleteIntroduction 
           onOptionSelect={handleOptionSelect} 
           itemList={itemList}
         />
       </div>
-    </div>
   );
 }
 
