@@ -9,7 +9,7 @@ import { Icon } from '@mui/material';
 import { itemList } from '../SearchBar/ItemList'
 
 // MUI name: SecondaryList
-export default function FavouritesList({ favourites, removeFavourite }) {
+export default function FavouritesList({ favourites, removeFavourite, onClickItem }) {
 
   // Create mapping item ID - item Name
   const idToNameMap = React.useMemo(() => {
@@ -50,7 +50,7 @@ export default function FavouritesList({ favourites, removeFavourite }) {
                   </IconButton>
               }
           >
-              <ListItemButton>{itemName}</ListItemButton>
+              <ListItemButton onClick={onClickItem(itemId)} >{itemName}</ListItemButton>
           </ListItem>
       )})}
 
