@@ -83,7 +83,7 @@ function Home() {
   // Components to be rendered
   return (
     <div className="Home">
-      <SearchBar onItemSelect={handleItemSelect} className="debug-searchbar"/>
+      <SearchBar onItemSelect={handleItemSelect} page='home' className="debug-searchbar"/>
       <Sidebar 
         className="debug-sidebar"
         favourites={favourites}
