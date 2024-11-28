@@ -41,7 +41,7 @@ def get_api_data_items():
 
 def add_other_data(data):
     for item in data:
-        item["icon"] = "https://discover.therookies.co/content/images/size/w1000/2024/08/11-2.jpg"
+        item["icon"] = f"https://services.runescape.com/m=itemdb_rs/obj_sprite.gif?id={item['id']}"
         item['favourite'] = False
         high = item.get("high")
         low = item.get("low")
