@@ -11,7 +11,7 @@ export default function HotItemGrid({}) {
         process.env.NODE_ENV === "development"
           ? "http://127.0.0.1:5000/react"
           : "https://runescape-tracker.impaas.uk/react";
-      fetch(`${url}/api/items`, { method: "GET" })
+      fetch(`${url}/api/hotitems`, { method: "GET" })
         .then((response) => response.json())
         .then((fetchedData) => {
           console.log("Fetched data:", fetchedData); // Log the fetchedData
