@@ -10,6 +10,8 @@ import SideBar from "./components/common/SideBar/SideBar";
 
 import "./App.css";
 
+// STARTING REFACTOR
+
 function App() {
   const navigate = useNavigate();  // Hook to handle navigation
 
