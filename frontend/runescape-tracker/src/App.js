@@ -38,7 +38,7 @@ function App() {
   useEffect(() => {
     console.log('useEffect called, fetching favourites...')
     fetchFavourites();
-  }, []);
+  }, [fetchFavourites]);
 
   // === Handlers ===
   // Handler for item selection via search bar
