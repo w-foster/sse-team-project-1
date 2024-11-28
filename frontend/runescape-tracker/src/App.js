@@ -85,28 +85,23 @@ function App() {
   return (
     <div className="App">
       <SearchBar onItemSelect={handleItemSelect} className="debug-searchbar"/>
-      {selectedItem && (
-        <p>
-          Selected Item: {selectedItem.name}, ID: {selectedItem.id}
-        </p>
-      )}
-
       <Sidebar 
         className="debug-sidebar"
         favourites={favourites}
         addFavourite={addFavourite}
         removeFavourite={removeFavourite} />
+      <div className="debug-main-content">
+        <Dashboard
+          selectedItemID={selectedItem ? parseInt(selectedItem.id, 10) : 2}
+          itemName={selectedItem ? selectedItem.name : 'Cannonball'}
+          favourites={favourites}
+          addFavourite={addFavourite}
+          removeFavourite={removeFavourite} />
 
-      <Dashboard 
-        className="debug-dashboard"
-        selectedItemID={selectedItem ? parseInt(selectedItem.id, 10) : 2}
-        favourites={favourites}
-        addFavourite={addFavourite}
-        removeFavourite={removeFavourite} />
 
-
-      <p>Example of importing a MUI component:</p>
-      <BasicRating/> 
+        <p>Example of importing a MUI component:</p>
+        <BasicRating/> 
+      </div>
     </div>
   );
 }

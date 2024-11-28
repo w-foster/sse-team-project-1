@@ -1,20 +1,45 @@
 .App {
-  text-align: center;
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  position: relative;
+  padding-top: 75px; /* Space for the fixed search bar */
 }
 
 .debug-sidebar {
   border: 3px solid lightcoral;
-  padding: 7.5vh;
+  position: fixed;  /* Make the sidebar fixed */
+  top: 70px; /* Position it below the fixed search bar (adjust this value based on your search bar height) */
+  left: 0;
+  width: 250px;  /* Set a fixed width for the sidebar */
+  height: calc(100vh - 70px); /* Ensure the sidebar takes the full height minus the search bar */
+  background-color: #f4f4f4;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  z-index: 5; /* Ensures sidebar stays below search bar */
 }
 
 .debug-searchbar {
   border: 3px solid lightskyblue;
-  padding: 7.5vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;  /* Reduce the height of the search bar */
+  z-index: 10;
+  background-color: #fff;  /* Optional background color */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 10px; /* Optional padding for spacing inside the search bar */
 }
 
-.debug-dashboard {
+.debug-main-content {
   border: 3px solid lightgreen;
-  padding: 7.5vh;
+  margin-left: 250px;  /* Offset the dashboard to the right of the sidebar */
+  padding: 20px;  /* Internal padding for the dashboard */
+  box-sizing: border-box;
+  height: calc(100vh - 70px); /* Ensure the dashboard takes the full height minus the search bar */
+  overflow-y: auto;
 }
 
 

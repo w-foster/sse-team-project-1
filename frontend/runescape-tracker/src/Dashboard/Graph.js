@@ -24,7 +24,7 @@ const generateTimeSeries = (intervalCount, intervalMinutes = 5) => {
 };
 
 // React Component to display the chart
-export default function BasicLineChart({ selectedItemID }) {
+export default function BasicLineChart({ selectedItemID, itemName }) {
     const url = process.env.NODE_ENV === "development"
     ? "http://127.0.0.1:5000/react"
     : "https://runescape-tracker.impaas.uk/react";
@@ -87,6 +87,7 @@ export default function BasicLineChart({ selectedItemID }) {
   return (
     <>
       <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+        <h2>{itemName}</h2>
         {/* LineChart for price */}
         <LineChart
           xAxis={[{ data: xAxisData, scaleType: 'band', label: 'Time' }]}

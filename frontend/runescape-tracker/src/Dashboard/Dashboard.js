@@ -1,7 +1,7 @@
 import ItemGrid from './ItemGrid'
 import BasicLineChart from './Graph'
 
-export default function Dashboard({ className, selectedItemID, favourites, addFavourite, removeFavourite }) {
+export default function Dashboard({ className, selectedItemID, itemName, favourites, addFavourite, removeFavourite }) {
     return (
         <div className={className}>
             Dashboard
@@ -9,7 +9,7 @@ export default function Dashboard({ className, selectedItemID, favourites, addFa
                 favourites={favourites}
                 addFavourite={addFavourite}
                 removeFavourite={removeFavourite} />
-            <BasicLineChart selectedItemID={selectedItemID} />
+            <BasicLineChart selectedItemID={selectedItemID} itemName={itemName} />
         </div>
     );
 }
