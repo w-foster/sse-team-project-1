@@ -16,6 +16,11 @@ const NavBar = (props) => {
               >
                 <Link to="/react">Dashboard</Link>
               </li>
+              <li
+                className={active === "about" ? "nav-item active" : "nav-item"}
+              >
+                <Link to="/about">About</Link>
+              </li>
               {/* Add more items here as needed */}
             </ul>
           </div>

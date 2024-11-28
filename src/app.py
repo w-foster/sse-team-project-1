@@ -97,7 +97,7 @@ def get_price_data():
     return jsonify(all_price_data)
 
 @app.route('/react/api/hotitems', methods=['GET'])
-def items():
+def hotitems():
     return jsonify(get_api_hot_items())
 
 if __name__ == "__main__":
