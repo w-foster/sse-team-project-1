@@ -4,7 +4,7 @@ import SignInForm from './SignInForm'
 export default function SideBar({ className, favourites, removeFavourite }) {
     return (
         <div className={className}>
-            <h1>SIDEBAR</h1>
+            <h2>Favourites</h2>
             <FavouritesList 
                 favourites={favourites}
                 removeFavourite={removeFavourite} />

@@ -6,11 +6,23 @@ import IconButton from '@mui/joy/IconButton';
 import Add from '@mui/icons-material/Add';
 import Delete from '@mui/icons-material/Delete';
 import { Icon } from '@mui/material';
+import { itemList } from '../SearchBar/ItemList'
 
 // MUI name: SecondaryList
 export default function FavouritesList({ favourites, removeFavourite }) {
+
+  // Create mapping item ID - item Name
+  const idToNameMap = React.useMemo(() => {
+    const map = new Map();
+    itemList.forEach((item) => {
+      map.set(Number(item.id), item.name);
+    });
+    return map;
+  }, []);
+
   return (
     <List sx={{ maxWidth: 300 }}>
+      {/*
       <ListItem
         startAction={
           <IconButton aria-label="Add" size="sm" variant="plain" color="neutral">
@@ -20,33 +32,27 @@ export default function FavouritesList({ favourites, removeFavourite }) {
       >
         <ListItemButton>Item 1</ListItemButton>
       </ListItem>
-      <ListItem
-        endAction={
-          <IconButton aria-label="Delete" size="sm" color="danger">
-            <Delete />
-          </IconButton>
-        }
-      >
-        <ListItemButton>Item 2</ListItemButton>
-      </ListItem>
-
-      {favourites.map((item) => (
-        <ListItem 
-            key={item}
-            endAction={
-                <IconButton 
-                    aria-label="Delete" 
-                    size="sm" 
-                    color="danger"
-                    onClick={() => removeFavourite(item)}
-                >
-                    <Delete />
-                </IconButton>
-            }
-        >
-            <ListItemButton>{item}</ListItemButton>
-        </ListItem>
-      ))}
+      */}
+      
+      {favourites.map((itemId) => {
+        const itemName = idToNameMap.get(Number(itemId)) || `Item ID: ${itemId}`;
+        return (
+          <ListItem 
+              key={itemId}
+              endAction={
+                  <IconButton 
+                      aria-label="Delete" 
+                      size="sm" 
+                      color="danger"
+                      onClick={() => removeFavourite(itemId)}
+                  >
+                      <Delete />
+                  </IconButton>
+              }
+          >
+              <ListItemButton>{itemName}</ListItemButton>
+          </ListItem>
+      )})}
 
     </List>
   );
