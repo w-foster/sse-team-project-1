@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Sidebar from '../components/common/SideBar/SideBar';
 import NavBar from '../components/common/SearchBar/NavBar';
 import './styles/home.css';
@@ -18,11 +18,9 @@ function Graphing() {
   const currentUserId = 420;  // For now, you can update this with actual user info
 
   // State hooks
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [setSelectedItem] = useState(null);
   const [favourites, setFavourites] = useState([]);
   const [description, setDescription] = useState(""); // State for item description
-
-  const navigate = useNavigate();
 
   // Fetch item details based on ID
   const fetchItemData = async (itemId) => {
