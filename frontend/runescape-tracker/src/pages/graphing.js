@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Sidebar from '../components/common/SideBar/SideBar';
+import NavBar from '../components/common/SearchBar/NavBar';
 import './styles/home.css';
 import BasicLineChart from '../components/Dashboard/Graph';
 
@@ -98,6 +99,7 @@ function Graphing() {
   // Components to be rendered
   return (
     <div className="Home">
+      <NavBar active="home" />
       <Sidebar 
         className="debug-sidebar"
         favourites={favourites}

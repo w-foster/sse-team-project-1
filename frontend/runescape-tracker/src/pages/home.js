@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Dashboard from '../components/Dashboard/Dashboard';
-import SearchBar from '../components/common/SearchBar/SearchBar';
+import NavBar from '../components/common/SearchBar/NavBar';
 import Sidebar from '../components/common/SideBar/SideBar';
 import './styles/home.css';
 
@@ -96,6 +96,7 @@ function Home() {
   // Components to be rendered
   return (
     <div className="Home">
+      <NavBar active="home" />
       <Sidebar 
         className="debug-sidebar"
         favourites={favourites}
