@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { LineChart } from '@mui/x-charts/LineChart';
+import { BarChart } from '@mui/x-charts';
 
 // React Component to display the chart
 export default function BasicLineChart({ selectedItemID }) {
@@ -53,15 +54,44 @@ export default function BasicLineChart({ selectedItemID }) {
     }
   
     // Assuming the price data contains x-axis and series data for the chart
+    
     const xAxisData = priceData.time_series || [];
-    const seriesData = priceData.avgHighPrice || []; // Example series data
+    const seriesDataHighPrice = priceData.avgHighPrice || [];
+    const seriesDataLowPrice = priceData.avgLowPrice || [];
+    const seriesDataHighVolume = priceData.highPriceVolume || [];
+    const seriesDataLowVolume = priceData.lowPriceVolume || [];
   
     return (
-      <LineChart
-        xAxis={[{ data: xAxisData }]}
-        series={[{ data: seriesData }]}
-        width={500}
-        height={300}
-      />
+      <>
+        <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+          {/* LineChart for price */}
+          <LineChart
+            xAxis={[{ data: xAxisData, label: 'Time' }]}
+            yAxis={[{ label: 'Price' }]}
+            series={[
+              { data: seriesDataHighPrice, label: 'High Price', yAxisIndex: 0, line: { color: '#42a5f5' } },
+              { data: seriesDataLowPrice, label: 'Low Price', yAxisIndex: 0, line: { color: '#66bb6a' } }
+            ]}
+            width={1400}
+            height={600}
+          />
+  
+          {/* BarChart for volume */}
+          <BarChart
+            xAxis={[
+              { data: xAxisData, label: 'Time', scaleType: 'band' }
+            ]}
+            yAxis={[
+              { label: 'Volume' }
+            ]}
+            series={[
+              { data: seriesDataHighVolume, label: 'High Volume', stack: 'total', color: '#ff7043' },
+              { data: seriesDataLowVolume, label: 'Low Volume', stack: 'total', color: '#ffb74d' }
+            ]}
+            width={1200}
+            height={600}
+          />
+        </div>
+      </>
     );
   }
