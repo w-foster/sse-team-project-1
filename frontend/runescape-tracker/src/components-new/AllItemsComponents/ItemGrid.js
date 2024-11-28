@@ -51,7 +51,12 @@ export default function ItemGrid({ favourites, addFavourite, removeFavourite }) 
       renderCell: (params) => {
         const isFavorite = params.row.favorite;
         return (
-          <IconButton onClick={() => handleToggleFavorite(params.row.id, isFavorite)} color="primary">
+          <IconButton onClick={(event) => {
+              event.stopPropagation();
+              handleToggleFavorite(params.row.id, isFavorite);
+            }} 
+            color="primary"
+          >
             {isFavorite ? <StarIcon /> : <StarOutlineIcon />}
           </IconButton>
         );
@@ -64,9 +69,9 @@ export default function ItemGrid({ favourites, addFavourite, removeFavourite }) 
       headerName: 'Icon',
       width: 100,
       renderCell: (params) => (
-        <a href={params.row.icon} target="_blank" rel="noopener noreferrer">
-          <img src={params.row.icon} alt={params.row.name} style={{ width: 30, height: 30, objectFit: 'contain' }} />
-        </a>
+        
+        <img src={params.row.icon} alt={params.row.name} style={{ width: 30, height: 30, objectFit: 'contain' }} />
+ 
       ),
       sortable: false,
       filterable: false,

@@ -30,13 +30,13 @@ export default function HotItemGrid({}) {
         headerName: "Icon",
         width: 30, // Adjusted smaller width for compactness
         renderCell: (params) => (
-          <a href={params.row.icon} target="_blank" rel="noopener noreferrer">
+
             <img
-              src={params.row.icon}
-              alt={params.row.name}
-              style={{ width: 30, height: 30, objectFit: "contain" }} // Smaller icon size
+                src={params.row.icon}
+                alt={params.row.name}
+                style={{ width: 30, height: 30, objectFit: "contain" }} // Smaller icon size
             />
-          </a>
+
         ),
         sortable: false,
         filterable: false,
