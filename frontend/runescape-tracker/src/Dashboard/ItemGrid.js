@@ -15,10 +15,9 @@ export default function ItemGrid({ favourites, addFavourite, removeFavourite }) 
     : "https://runescape-tracker.impaas.uk/react";
     fetch(`${url}/api/items`, {method: 'GET'})
       .then((response) => response.json())
-      .then((data) => {
-        console.log('Fetched data:', data); // Log the data
-        const favouriteSet = new Set(favourites.map((id) => Number(id)));
-        setRows(data); // Update the state
+      .then((fetchedData) => {
+        console.log('Fetched data:', fetchedData); // Log the fetchedData
+        setRows(fetchedData); // Update the state
       })
       .catch((error) => console.error('Error fetching data:', error));
   }, []);
@@ -38,12 +37,12 @@ export default function ItemGrid({ favourites, addFavourite, removeFavourite }) 
   const handleToggleFavorite = async (id, isFavorite) => {
     try {
       // Optimistic update for the UI (immediate)
-      setRows((prevRows) =>
-        prevRows.map((row) =>
-          row.id === id ? { ...row, favorite: !row.favorite } : row
-        )
-      );
-      // Update DB
+      // setRows((prevRows) =>
+      //   prevRows.map((row) =>
+      //     row.id === id ? { ...row, favorite: !row.favorite } : row
+      //   )
+      // );
+      // Update favourites (and in turn, DB)
       if (isFavorite) {
         await removeFavourite(id);
       } else {
