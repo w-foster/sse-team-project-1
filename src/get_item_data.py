@@ -4,6 +4,13 @@ import re
 import json
 from headers import headers # import headers
 
+# FOR FIXING TSURU RELATIVE PATH ISSUE
+import os
+# Get the directory where app.py resides
+current_dir = os.path.dirname(os.path.abspath(__file__))
+# Build the file path
+item_list_file_path = os.path.join(current_dir, 'ItemList.js')
+
 
 def get_api_data_items():
     api_url = 'https://prices.runescape.wiki/api/v1/osrs/latest'
@@ -41,7 +48,7 @@ def add_other_data(data):
 
 
 def add_name(data):
-    file_path = 'ItemList.js'
+    file_path = item_list_file_path
     with open(file_path, 'r') as f:
         content = f.read()
     
