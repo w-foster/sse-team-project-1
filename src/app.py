@@ -6,6 +6,7 @@ from get_hot_items import get_api_hot_items
 from update_favourites import insert_favourite, delete_favourite
 from flask_cors import CORS
 from get_price_data import get_graph_data
+from get_item_text import get_item_description
 
 app = Flask(__name__, static_folder='../frontend/runescape-tracker/build', static_url_path='')  # Update the static folder path
 CORS(app, resources={r"/react/api/*": {"origins": "http://localhost:3000"}})
@@ -99,6 +100,20 @@ def get_price_data():
 @app.route('/react/api/hotitems', methods=['GET'])
 def hotitems():
     return jsonify(get_api_hot_items())
+
+
+# Route to handle item description
+@app.route('/react/api/item-description/<int:item_id>', methods=['GET'])
+def item_description(item_id):
+    """
+    Fetch and return the item description for the given item ID.
+    """
+    description = get_item_description(item_id)
+
+    if description is None:
+        return jsonify({"error": "Description not found for the given item"}), 404
+
+    return jsonify({"description": description})
 
 if __name__ == "__main__":
     app.run(debug=True)

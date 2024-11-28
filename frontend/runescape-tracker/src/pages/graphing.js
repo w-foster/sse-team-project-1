@@ -4,6 +4,8 @@ import Sidebar from '../components/common/SideBar/SideBar';
 import NavBar from '../components/common/SearchBar/NavBar';
 import './styles/home.css';
 import BasicLineChart from '../components/Dashboard/Graph';
+import MovingTextBar from '../components/common/SearchBar/MovingTextBar'; // Adjust path as needed
+
 
 function Graphing() {
 
@@ -18,6 +20,8 @@ function Graphing() {
   // State hooks
   const [selectedItem, setSelectedItem] = useState(null);
   const [favourites, setFavourites] = useState([]);
+  const [description, setDescription] = useState(""); // State for item description
+
   const navigate = useNavigate();
 
   // Fetch item details based on ID
@@ -96,6 +100,30 @@ function Graphing() {
     }
   };
 
+  //for the moving line bar
+  const fetchItemDescription = async (itemId) => {
+    try {
+        const response = await fetch(`${url}/api/item-description/${itemId}`);
+        if (!response.ok) throw new Error("Failed to fetch item description");
+        const data = await response.json();
+        return data.description;
+    } catch (error) {
+        console.error("Error fetching item description:", error);
+        return null;
+    }
+};
+useEffect(() => {
+  if (itemIdFromQuery) {
+      fetchItemDescription(itemIdFromQuery).then((description) => {
+          if (description) {
+              setDescription(description); // Update the state with the description
+          }
+      });
+  }
+}, [itemIdFromQuery]); // Trigger when itemIdFromQuery changes
+
+
+
   // Components to be rendered
   return (
     <div className="Home">
@@ -112,6 +140,7 @@ function Graphing() {
             itemName={nameFromQuery ? nameFromQuery : 'Cannonball'}
         />
       </div>
+      <MovingTextBar text={description} />
     </div>
   );
 }
