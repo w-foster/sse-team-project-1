@@ -4,7 +4,7 @@ import re
 import json
 from headers import headers # import headers
 
-file_path = 'frontend/runescape-tracker/src/SearchBar/ItemList.js'
+file_path = 'frontend/runescape-tracker/src/components/common/SearchBar/ItemList.js'
 with open(file_path, 'r') as f:
     content = f.read()
     
