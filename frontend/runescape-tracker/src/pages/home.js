@@ -1,22 +1,35 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Dashboard from '../components/Dashboard/Dashboard';
 import SearchBar from '../components/common/SearchBar/SearchBar';
 import Sidebar from '../components/common/SideBar/SideBar';
-import './styles/home.css'
-
+import './styles/home.css';
 
 function Home() {
 
   const url = process.env.NODE_ENV === "development"
-  ? "http://127.0.0.1:5000/react"
-  : "https://runescape-tracker.impaas.uk/react";
-  //const url = "http://127.0.0.1:5000/react"
+    ? "http://127.0.0.1:5000/react"
+    : "https://runescape-tracker.impaas.uk/react";
+
   console.log("API Base URL:", url);
 
-  const currentUserId = 420;  // for now
+  const currentUserId = 420;  // For now, you can update this with actual user info
+
   // State hooks
   const [selectedItem, setSelectedItem] = useState(null);
   const [favourites, setFavourites] = useState([]);
+  const navigate = useNavigate();
+
+  // Fetch item details based on ID
+  const fetchItemData = async (itemId) => {
+    try {
+      const response = await fetch(`${url}/api/items/${itemId}`);
+      const data = await response.json();
+      setSelectedItem(data); // Set the item details into state
+    } catch (error) {
+      console.error("Error fetching item:", error);
+    }
+  };
 
   // Flask API call helper functions
   async function fetchFavourites() {
@@ -33,16 +46,17 @@ function Home() {
   }
 
   // === Effect Hooks ===
-  // Fetch favourites once upon rendering App
   useEffect(() => {
-    console.log('useEffect called, fetching favourites...')
+    console.log('useEffect called, fetching favourites...');
     fetchFavourites();
-  }, []);
+  }, []);  // Only run this effect when itemIdFromQuery changes
 
   // === Handlers ===
   // Handler for item selection via search bar
   const handleItemSelect = (item) => {
-    setSelectedItem(item); // Update the App.js state with the selected item
+    setSelectedItem(item);
+    // Navigate to home and pass the selected itemId via query parameters
+    navigate(`/graphing?itemId=${item.id}`);
   };
 
   // Adds a favourite item (first to state, then to DB)
@@ -77,8 +91,7 @@ function Home() {
       // Rollback State
       setFavourites((prev) => [...prev, itemId]);
     }
-  }
-
+  };
 
   // Components to be rendered
   return (
@@ -90,13 +103,13 @@ function Home() {
         addFavourite={addFavourite}
         removeFavourite={removeFavourite} />
       <div className="debug-main-content">
+        {/* Pass the selectedItem ID or the whole selectedItem object to Dashboard */}
         <Dashboard
           selectedItemID={selectedItem ? parseInt(selectedItem.id, 10) : -1}
           itemName={selectedItem ? selectedItem.name : ''}
           favourites={favourites}
           addFavourite={addFavourite}
           removeFavourite={removeFavourite} />
-
       </div>
     </div>
   );
