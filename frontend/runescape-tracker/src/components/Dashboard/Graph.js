@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { LineChart, BarChart } from '@mui/x-charts';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
-import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter';
 
 const getNearestTimeMark = (interval = '5m') => {
   const now = new Date();
@@ -155,10 +153,10 @@ export default function BasicLineChart({ selectedItemID, itemName }) {
           aria-label="chart type"
         >
           <ToggleButton value="price" aria-label="price chart">
-            <FormatAlignLeftIcon /> Price
+            Price
           </ToggleButton>
           <ToggleButton value="volume" aria-label="volume chart">
-            <FormatAlignCenterIcon /> Volume
+            Volume
           </ToggleButton>
         </ToggleButtonGroup>
         <ToggleButtonGroup
