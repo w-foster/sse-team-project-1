@@ -9,7 +9,7 @@ def get_api_data(item_id: int, timestep: str):
 
     Args:
         item_id (int): The ID of the item to fetch data for.
-        timestep (str): The timestep for the data (e.g., '5m', '1h', '1d').
+        timestep (str): The timestep for the data (e.g., '5m', '1h', '24h').
 
     Returns:
         Optional[List[Dict[str, float]]]: The price data for the item as a list of dictionaries,
@@ -36,7 +36,7 @@ def get_time_series(timestep: str):
     Generates a time series based on the given timestep.
 
     Args:
-        timestep (str): The timestep for the data ('5m', '1h', '1d').
+        timestep (str): The timestep for the data ('5m', '1h', '24h').
 
     Returns:
         List[int]: A list of integers representing the time axis based on the timestep.
@@ -46,7 +46,7 @@ def get_time_series(timestep: str):
         time_axis = [5 * i for i in range(288)]  # 5-minute intervals for a full day
     elif timestep == "1h":
         time_axis = [i for i in range(336)]  # Hourly intervals for a full day
-    elif timestep == "1d":
+    elif timestep == "24h":
         time_axis = [i for i in range(365)]  # Daily intervals for a year
     else:
         print("Invalid timestep")
@@ -87,7 +87,7 @@ def get_graph_data(item_id: int, timestep: str = "5m"):
 
     Args:
         item_id (int): The ID of the item to fetch data for.
-        timestep (str): The timestep for the data ('5m', '1h', '1d').
+        timestep (str): The timestep for the data ('5m', '1h', '24h').
 
     Returns:
         Optional[Dict[str, List[int] or List[float]]]: A dictionary containing the time series, 

@@ -86,12 +86,14 @@ def get_price_data():
         return jsonify({"error": "Item ID is required"}), 400
     
     # Get price data for the item
-    price_data = get_graph_data(item_id)
+    # Store the data in a list using a list comprehension
+    time_intervals = ["5m", "1h", "24h"]
+    all_price_data = [get_graph_data(item_id, interval) for interval in time_intervals]
     
-    if price_data is None:
+    if all_price_data is None:
         return jsonify({"error": "Unable to fetch price data for the given item"}), 500
     
-    return jsonify(price_data)
+    return jsonify(all_price_data)
 
 if __name__ == "__main__":
     app.run(debug=True)
