@@ -195,8 +195,8 @@ export default function Graph({ itemList, itemId }) {
               { data: highPrice, label: 'High Price', yAxisIndex: 0, line: { color: '#42a5f5' } },
               { data: lowPrice, label: 'Low Price', yAxisIndex: 0, line: { color: '#66bb6a' } }
             ]}
-            width={1400}
-            height={600}
+            width={window.innerWidth * 0.75}
+            height={window.innerHeight * 0.65}
           />
         ) : (
           <BarChart
@@ -206,8 +206,8 @@ export default function Graph({ itemList, itemId }) {
               { data: highVolume, label: 'High Volume', stack: 'total', color: '#ff7043' },
               { data: lowVolume, label: 'Low Volume', stack: 'total', color: '#ffb74d' }
             ]}
-            width={1400}
-            height={600}
+            width={window.innerWidth * 0.75}
+            height={window.innerHeight * 0.65}
           />
         )}
       </div>
