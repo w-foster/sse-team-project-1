@@ -101,9 +101,11 @@ function App() {
 
 			<Routes>
 				{/* PAGES WITHOUT HEADER or TITLE BAR */}
+				<Route path="*" element={<Notfound />} /> {/* Fallback for undefined routes */}
 				<Route path="/signin" element={<SignInPage />} />
 				<Route path="/signup" element={<NewUserPage />} />
-				<Route element={
+				{/* PAGES WITH HEADER -- NESTED ROUTES */}
+				<Route path='/' element={
 						<PageWithHeader 
 							itemList={itemList} 
 							favourites={favourites} 
@@ -111,8 +113,8 @@ function App() {
 							removeFavourite={removeFavourite} 
 						/>
 					} 
-				/>
-					<Route path="/" element={<Navigate to="/items" replace />} />
+				>
+					<Route index element={<Navigate to="/items" replace />} />
 					<Route path="/about" element={<AboutPage />} />
 					<Route
 						path="/items/*"
@@ -144,9 +146,8 @@ function App() {
 								/>
 							}
 						/>
+					</Route>
 				</Route>
-				{/* Fallback for undefined routes */}
-				<Route path="*" element={<Notfound />} />
 			</Routes>
 		</div>
 		</SessionInfoProvider>
