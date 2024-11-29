@@ -100,10 +100,7 @@ function App() {
 
 			<Routes>
 				<Route path="/" element={<Navigate to="/items" replace />} />
-				<Route
-					path="/about"
-					element={<AboutPage />}	 
-				/>
+				<Route path="/about" element={<AboutPage />} />
 				<Route
 					path="/items/*"
 					element={
@@ -112,7 +109,7 @@ function App() {
 							favourites={favourites}
 							removeFavourite={removeFavourite}
 						/>
-					}	 
+					}
 				>
 					<Route
 						path=":itemId"
@@ -123,7 +120,6 @@ function App() {
 							/>
 						}
 					/>
-					{/* default route for /items */}
 					<Route
 						index
 						element={
@@ -131,12 +127,13 @@ function App() {
 								itemList={itemList}
 								favourites={favourites}
 								addFavourite={addFavourite}
-								removeFavourite={removeFavourite}	
+								removeFavourite={removeFavourite}    
 							/>
 						}
 					/>
 				</Route>
-				<Route path="/*" element={<Notfound />} />
+				{/* Fallback for undefined routes */}
+				<Route path="*" element={<Notfound />} />
 			</Routes>
 		</div>
 	);
