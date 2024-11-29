@@ -15,13 +15,14 @@ import Notfound from './pages/404';
 // IMPORT ITEM LIST ONCE, PASSED DOWN AS PROP
 import { itemList } from './ItemList';
 import { SessionInfoProvider } from "./SessionInfoContext";
+import { useSessionInfo } from "./SessionInfoContext";
 
 
 function App() {
 	const url = process.env.NODE_ENV === "development"
     ? "http://127.0.0.1:5000"
     : "https://runescape-tracker.impaas.uk";
-	const currentUserId = "0bb06241-e2c9-4155-abe7-e6cd0ddb3a7b";
+	const currentUserId = useSessionInfo();
 
 	// Create mapping {item ID: item name}, to be passed around as a prop
 	const idToNameMap = React.useMemo(() => {
@@ -39,6 +40,9 @@ function App() {
 
 	// Flask API call helper functions
 	async function fetchFavourites() {
+		if (!currentUserId) {
+			return null; // idk
+		}
 		try {
 			const response = await fetch(`${url}/api/favourites?user_id=${currentUserId}`, {
 				method: 'GET'
@@ -60,36 +64,38 @@ function App() {
 	// === Handlers === 
 	// Adds a favourite item (first to state, then to DB)
 	const addFavourite = async (itemId) => {
-	try {
-		// 'Optimistic' update (faster for UI)
-		setFavourites((prev) => [...prev, itemId]);
-		// Update the DB after
-		await fetch(`${url}/api/favourites`, {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json'},
-		body: JSON.stringify({ user_id: currentUserId, item_id: itemId}),
-		});
-	} catch (error) {
-		console.error('Error adding favourite:', error);
-		// Rollback favourites in State if error adding to DB
-		setFavourites((prev) => prev.filter((id) => id !== itemId));
-	}
+		if (!currentUserId) return null; // idk
+		try {
+			// 'Optimistic' update (faster for UI)
+			setFavourites((prev) => [...prev, itemId]);
+			// Update the DB after
+			await fetch(`${url}/api/favourites`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json'},
+				body: JSON.stringify({ user_id: currentUserId, item_id: itemId}),
+			});
+		} catch (error) {
+			console.error('Error adding favourite:', error);
+			// Rollback favourites in State if error adding to DB
+			setFavourites((prev) => prev.filter((id) => id !== itemId));
+		}
 	};
 
 	// Remove a favourite item
 	const removeFavourite = async (itemId) => {
-	try {
-		// Optimistic update (faster for UI)
-		setFavourites((prev) => prev.filter((id) => id !== itemId));
-		// Update DB afterwards
-		await fetch(`${url}/api/favourites/${itemId}?user_id=${currentUserId}`, {
-		method: 'DELETE',
-		});
-	} catch (error) {
-		console.error("Error removing favourite:", error);
-		// Rollback State
-		setFavourites((prev) => [...prev, itemId]);
-	}
+		if (!currentUserId) return null; // idk
+		try {
+			// Optimistic update (faster for UI)
+			setFavourites((prev) => prev.filter((id) => id !== itemId));
+			// Update DB afterwards
+			await fetch(`${url}/api/favourites/${itemId}?user_id=${currentUserId}`, {
+				method: 'DELETE',
+			});
+		} catch (error) {
+			console.error("Error removing favourite:", error);
+			// Rollback State
+			setFavourites((prev) => [...prev, itemId]);
+		}
 	};
 
 	/**

@@ -5,6 +5,7 @@ import { useSessionInfo } from '../../SessionInfoContext';
 
 export default function SideBar({ itemList, favourites, removeFavourite }) {
     const currentUserId = useSessionInfo();
+    console.log(JSON.stringify(currentUserId, null, 2));
     const navigate = useNavigate();
 
     const handleClick = () => {
