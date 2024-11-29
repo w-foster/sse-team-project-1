@@ -136,7 +136,7 @@ function App() {
 						}
 					/>
 				</Route>
-				<Route path="*" element={<Notfound />} />
+				<Route path="/*" element={<Notfound />} />
 			</Routes>
 		</div>
 	);
