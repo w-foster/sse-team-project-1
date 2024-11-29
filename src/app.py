@@ -42,6 +42,12 @@ def get_favourites():
     item_ids = [item['item_id'] for item in item_data]
     return jsonify(item_ids)
 
+# Catch-all route for React Router, hopefully enables refreshing and so on
+@app.route('/<path:path>')
+def catch_all(path):
+    # Serve React's index.html for any unknown route
+    return send_from_directory(app.static_folder, "index.html")
+
 # Add a row to DB containing a user_id and a new favourite item_id
 @app.route('/api/favourites', methods=['POST'])
 def add_favourite():
