@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useSessionInfo } from '../../SessionInfoContext';
 
 export default function SideBar({ itemList, favourites, removeFavourite }) {
-    const currentUserId = useSessionInfo();
-    console.log(JSON.stringify(currentUserId, null, 2));
+    const userId = useSessionInfo();
+    console.log(JSON.stringify(userId, null, 2));
     const navigate = useNavigate();
 
     const handleClick = () => {
@@ -14,7 +14,7 @@ export default function SideBar({ itemList, favourites, removeFavourite }) {
 
     return (
         <div className="debug-sidebar">
-            {currentUserId.user &&
+            {userId &&
                 <>
                 <h2>Favourites</h2>
                 <FavouritesList 
@@ -24,7 +24,7 @@ export default function SideBar({ itemList, favourites, removeFavourite }) {
                 />
                 </>
             }
-            {!currentUserId.user &&
+            {!userId &&
                 <SignInButton handleClick={handleClick} />
             }      
         </div>

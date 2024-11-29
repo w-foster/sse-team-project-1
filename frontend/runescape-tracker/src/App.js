@@ -17,12 +17,22 @@ import { itemList } from './ItemList';
 import { SessionInfoProvider } from "./SessionInfoContext";
 import { useSessionInfo } from "./SessionInfoContext";
 
-
 function App() {
+	return (
+		<SessionInfoProvider>
+			<MainApp />
+		</SessionInfoProvider>
+	);
+}
+
+
+function MainApp() {
 	const url = process.env.NODE_ENV === "development"
     ? "http://127.0.0.1:5000"
     : "https://runescape-tracker.impaas.uk";
-	const currentUserId = useSessionInfo();
+
+	const { userId } = useSessionInfo();
+	console.log(`Current user ID: ${userId}`);
 
 	// Create mapping {item ID: item name}, to be passed around as a prop
 	const idToNameMap = React.useMemo(() => {
@@ -40,12 +50,12 @@ function App() {
 
 	// Flask API call helper functions
 	async function fetchFavourites() {
-		if (!currentUserId) {
+		if (!userId) {
 			console.log("Could not fetch faves -- user is null");
 			return null; // idk
 		}
 		try {
-			const response = await fetch(`${url}/api/favourites?user_id=${currentUserId}`, {
+			const response = await fetch(`${url}/api/favourites?user_id=${userId}`, {
 				method: 'GET'
 			});
 			const data = await response.json();
@@ -60,12 +70,15 @@ function App() {
 	useEffect(() => {
 		console.log('useEffect called, fetching favourites...');
 		fetchFavourites();
-	}, []);
+	}, [userId]);
 
 	// === Handlers === 
 	// Adds a favourite item (first to state, then to DB)
 	const addFavourite = async (itemId) => {
-		if (!currentUserId) return null; // idk
+		if (!userId) {
+			console.log("Could not fetch faves -- user is null");
+			return null; // idk
+		}
 		try {
 			// 'Optimistic' update (faster for UI)
 			setFavourites((prev) => [...prev, itemId]);
@@ -73,7 +86,7 @@ function App() {
 			await fetch(`${url}/api/favourites`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json'},
-				body: JSON.stringify({ user_id: currentUserId, item_id: itemId}),
+				body: JSON.stringify({ user_id: userId, item_id: itemId}),
 			});
 		} catch (error) {
 			console.error('Error adding favourite:', error);
@@ -84,12 +97,15 @@ function App() {
 
 	// Remove a favourite item
 	const removeFavourite = async (itemId) => {
-		if (!currentUserId) return null; // idk
+		if (!userId) {
+			console.log("Could not fetch faves -- user is null");
+			return null; // idk
+		}
 		try {
 			// Optimistic update (faster for UI)
 			setFavourites((prev) => prev.filter((id) => id !== itemId));
 			// Update DB afterwards
-			await fetch(`${url}/api/favourites/${itemId}?user_id=${currentUserId}`, {
+			await fetch(`${url}/api/favourites/${itemId}?user_id=${userId}`, {
 				method: 'DELETE',
 			});
 		} catch (error) {
@@ -103,7 +119,7 @@ function App() {
 	 * STRUCTURE: 
 	 */
 	return (
-		<SessionInfoProvider>
+		
 		<div className="App">
 
 			<Routes>
@@ -157,7 +173,7 @@ function App() {
 				</Route>
 			</Routes>
 		</div>
-		</SessionInfoProvider>
+		
 	);
 }
 

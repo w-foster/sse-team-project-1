@@ -4,19 +4,19 @@ import { supabase } from './SupabaseClient';
 const SessionInfoContext = createContext();
 
 export const SessionInfoProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+    const [userId, setUserId] = useState(null);
 
     // Check for existing session when app starts
     useEffect(() => {
         const fetchUserSession = async () => {
             const { data } = await supabase.auth.getSession();
-            setUser(data?.user || null);
+            setUserId(data?.user?.id || null);
         };
         fetchUserSession();
 
         // Listen for supabase auth state changes
         const { data: subscription } = supabase.auth.onAuthStateChange((event, session) => {
-            setUser(session?.user || null);
+            setUserId(session?.user?.id || null);
         });
 
         return () => {
@@ -24,7 +24,7 @@ export const SessionInfoProvider = ({ children }) => {
         }
     }, []);
 
-    return <SessionInfoContext.Provider value={{ user }}>{children}</SessionInfoContext.Provider>
+    return <SessionInfoContext.Provider value={{ userId }}>{children}</SessionInfoContext.Provider>
 };
 
 // Custom hook for other components to access session info
