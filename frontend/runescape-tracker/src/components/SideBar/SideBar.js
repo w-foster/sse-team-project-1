@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSessionInfo } from '../../SessionInfoContext';
 
 export default function SideBar({ itemList, favourites, removeFavourite }) {
-    const userId = useSessionInfo();
+    const { userId } = useSessionInfo();
     console.log(JSON.stringify(userId, null, 2));
     const navigate = useNavigate();
 
