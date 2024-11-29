@@ -14,7 +14,7 @@ export default function SideBar({ itemList, favourites, removeFavourite }) {
 
     return (
         <div className="debug-sidebar">
-            {currentUserId &&
+            {currentUserId.user &&
                 <>
                 <h2>Favourites</h2>
                 <FavouritesList 
@@ -24,7 +24,7 @@ export default function SideBar({ itemList, favourites, removeFavourite }) {
                 />
                 </>
             }
-            {!currentUserId &&
+            {!currentUserId.user &&
                 <SignInButton handleClick={handleClick} />
             }      
         </div>

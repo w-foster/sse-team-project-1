@@ -41,6 +41,7 @@ function App() {
 	// Flask API call helper functions
 	async function fetchFavourites() {
 		if (!currentUserId) {
+			console.log("Could not fetch faves -- user is null");
 			return null; // idk
 		}
 		try {
