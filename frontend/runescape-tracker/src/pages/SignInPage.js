@@ -1,10 +1,9 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { supabase } from '../SupabaseClient';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 //import { Auth } from '@supabase/auth-ui-react';
-import { AppProvider } from '@toolpad/core/AppProvider';
-import { SignInPage } from '@toolpad/core/SignInPage';
-import { useTheme } from '@mui/material/styles';
+import SignInForm from '../components/UserManagement/SignInForm';
+
 
 
 // MUI variables
@@ -16,14 +15,11 @@ const url = process.env.NODE_ENV === "development"
 
 
 
-
 export default function CredentialsSignInPage() {
-  const theme = useTheme();
   const navigate = useNavigate();
-  const handleRedirect = () => {
-    navigate('/items');
-  }
+  const [subtitleMessage, setSubtitleMessage] = useState(null);
 
+  // Event handler for sign in button
   const handleSignIn = async (provider, formData) => {
     const email = formData.get('email');
     const password = formData.get('password');
@@ -33,21 +29,39 @@ export default function CredentialsSignInPage() {
       if (error) {
           throw new Error(error.message);
       }
-      alert(`Welcome back, ${email}!`);
-      handleRedirect();
+      navigate('/items');
       return data;
     } catch (error) {
-      alert(`Sign in failed: ${error.message}`);
+      setSubtitleMessage(error.message);
       return null;
     }
   };
 
+  // MUI LINK COMPONENTS
+  function SignUpLink() {
+    return (
+      <Link to='/signup' variant="body2">
+        Sign up
+      </Link>
+    );
+  }
+  
+  function ForgotPasswordLink() {
+    return (
+      <Link to='/' variant="body2">
+        Forgot password?
+      </Link>
+    );
+  }
 
   return (
     <div>
-        <AppProvider theme={theme}>
-        <SignInPage signIn={handleSignIn} providers={providers} />
-        </AppProvider>
+        <SignInForm 
+          handleSignIn={handleSignIn}
+          SignUpLink={SignUpLink}
+          ForgotPasswordLink={ForgotPasswordLink}
+          subtitleMessage={subtitleMessage}
+        />
     </div>
   );
 }

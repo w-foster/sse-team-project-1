@@ -2,16 +2,19 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import "./App.css";
 // STANDARD COMPONENTS
-import TitleBar from "./components/SearchBar/TitleBar";
+
 // PAGE COMPONENTS
+import PageWithHeader from './pages/PageWithHeader';
 import AboutPage from './pages/AboutPage';
 import SignInPage from './pages/SignInPage';
+import NewUserPage from './pages/NewUserPage';
 import NormalPage from './pages/NormalPage';
 import PerItemPage from './pages/PerItemPage';
 import AllItemsPage from './pages/AllItemsPage';
 import Notfound from './pages/404';
 // IMPORT ITEM LIST ONCE, PASSED DOWN AS PROP
 import { itemList } from './ItemList';
+import { SessionInfoProvider } from "./SessionInfoContext";
 
 
 function App() {
@@ -93,51 +96,60 @@ function App() {
 	 * STRUCTURE: 
 	 */
 	return (
+		<SessionInfoProvider>
 		<div className="App">
 
-			<TitleBar className='search-bar'
-				itemList={itemList}
-			/>
-
 			<Routes>
-				<Route path="/" element={<Navigate to="/items" replace />} />
-				<Route path="/about" element={<AboutPage />} />
+				{/* PAGES WITHOUT HEADER or TITLE BAR */}
 				<Route path="/signin" element={<SignInPage />} />
-				<Route
-					path="/items/*"
-					element={
-						<NormalPage
-							itemList={itemList}
-							favourites={favourites}
-							removeFavourite={removeFavourite}
+				<Route path="/signup" element={<NewUserPage />} />
+				<Route element={
+						<PageWithHeader 
+							itemList={itemList} 
+							favourites={favourites} 
+							addFavourite={addFavourite} 
+							removeFavourite={removeFavourite} 
 						/>
-					}
-				>
+					} 
+				/>
+					<Route path="/" element={<Navigate to="/items" replace />} />
+					<Route path="/about" element={<AboutPage />} />
 					<Route
-						path=":itemId"
+						path="/items/*"
 						element={
-							<PerItemPage 
-								itemList={itemList}
-								idToNameMap={idToNameMap}
-							/>
-						}
-					/>
-					<Route
-						index
-						element={
-							<AllItemsPage 
+							<NormalPage
 								itemList={itemList}
 								favourites={favourites}
-								addFavourite={addFavourite}
-								removeFavourite={removeFavourite}    
+								removeFavourite={removeFavourite}
 							/>
 						}
-					/>
+					>
+						<Route
+							path=":itemId"
+							element={
+								<PerItemPage 
+									itemList={itemList}
+									idToNameMap={idToNameMap}
+								/>
+							}
+						/>
+						<Route
+							index
+							element={
+								<AllItemsPage 
+									itemList={itemList}
+									favourites={favourites}
+									addFavourite={addFavourite}
+									removeFavourite={removeFavourite}    
+								/>
+							}
+						/>
 				</Route>
 				{/* Fallback for undefined routes */}
 				<Route path="*" element={<Notfound />} />
 			</Routes>
 		</div>
+		</SessionInfoProvider>
 	);
 }
 
