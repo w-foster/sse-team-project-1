@@ -1,0 +1,31 @@
+.moving-text-bar {
+   position: relative; /* Establish positioning context */
+   overflow: hidden; /* Hide any text outside the container */
+   width: 100%; /* Make it match the parent width */
+   height: 40px; /* Explicit height for the bar */
+   background-color: #f9f9f9; /* Background color */
+   border: 1px solid #ddd; /* Subtle border for visibility */
+   display: flex; /* Flexbox for text alignment */
+   align-items: center; /* Vertically center the text */
+   justify-content: start; /* Align the text at the start */
+   box-sizing: border-box; /* Include padding and border in size calculations */
+}
+
+
+.moving-text-bar span {
+   display: inline-block; /* Allows animations */
+   white-space: nowrap; /* Prevent text from wrapping */
+   transform: translateX(100%); /* Start fully off-screen to the right */
+   animation: scroll-left 10s linear infinite; /* Smooth leftward scrolling */
+}
+
+
+/* Keyframes for leftward scrolling */
+@keyframes scroll-left {
+   0% {
+       transform: translateX(100%); /* Start off-screen to the right */
+   }
+   100% {
+       transform: translateX(-100%); /* Exit off-screen to the left */
+   }
+}
