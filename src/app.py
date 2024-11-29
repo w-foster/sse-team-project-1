@@ -12,10 +12,15 @@ app = Flask(__name__, static_folder='../frontend/runescape-tracker/build', stati
 CORS(app)
 
 
-
-@app.route("/")
-def serve_react():
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+@app.errorhandler(404)
+def catch_all(path):
     return send_from_directory(app.static_folder, "index.html")
+
+# @app.route("/")
+# def serve_react():
+#     return send_from_directory(app.static_folder, "index.html")
 
 # Serve static files (e.g., JavaScript, CSS)
 @app.route('/static/<path:path>')
