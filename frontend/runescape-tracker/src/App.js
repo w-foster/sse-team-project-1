@@ -5,6 +5,7 @@ import "./App.css";
 import TitleBar from "./components/SearchBar/TitleBar";
 // PAGE COMPONENTS
 import AboutPage from './pages/AboutPage';
+import SignInPage from './pages/SignInPage';
 import NormalPage from './pages/NormalPage';
 import PerItemPage from './pages/PerItemPage';
 import AllItemsPage from './pages/AllItemsPage';
@@ -101,6 +102,7 @@ function App() {
 			<Routes>
 				<Route path="/" element={<Navigate to="/items" replace />} />
 				<Route path="/about" element={<AboutPage />} />
+				<Route path="/signin" element={<SignInPage />} />
 				<Route
 					path="/items/*"
 					element={
