@@ -2,13 +2,12 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import "./App.css";
 // STANDARD COMPONENTS
-import SearchBar from './components-new/SearchBar/SearchBar';
-import TitleBar from "./components-new/SearchBar/TitleBar";
+import TitleBar from "./components/SearchBar/TitleBar";
 // PAGE COMPONENTS
-import AboutPage from './pages-new/AboutPage';
-import NormalPage from './pages-new/NormalPage';
-import PerItemPage from './pages-new/PerItemPage';
-import AllItemsPage from './pages-new/AllItemsPage';
+import AboutPage from './pages/AboutPage';
+import NormalPage from './pages/NormalPage';
+import PerItemPage from './pages/PerItemPage';
+import AllItemsPage from './pages/AllItemsPage';
 // IMPORT ITEM LIST ONCE, PASSED DOWN AS PROP
 import { itemList } from './ItemList';
 
