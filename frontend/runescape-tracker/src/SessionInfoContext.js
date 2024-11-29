@@ -12,7 +12,6 @@ export const SessionInfoProvider = ({ children }) => {
             const { data } = await supabase.auth.getSession();
             setUser(data?.user || null);
         };
-
         fetchUserSession();
 
         // Listen for supabase auth state changes
@@ -25,7 +24,7 @@ export const SessionInfoProvider = ({ children }) => {
         }
     }, []);
 
-    return <SessionInfoContext.Provider value={{ user, setUser }}>{children}</SessionInfoContext.Provider>
+    return <SessionInfoContext.Provider value={{ user }}>{children}</SessionInfoContext.Provider>
 };
 
 // Custom hook for other components to access session info

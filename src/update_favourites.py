@@ -30,8 +30,8 @@ def delete_favourite(user_id, item_id):
     # handle supabase error here (not with .get)
     return response
 
-# TEST HERE: (last test: successful)
-if __name__ == "__main__":
-    print("Deleting 420's 9999")
-    insert_favourite(420, 9999)
+# TEST HERE: (currently untested using UUID)
+# if __name__ == "__main__":
+#     print("Deleting 0bb06241-e2c9-4155-abe7-e6cd0ddb3a7b's 9999")
+#     insert_favourite("0bb06241-e2c9-4155-abe7-e6cd0ddb3a7b", 9999)
 

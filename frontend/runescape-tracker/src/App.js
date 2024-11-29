@@ -21,7 +21,7 @@ function App() {
 	const url = process.env.NODE_ENV === "development"
     ? "http://127.0.0.1:5000"
     : "https://runescape-tracker.impaas.uk";
-	const currentUserId = 420;
+	const currentUserId = "0bb06241-e2c9-4155-abe7-e6cd0ddb3a7b";
 
 	// Create mapping {item ID: item name}, to be passed around as a prop
 	const idToNameMap = React.useMemo(() => {
