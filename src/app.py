@@ -12,15 +12,10 @@ app = Flask(__name__, static_folder='../frontend/runescape-tracker/build', stati
 CORS(app)
 
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-@app.errorhandler(404)
-def catch_all(path):
-    return send_from_directory(app.static_folder, "index.html")
 
-# @app.route("/")
-# def serve_react():
-#     return send_from_directory(app.static_folder, "index.html")
+@app.route("/")
+def serve_react():
+    return send_from_directory(app.static_folder, "index.html")
 
 # Serve static files (e.g., JavaScript, CSS)
 @app.route('/static/<path:path>')
@@ -47,11 +42,6 @@ def get_favourites():
     item_ids = [item['item_id'] for item in item_data]
     return jsonify(item_ids)
 
-# Catch-all route for React Router, hopefully enables refreshing and so on
-@app.route('/<path:path>')
-def catch_all(path):
-    # Serve React's index.html for any unknown route
-    return send_from_directory(app.static_folder, "index.html")
 
 # Add a row to DB containing a user_id and a new favourite item_id
 @app.route('/api/favourites', methods=['POST'])
