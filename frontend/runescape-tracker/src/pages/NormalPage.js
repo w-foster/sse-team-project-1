@@ -4,8 +4,8 @@ import { useSessionInfo } from '../SessionInfoContext';
 
 
 export default function NormalPage({ itemList, favourites, removeFavourite }) {
-    const currentUserId = useSessionInfo();
-    console.log("Current User:", JSON.stringify(currentUserId.user, null, 2));
+    const { userId } = useSessionInfo();
+    console.log("Current User:", JSON.stringify(userId, null, 2));
 
     return (
         <>
