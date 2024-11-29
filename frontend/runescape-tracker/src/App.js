@@ -8,6 +8,7 @@ import AboutPage from './pages/AboutPage';
 import NormalPage from './pages/NormalPage';
 import PerItemPage from './pages/PerItemPage';
 import AllItemsPage from './pages/AllItemsPage';
+import Notfound from './pages/404';
 // IMPORT ITEM LIST ONCE, PASSED DOWN AS PROP
 import { itemList } from './ItemList';
 
@@ -135,7 +136,7 @@ function App() {
 						}
 					/>
 				</Route>
-				
+				<Route path="*" element={<Notfound />} />
 			</Routes>
 		</div>
 	);
