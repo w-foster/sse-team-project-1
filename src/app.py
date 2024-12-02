@@ -114,9 +114,6 @@ def item_description(item_id):
 
     return jsonify({"description": description})
 
-if __name__ == "__main__":
-    app.run(debug=True)
-
 
 @app.route('/api/itemview', methods=['POST'])
 def item_view():
@@ -148,7 +145,11 @@ def popular_items():
     return jsonify(response)
 
 
+# Catch-all route to serve the React app
+@app.route('/<path:path>')
+def catch_all(path):
+    return send_from_directory(app.static_folder, "index.html")
 
-        
 
-
+if __name__ == "__main__":
+    app.run(debug=True)

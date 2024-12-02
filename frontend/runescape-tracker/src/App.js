@@ -126,9 +126,9 @@ function MainApp() {
 
 			<Routes>
 				{/* PAGES WITHOUT HEADER or TITLE BAR */}
-				<Route path="*" element={<Notfound />} /> {/* Fallback for undefined routes */}
 				<Route path="/signin" element={<SignInPage />} />
 				<Route path="/signup" element={<NewUserPage />} />
+
 				{/* PAGES WITH HEADER -- NESTED ROUTES */}
 				<Route path='/' element={
 						<PageWithHeader 
@@ -181,6 +181,9 @@ function MainApp() {
 						/>
 					</Route>
 				</Route>
+				
+				{/* Fallback for undefined routes */}
+				<Route path="*" element={<Notfound />} />
 			</Routes>
 		</div>
 		
