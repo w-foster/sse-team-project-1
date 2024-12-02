@@ -24,6 +24,7 @@ __pycache__/
 
 # React
 /node_modules
+node_modules/
 
 # Distribution / packaging
 .Python
