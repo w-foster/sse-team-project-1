@@ -16,9 +16,11 @@ CORS(app)
 
 
 
-@app.route("/")
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
 def serve_react():
     return send_from_directory(app.static_folder, "index.html")
+
 
 # Serve static files (e.g., JavaScript, CSS)
 @app.route('/static/<path:path>')
@@ -61,6 +63,7 @@ def add_favourite():
 
     return jsonify({'message': 'Favourite added to DB successfully'}), 201
 
+
 # Remove a row from DB, according to user_id and item_id specified
 @app.route('/api/favourites/<int:item_id>', methods=['DELETE'])
 def remove_favourite(item_id):
@@ -73,10 +76,12 @@ def remove_favourite(item_id):
 
     return jsonify({'message': 'Favourite removed from DB successfully'}), 201
 
+
 # Add the /items endpoint using the get_api_data function from get_item_data.py
 @app.route('/api/items', methods=['GET'])
 def items():
     return jsonify(get_api_data_items())
+
 
 # Route to handle incoming price data requests from React
 @app.route('/api/price', methods=['GET'])
@@ -95,6 +100,7 @@ def get_price_data():
         return jsonify({"error": "Unable to fetch price data for the given item"}), 500
     
     return jsonify(all_price_data)
+
 
 @app.route('/api/hotitems', methods=['GET'])
 def hotitems():
@@ -135,6 +141,7 @@ def item_view():
 
     return jsonify({'message': 'successfully processed item view'}), 200
 
+
 @app.route('/api/popular-items', methods=['GET'])
 def popular_items():
     num_of_items = request.args.get('num_of_items')
@@ -143,13 +150,6 @@ def popular_items():
     
     response = get_most_viewed_items(num_of_items)
     return jsonify(response)
-
-
-# Catch-all route to serve the React app
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def catch_all(path):
-    return send_from_directory(app.static_folder, "index.html")
 
 
 if __name__ == "__main__":
