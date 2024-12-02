@@ -1,5 +1,5 @@
 /* CSS Styling */
-.debug-main-content {
+.debug-graph-content {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -12,14 +12,14 @@
 }
 
 /* Title Styling */
-.debug-main-content h1 {
+.debug-graph-content h1 {
     font-size: 1rem;
     color: #333;
     margin-bottom: 20px;
 }
 
 /* Loading Message Styling */
-.debug-main-content p {
+.debug-graph-content p {
     font-size: 1.2rem;
     color: #666;
 }
