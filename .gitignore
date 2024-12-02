@@ -16,8 +16,11 @@ __pycache__/
 # C extensions
 *.so
 
-# VS Code
-.DS_store
+# MacOS system files
+.DS_Store
+
+# VS Code folders
+.vscode/
 
 # Distribution / packaging
 .Python
