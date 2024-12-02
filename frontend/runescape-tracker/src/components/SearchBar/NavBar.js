@@ -17,6 +17,7 @@ export default function NavBar({ className }) {
   const navItems = [
     { label: 'Dashboard', path: '/items' },
     { label: 'About', path: '/about' },
+    { label: 'POPULAR', path: '/items/popular' },
     { label: 'Curious?', path: `/items/${randomItemId}` },
   ]
 

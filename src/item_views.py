@@ -9,10 +9,13 @@ def user_already_viewed_item(user_id, item_id):
             .eq('item_id', item_id)
             .execute()
         )
+        print(f"ITEM ALREADY VIEWED RESPONSE: {response}")
         # If row exists, response.data will not be empty / null
         if response.data:
+            print('RETURNING TRUE FROM ITEM ALR VIEW')
             return True
         else:
+            print('RETURNIN FALSE FROM ITEM ALR VIEW')
             return False
     except Exception as e:
         print(f'error checking row existence: {e}')
@@ -30,44 +33,19 @@ def insert_item_view(user_id, item_id, timestamp):
 
     response = (
         supabase.table('item_views')
-        .insert(new_row)
+        .upsert(new_row)
         .execute()
     )
 
     if response:
-        increment_item_total_views(item_id)
         return True
     
     return False
 
 
-def increment_item_total_views(item_id):
-    try:
-        response = (
-            supabase.table('item_total_views')
-            .select('view_count')
-            .eq('item_id', item_id)
-        )
+def get_most_viewed_items(num_of_items):
+    response = supabase.rpc('get_most_viewed_items', {'num_of_items': num_of_items}).execute()
+    print(f"TOTAL VIEWS RESPONSE: {response}") 
+    return response.data
 
-        if response:
-            current_view_count = response.data[0]['view_count']
-            update_response = (
-                supabase.table('item_total_views')
-                .update({'view_count': current_view_count + 1})
-                .eq('item_id', item_id)
-                .execute()
-            )
-            return True
-        
-        new_row = {
-            'item_id': item_id,
-            'view_count': 0
-        }
-        insert_response = (
-            supabase.table('item_total_views')
-            .insert(new_row)
-            .execute()
-        )
-        return True
-    except Exception as e:
-        print(f'error updating total views table: {e}')
+    

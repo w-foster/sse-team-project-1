@@ -11,11 +11,13 @@ import NewUserPage from './pages/NewUserPage';
 import NormalPage from './pages/NormalPage';
 import PerItemPage from './pages/PerItemPage';
 import AllItemsPage from './pages/AllItemsPage';
+import ItemViewsPage from "./pages/ItemViewsPage";
 import Notfound from './pages/404';
 // IMPORT ITEM LIST ONCE, PASSED DOWN AS PROP
 import { itemList } from './ItemList';
 import { SessionInfoProvider } from "./SessionInfoContext";
 import { useSessionInfo } from "./SessionInfoContext";
+
 
 function App() {
 	return (
@@ -154,6 +156,14 @@ function MainApp() {
 							element={
 								<PerItemPage 
 									itemList={itemList}
+									idToNameMap={idToNameMap}
+								/>
+							}
+						/>
+						<Route
+							path="popular"
+							element={
+								<ItemViewsPage
 									idToNameMap={idToNameMap}
 								/>
 							}

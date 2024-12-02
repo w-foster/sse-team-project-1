@@ -7,7 +7,7 @@ from get_hot_items import get_api_hot_items
 from update_favourites import insert_favourite, delete_favourite
 from get_price_data import get_graph_data
 from get_item_text import get_item_description
-from item_views import user_already_viewed_item, insert_item_view
+from item_views import user_already_viewed_item, insert_item_view, get_most_viewed_items
 from datetime import datetime
 
 
@@ -135,7 +135,18 @@ def item_view():
     # If not, insert a row in item_views, which will also increment total views
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     insert_item_view(user_id, item_id, current_time)
+
     return jsonify({'message': 'successfully processed item view'}), 200
+
+@app.route('/api/popular-items', methods=['GET'])
+def popular_items():
+    num_of_items = request.args.get('num_of_items')
+    if not num_of_items:
+        return jsonify({'error': 'num_of_items is reqiured'}), 400
+    
+    response = get_most_viewed_items(num_of_items)
+    return jsonify(response)
+
 
 
         
