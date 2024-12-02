@@ -41,10 +41,10 @@ export default function HotItemGrid({}) {
         sortable: false,
         filterable: false,
       },
-      { field: "id", headerName: "ID", width: 40 }, // Smaller width for compact layout
+      { field: "id", headerName: "ID", width: 60 }, // Smaller width for compact layout
       { field: "name", headerName: "Name", width: 100 }, // Adjusted width
-      { field: "avg_price", headerName: "Price", width: 50 }, // Narrow column
-      { field: "avg_vol", headerName: "Vol", width: 50 }, // Narrow column
+      { field: "avg_price", headerName: "Price", width: 70 }, // Narrow column
+      { field: "avg_vol", headerName: "Vol", width: 100 }, // Narrow column
     ];
   
 
@@ -62,16 +62,7 @@ export default function HotItemGrid({}) {
             rows={rows}
             columns={columns}
             density="compact" // Compact layout
-            sx={{
-              fontSize: "0.75rem", // Smaller font size for a compact look
-              "& .MuiDataGrid-columnHeaders": {
-                fontSize: "0.8rem", // Smaller column header font size
-                padding: "4px", // Less padding for column headers
-              },
-              "& .MuiDataGrid-cell": {
-                padding: "4px", // Less padding for cells
-              },
-            }}
+
             getRowClassName={(params) =>
               params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
             }
