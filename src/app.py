@@ -11,7 +11,7 @@ from item_views import user_already_viewed_item, insert_item_view, get_most_view
 from datetime import datetime
 
 
-app = Flask(__name__, static_folder='../frontend/runescape-tracker/build', static_url_path='')  # Update the static folder path
+app = Flask(__name__, static_folder='../frontend/build', static_url_path='')  # Update the static folder path
 CORS(app)
 
 
