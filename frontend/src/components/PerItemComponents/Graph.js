@@ -139,6 +139,26 @@ export default function Graph({ itemList, itemId }) {
   }
 
   const seriesData = priceData[interval]; // Select series data for the chosen interval
+
+  // Check if the necessary price data exists before rendering the line chart
+  if (!seriesData || !seriesData.avgHighPrice || !seriesData.avgLowPrice) {
+    return (
+      <div>
+        <h3>No Price Data Available</h3>
+        <BarChart
+          xAxis={[{ data: generateTimeSeries(seriesData.time_series.length, interval), label: 'Time', scaleType: 'band' }]}
+          yAxis={[{ label: 'Volume' }]}
+          series={[
+            { data: seriesData?.highPriceVolume || [], label: 'High Volume', stack: 'total', color: '#ff7043' },
+            { data: seriesData?.lowPriceVolume || [], label: 'Low Volume', stack: 'total', color: '#ffb74d' }
+          ]}
+          width={window.innerWidth * 0.75}
+          height={window.innerHeight * 0.65}
+        />
+      </div>
+    );
+  }
+
   const xAxisData = generateTimeSeries(seriesData.time_series.length, interval);
 
   const handleAlignment = (event, newAlignment) => {
