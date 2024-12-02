@@ -22,6 +22,9 @@ __pycache__/
 # VS Code folders
 .vscode/
 
+# React
+/node_modules
+
 # Distribution / packaging
 .Python
 develop-eggs/
