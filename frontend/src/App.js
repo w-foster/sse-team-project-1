@@ -173,6 +173,9 @@ function MainApp() {
 							path="alchemy"
 							element={
 								<AlchemyPage
+									favourites={favourites}
+									addFavourite={addFavourite}
+									removeFavourite={removeFavourite}  
 									idToNameMap={idToNameMap}
 								/>
 							}

@@ -1,52 +1,108 @@
-import * as React from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid';
-import Paper from '@mui/material/Paper';
+import { IconButton } from '@mui/material';
+import StarIcon from '@mui/icons-material/Star';
+import StarOutlineIcon from '@mui/icons-material/StarOutline';
 
-const columns = [
-  { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'firstName', headerName: 'First name', width: 130 },
-  { field: 'lastName', headerName: 'Last name', width: 130 },
-  {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
-    width: 90,
-  },
-  {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    width: 160,
-    valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
-  },
-];
+export default function AlchemyTable({ favourites, addFavourite, removeFavourite }) {
+  const navigate = useNavigate(); // initialise navigate func
+  const [rows, setRows] = useState([]);
 
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
+  useEffect(() => {
+    const url = process.env.NODE_ENV === "development"
+      ? "http://127.0.0.1:5000"
+      : "https://runescape-tracker.impaas.uk";
+    fetch(`${url}/api/items`, { method: 'GET' })
+      .then((response) => response.json())
+      .then((fetchedData) => {
+        setRows(fetchedData); // Update the state with fetched data
+      })
+      .catch((error) => console.error('Error fetching data:', error));
+  }, []);
 
-const paginationModel = { page: 0, pageSize: 5 };
+  useEffect(() => {
+    setRows((prevRows) => {
+      const favouriteSet = new Set(favourites.map((id) => Number(id)));
+      return prevRows.map((row) => ({
+        ...row,
+        favorite: favouriteSet.has(Number(row.id)),
+      }));
+    });
+  }, [favourites]);
 
-export default function AlchemyTable() {
+  const handleToggleFavorite = async (id, isFavorite) => {
+    try {
+      if (isFavorite) {
+        await removeFavourite(id);
+      } else {
+        await addFavourite(id);
+      }
+    } catch (error) {
+      console.error('Error toggling favourite', error);
+    }
+  };
+
+  const columns = [
+    {
+      field: 'favorite',
+      headerName: 'Favorite',
+      width: 100,
+      renderCell: (params) => {
+        const isFavorite = params.row.favorite;
+        return (
+          <IconButton onClick={(event) => {
+              event.stopPropagation();
+              handleToggleFavorite(params.row.id, isFavorite);
+            }} 
+            color="primary"
+          >
+            {isFavorite ? <StarIcon /> : <StarOutlineIcon />}
+          </IconButton>
+        );
+      },
+      sortable: false,
+      filterable: false,
+    },
+    {
+      field: 'icon',
+      headerName: 'Icon',
+      width: 100,
+      renderCell: (params) => (
+        
+        <img src={params.row.icon} alt={params.row.name} style={{ width: 30, height: 30, objectFit: 'contain' }} />
+ 
+      ),
+      sortable: false,
+      filterable: false,
+    },
+    { field: 'id', headerName: 'Item ID', width: 100 },
+    { field: 'name', headerName: 'Name', width: 200 },
+    { field: 'high', headerName: 'High', width: 150 },
+    { field: 'low', headerName: 'Low', width: 150 },
+    { field: 'margin_percentage', headerName: 'Margin Percentage', width: 150 },
+  ];
+
+
+  // Handler for clicking on a row and being redirected
+  const handleRowClick = (params) => {
+    const itemId = params.row.id;
+    navigate(`/items/${itemId}`);
+  };
+
   return (
-    <Paper sx={{ height: 400, width: '100%' }}>
+    <div style={{ width: '100%', height: 400 }}> {/* Set fixed height for grid container */}
+      {/* Data Grid with pagination and no autoHeight */}
       <DataGrid
         rows={rows}
         columns={columns}
-        initialState={{ pagination: { paginationModel } }}
-        pageSizeOptions={[5, 10]}
-        checkboxSelection
-        sx={{ border: 0 }}
+        pageSize={5}  // Set to show 5 rows per page
+        pageSizeOptions={[5, 10, 20]}  // Allow the user to choose between 5, 10, or 20 items per page
+        pagination
+        density="compact"
+        getRowClassName={(params) => params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'}
+        onRowClick={handleRowClick}
       />
-    </Paper>
+    </div>
   );
 }
