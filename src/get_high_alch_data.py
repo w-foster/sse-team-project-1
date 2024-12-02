@@ -1,25 +1,32 @@
 from db_client import supabase
 
-
 def get_high_alch_data():
     try:
-        # Query Supabase for the description
-        response = (
-            supabase.table("mapping_data")  # Replace with your table name
-            .select("id", "highalch")              # Replace with your column name
-            .execute()
-        )
+        data = []
+        limit = 1000  # Supabase's default limit
+        offset = 0
 
-        # Print raw response for debugging
-        print(f"Supabase Response: {response.data}")
+        while True:
+            # Query Supabase for a range of rows
+            response = (
+                supabase.table("mapping_data")
+                .select("id, highalch")
+                .range(offset, offset + limit - 1)  # Fetch rows in chunks of 1000
+                .execute()
+            )
 
-        # Handle no data found
-        if not response.data or len(response.data) == 0:
-            print(f"No data found for high alching")
-            return None
+            # Append fetched rows to data
+            if response.data:
+                data.extend(response.data)
+            else:
+                break  # No more rows to fetch
 
-        # Return the description
-        return response.data
+            # Increment offset for the next batch
+            offset += limit
+
+        print(f"HIGH ALCH DATA: {data}")
+        print(f"LENGTH OF ALCH DATA: {len(data)}")
+        return data
 
     except Exception as e:
         print(f"An error occurred: {e}")

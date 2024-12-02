@@ -10,16 +10,46 @@ export default function AlchemyTable({ favourites, addFavourite, removeFavourite
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    const url = process.env.NODE_ENV === "development"
+    const fetchData = async () => {
+      const url = process.env.NODE_ENV === "development"
       ? "http://127.0.0.1:5000"
       : "https://runescape-tracker.impaas.uk";
-    fetch(`${url}/api/high-alch`, { method: 'GET' })
-      .then((response) => response.json())
-      .then((fetchedData) => {
-        setRows(fetchedData); // Update the state with fetched data
-      })
-      .catch((error) => console.error('Error fetching data:', error));
+
+      const priceData = await fetch(`${url}/api/items`, { method: 'GET' })
+        .then((response) => response.json())
+        .catch((error) => console.error('Error fetching price data:', error));
+
+      const highAlchData = await fetch(`${url}/api/high-alch`, { method: 'GET' })
+        .then((response) => response.json())
+        .catch((error) => console.error('Error fetching high alch data:', error));
+
+      // // Standardize IDs to numbers
+      // const standardizedPriceData = priceData.map((item) => ({
+      //   ...item,
+      //   id: Number(item.id), // Ensure ID is a number
+      // }));
+
+      // const standardizedHighAlchData = highAlchData.map((item) => ({
+      //   ...item,
+      //   id: Number(item.id), // Ensure ID is a number
+      // }));
+
+      // Merge data
+      const merged = priceData.map(item => {
+        const matchingItem = highAlchData.find(obj => Number(obj.id) === Number(item.id));
+        return { ...item, ...(matchingItem || {}) }; // Merge attributes
+      });
+
+      // console.log(standardizedPriceData);
+      // console.log(standardizedHighAlchData);
+      const merged_data = merged;
+      //console.log(merged_data);
+      setRows(merged);
+    };
+    
+    fetchData();
   }, []);
+
 
   useEffect(() => {
     setRows((prevRows) => {
@@ -78,11 +108,12 @@ export default function AlchemyTable({ favourites, addFavourite, removeFavourite
     },
     
     { field: 'name', headerName: 'Name', width: 200 },
-    { field: 'high_alch', headerName: 'High Alch', width: 150 },
+    { field: 'highalch', headerName: 'High Alch', width: 150 },
     { field: 'high', headerName: 'High Price', width: 150 },
     { field: 'high_margin', headerName: 'High Margin', width: 150 },
     { field: 'low', headerName: 'Low Price', width: 150 },
     { field: 'low_margin', headerName: 'Low Margin', width: 150 },
+
   ];
 
 
