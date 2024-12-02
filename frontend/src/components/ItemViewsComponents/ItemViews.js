@@ -42,38 +42,40 @@ export default function ItemViews({ idToNameMap }) {
     };
 
     return (
-        <div className="debug-main-content">
-            <h1>Most Popular Items (All Time)</h1>
-            {chartData.length > 0 ? (
-                <BarChart
-                    dataset={chartData}
-                    yAxis={[
-                        {
-                            scaleType: 'band',
-                            dataKey: 'itemName',
-                            paddingOuter: 0.5, // Add outer padding
-                            paddingInner: 0.5, // Space between bars
-                            tickSize: 10, // Adjust the tick size if needed
-                            tickLabelStyle: {
-                                textAnchor: 'end', // Align text properly
-                                fontSize: 12, // Adjust font size
+        <div className='debug-main-content'>
+            <div className="debug-graph-content">
+                <h1>Most Popular Items (All Time)</h1>
+                {chartData.length > 0 ? (
+                    <BarChart
+                        dataset={chartData}
+                        yAxis={[
+                            {
+                                scaleType: 'band',
+                                dataKey: 'itemName',
+                                paddingOuter: 0.5, // Add outer padding
+                                paddingInner: 0.5, // Space between bars
+                                tickSize: 10, // Adjust the tick size if needed
+                                tickLabelStyle: {
+                                    textAnchor: 'end', // Align text properly
+                                    fontSize: 12, // Adjust font size
+                                },
+                                labelFormatter: (value) => value, // Ensure full text is rendered
                             },
-                            labelFormatter: (value) => value, // Ensure full text is rendered
-                        },
-                    ]}
-                    series={[
-                        {
-                            dataKey: 'totalViews',
-                            label: 'Total Views',
-                            tooltip: ({ dataPoint }) => `${dataPoint.itemName}`, // Tooltip shows name
-                        },
-                    ]}
-                    layout="horizontal" // Horizontal bar layout
-                    {...chartSetting}
-                />
-            ) : (
-                <p>Loading popular items...</p>
-            )}
+                        ]}
+                        series={[
+                            {
+                                dataKey: 'totalViews',
+                                label: 'Total Views',
+                                tooltip: ({ dataPoint }) => `${dataPoint.itemName}`, // Tooltip shows name
+                            },
+                        ]}
+                        layout="horizontal" // Horizontal bar layout
+                        {...chartSetting}
+                    />
+                ) : (
+                    <p>Loading popular items...</p>
+                )}
+            </div>
         </div>
     );
     
