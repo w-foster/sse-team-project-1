@@ -15,7 +15,6 @@ app = Flask(__name__, static_folder='../frontend/build', static_url_path='')  # 
 CORS(app)
 
 
-
 @app.route("/")
 def serve_react():
     return send_from_directory(app.static_folder, "index.html")
@@ -150,6 +149,11 @@ def popular_items():
     response = get_most_viewed_items(num_of_items)
     return jsonify(response)
 
+
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
+def serve_react():
+    return send_from_directory(app.static_folder, "index.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
