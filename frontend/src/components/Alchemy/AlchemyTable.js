@@ -37,7 +37,13 @@ export default function AlchemyTable({ favourites, addFavourite, removeFavourite
       // Merge data
       const merged = priceData.map(item => {
         const matchingItem = highAlchData.find(obj => Number(obj.id) === Number(item.id));
-        return { ...item, ...(matchingItem || {}) }; // Merge attributes
+        const highalch = matchingItem?.highalch;
+        const high = item.high;
+        const low = item.low;
+        const high_margin = highalch - high
+        const low_margin = highalch - low
+
+        return { ...item, ...(matchingItem || {}) , high_margin, low_margin }; // Merge attributes
       });
 
       // console.log(standardizedPriceData);
