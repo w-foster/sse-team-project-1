@@ -17,7 +17,6 @@ CORS(app)
 
 
 @app.route("/", defaults={"path": ""})
-@app.route("/<path:path>")
 def serve_react():
     return send_from_directory(app.static_folder, "index.html")
 
