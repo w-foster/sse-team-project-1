@@ -11,9 +11,10 @@ export default function AlchemyTable({ favourites, addFavourite, removeFavourite
 
   useEffect(() => {
     const fetchData = async () => {
-      const url = process.env.NODE_ENV === "development"
+      const url = window.location.protocol === "http:"
       ? "http://127.0.0.1:5000"
       : "https://runescape-tracker.impaas.uk";
+    
 
       const priceData = await fetch(`${url}/api/items`, { method: 'GET' })
         .then((response) => response.json())
