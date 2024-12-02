@@ -103,8 +103,9 @@ def get_price_data():
 
 
 @app.route('/api/getRandomId', methods=['GET'])
-def get_random_id():
-    return jsonify(get_random_id())
+def get_random_item():
+    item = get_random_id()
+    return jsonify(item)
 
 
 @app.route('/api/hotitems', methods=['GET'])
