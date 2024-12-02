@@ -19,8 +19,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Impaas Deploy
+      - name: ImPaas-Deploy
         uses: /impaas/impaas-deploy@v3
         with:
           app-name: runescape-tracker
           deployment-token: ${{ secrets.IMPAAS_DEPLOY_TOKEN }}
+          method: PLATFORM
