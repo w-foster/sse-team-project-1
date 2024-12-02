@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Build
 on: [push]
 
 jobs:
@@ -7,78 +7,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: 3.12
 
-      - name: Install Python Dependencies
-        run: pip install -r requirements.txt
-
-  build-react:
+  deploy-to-impaas:
     needs: python-formatting
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-
-      - name: Clean NPM Cache
-        run: npm cache clean --force
-
-      - name: Remove Node Modules
-        run: rm -rf frontend/node_modules
-
-      - name: Install Node Dependencies
-        run: |
-          cd frontend
-          npm install
-
-      - name: Debug Node Modules
-        run: |
-          cd frontend
-          ls -R node_modules/cross-spawn || echo "cross-spawn module is missing"
-
-      - name: Build React App
-        run: |
-          cd frontend
-          npm run build
-
-      - name: Upload React Build
-        uses: actions/upload-artifact@v3
-        with:
-          name: react-build
-          path: frontend/build
-
-  deploy-to-impaas:
-    needs: [python-formatting, build-react]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.12
-
-      - name: Install Python Dependencies
-        run: pip install -r requirements.txt
-
-      - name: Download React Build
-        uses: actions/download-artifact@v3
-        with:
-          name: react-build
-          path: frontend/build
-
-      - name: Deploy to ImPaaS
+      - name: Impaas Deploy
         uses: /impaas/impaas-deploy@v3
         with:
           app-name: runescape-tracker
           deployment-token: ${{ secrets.IMPAAS_DEPLOY_TOKEN }}
-          method: PLATFORM
