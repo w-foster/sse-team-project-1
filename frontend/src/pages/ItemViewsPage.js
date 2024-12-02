@@ -1,47 +1,16 @@
-import { useState, useEffect } from 'react';
+import ItemViews from "../components/ItemViewsComponents/ItemViews.js";
 
 export default function ItemViewsPage({ idToNameMap }) {
-    const url = process.env.NODE_ENV === "development"
-    ? "http://127.0.0.1:5000"
-    : "https://runescape-tracker.impaas.uk";
-
-    const [popularItems, setPopularItems] = useState([]);
-    console.log(idToNameMap);
-	// Func to fetch most viewed items
-	async function fetchItemViews(num_of_items) {
-		try {
-			const response = await fetch(`${url}/api/popular-items?num_of_items=${num_of_items}`, {
-				method: 'GET'
-			});
-			const data = await response.json();
-            console.log(data);
-			setPopularItems(data);  // assumes response is array of item_ids
-		}
-		catch (error) {
-			console.error("Error fetching popular items:", error);
-		}
-	}
-
-    useEffect(() => {
-        fetchItemViews(5);
-    }, []);
-
-    return (
-        <div className="debug-main-content">
-            <h1>Most Popular Items (All Time)</h1>
-            {popularItems.length > 0 ? (
-                <ul>
-                    {popularItems.map((itemInfo, index) => (
-                        <li key={itemInfo.item_id} style={{ listStyleType: 'none' }}>
-                            <h2>
-                                {index + 1}.  {idToNameMap.get(Number(itemInfo.item_id)) || "Unknown Item"} - {itemInfo.total_views} view{itemInfo.total_views > 1 ? 's' : ''}
-                            </h2>
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>Loading popular items...</p>
-            )}
-        </div>
-    );
+  return (
+    <div
+      className="debug-main-content"
+      style={{
+        outline: "2px solid red", // Add an outline to visually debug the container
+        margin: "10px", // Add margin for clarity
+        padding: "10px", // Ensure padding inside the container
+      }}
+    >
+      <ItemViews idToNameMap={idToNameMap} />
+    </div>
+  );
 }
