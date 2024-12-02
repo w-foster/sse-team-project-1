@@ -17,6 +17,7 @@ import Notfound from './pages/404';
 import { itemList } from './ItemList';
 import { SessionInfoProvider } from "./SessionInfoContext";
 import { useSessionInfo } from "./SessionInfoContext";
+import AlchemyPage from "./pages/AlchemyPage";
 
 
 function App() {
@@ -164,6 +165,14 @@ function MainApp() {
 							path="popular"
 							element={
 								<ItemViewsPage
+									idToNameMap={idToNameMap}
+								/>
+							}
+						/>
+						<Route
+							path="alchemy"
+							element={
+								<AlchemyPage
 									idToNameMap={idToNameMap}
 								/>
 							}
