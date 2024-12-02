@@ -1,0 +1,10 @@
+/* Inject Tailwind's base styles */
+@tailwind base;
+
+/* Inject Tailwind's component styles */
+@tailwind components;
+
+/* Inject Tailwind's utility styles */
+@tailwind utilities;
+
+/* Add any custom CSS below if needed */

@@ -43,7 +43,6 @@ export default function ItemViews({ idToNameMap }) {
 
     return (
         <div className='debug-main-content'>
-            <div className="debug-graph-content">
                 <h1>Most Popular Items (All Time)</h1>
                 {chartData.length > 0 ? (
                     <BarChart
@@ -71,11 +70,12 @@ export default function ItemViews({ idToNameMap }) {
                         ]}
                         layout="horizontal" // Horizontal bar layout
                         {...chartSetting}
+                        width={window.innerWidth * 0.35}
+                        height={window.innerHeight * 0.65}
                     />
                 ) : (
                     <p>Loading popular items...</p>
                 )}
-            </div>
         </div>
     );
     
