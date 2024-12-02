@@ -9,6 +9,7 @@ from get_price_data import get_graph_data
 from get_item_text import get_item_description
 from item_views import user_already_viewed_item, insert_item_view, get_most_viewed_items
 from get_high_alch_data import get_high_alch_data
+from get_random_id import get_random_id
 from datetime import datetime
 
 
@@ -99,6 +100,11 @@ def get_price_data():
         return jsonify({"error": "Unable to fetch price data for the given item"}), 500
     
     return jsonify(all_price_data)
+
+
+@app.route('/api/getRandomId', methods=['GET'])
+def get_random_id():
+    return jsonify(get_random_id())
 
 
 @app.route('/api/hotitems', methods=['GET'])
