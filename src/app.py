@@ -113,7 +113,7 @@ def hotitems():
     return jsonify(get_api_hot_items())
 
 
-@app.route('/api/high-alch/', methods=['GET'])
+@app.route('/api/high-alch', methods=['GET'])
 def high_alch():
     return jsonify(get_high_alch_data())
 
