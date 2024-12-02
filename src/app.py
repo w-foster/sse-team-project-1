@@ -1,5 +1,6 @@
 from flask import Flask, render_template, send_from_directory, request, jsonify
 from flask_cors import CORS
+import os
 from db_client import supabase
 from get_favourites_data import get_favourites_data
 from get_most_favourited import get_most_favourited
@@ -18,15 +19,21 @@ app = Flask(__name__, static_folder='../frontend/build', static_url_path='')  # 
 CORS(app)
 
 
-@app.route("/")
-def serve_react():
-    return send_from_directory(app.static_folder, "index.html")
+@app.route("/", defaults={'path': ''})
+@app.route('/<path:path>')
+def serve_react(path):
+    # If the request matches a file in the static folder, serve it
+    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+        return send_from_directory(app.static_folder, path)
+    else:
+        # Otherwise, serve index.html (the React app)
+        return send_from_directory(app.static_folder, 'index.html')
 
 
 # Serve static files (e.g., JavaScript, CSS)
-@app.route('/static/<path:path>')
-def serve_static(path):
-    return send_from_directory(f"{app.static_folder}/static", path)
+@app.route('/static/<path:filename>')
+def serve_static(filename):
+    return send_from_directory(os.path.join(app.static_folder, 'static'), filename)
 
 
 # Get favourite item data for the logged in user
