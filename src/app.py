@@ -8,6 +8,7 @@ from update_favourites import insert_favourite, delete_favourite
 from get_price_data import get_graph_data
 from get_item_text import get_item_description
 from item_views import user_already_viewed_item, insert_item_view, get_most_viewed_items
+from get_high_alch_data import get_high_alch_data
 from datetime import datetime
 
 
@@ -105,6 +106,10 @@ def hotitems():
     return jsonify(get_api_hot_items())
 
 
+@app.route('/api/high-alch/', methods=['GET'])
+def high_alch(item_id):
+    return jsonify(get_high_alch_data())
+
 # Route to handle item description
 @app.route('/api/item-description/<int:item_id>', methods=['GET'])
 def item_description(item_id):
@@ -117,6 +122,7 @@ def item_description(item_id):
         return jsonify({"error": "Description not found for the given item"}), 404
 
     return jsonify({"description": description})
+
 
 
 @app.route('/api/itemview', methods=['POST'])

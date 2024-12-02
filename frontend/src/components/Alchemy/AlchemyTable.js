@@ -76,11 +76,13 @@ export default function AlchemyTable({ favourites, addFavourite, removeFavourite
       sortable: false,
       filterable: false,
     },
-    { field: 'id', headerName: 'Item ID', width: 100 },
+    
     { field: 'name', headerName: 'Name', width: 200 },
-    { field: 'high', headerName: 'High', width: 150 },
-    { field: 'low', headerName: 'Low', width: 150 },
-    { field: 'margin_percentage', headerName: 'Margin Percentage', width: 150 },
+    { field: 'high_alch', headerName: 'High Alch', width: 150 },
+    { field: 'high', headerName: 'High Price', width: 150 },
+    { field: 'high_margin', headerName: 'High Margin', width: 150 },
+    { field: 'low', headerName: 'Low Price', width: 150 },
+    { field: 'low_margin', headerName: 'Low Margin', width: 150 },
   ];
 
 
