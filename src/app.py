@@ -1,12 +1,15 @@
 from flask import Flask, render_template, send_from_directory, request, jsonify
+from flask_cors import CORS
 from db_client import supabase
 from get_favourites_data import get_favourites_data
 from get_item_data import get_api_data_items
 from get_hot_items import get_api_hot_items
 from update_favourites import insert_favourite, delete_favourite
-from flask_cors import CORS
 from get_price_data import get_graph_data
 from get_item_text import get_item_description
+from item_views import user_already_viewed_item, insert_item_view
+from datetime import datetime
+
 
 app = Flask(__name__, static_folder='../frontend/runescape-tracker/build', static_url_path='')  # Update the static folder path
 CORS(app)
@@ -113,5 +116,28 @@ def item_description(item_id):
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+@app.route('/api/itemview', methods=['POST'])
+def item_view():
+    data = request.json
+    
+    if not data or 'user_id' not in data or 'item_id' not in data:
+        return jsonify({'error': 'user_id and item_id are required'}), 400
+    
+    user_id = data['user_id']
+    item_id = data['item_id']
+
+    # Check if the user has already viewed the item
+    if (user_already_viewed_item(user_id, item_id)):
+        return jsonify({'message': 'user already viewed item'}), 200
+    
+    # If not, insert a row in item_views, which will also increment total views
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    insert_item_view(user_id, item_id, current_time)
+    return jsonify({'message': 'successfully processed item view'}), 200
+
+
+        
 
 
