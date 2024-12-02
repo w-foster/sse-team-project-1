@@ -107,7 +107,7 @@ def hotitems():
 
 
 @app.route('/api/high-alch/', methods=['GET'])
-def high_alch(item_id):
+def high_alch():
     return jsonify(get_high_alch_data())
 
 # Route to handle item description

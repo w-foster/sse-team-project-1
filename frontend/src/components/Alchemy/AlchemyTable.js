@@ -13,7 +13,7 @@ export default function AlchemyTable({ favourites, addFavourite, removeFavourite
     const url = process.env.NODE_ENV === "development"
       ? "http://127.0.0.1:5000"
       : "https://runescape-tracker.impaas.uk";
-    fetch(`${url}/api/items`, { method: 'GET' })
+    fetch(`${url}/api/high-alch`, { method: 'GET' })
       .then((response) => response.json())
       .then((fetchedData) => {
         setRows(fetchedData); // Update the state with fetched data
