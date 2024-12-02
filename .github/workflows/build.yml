@@ -28,10 +28,21 @@ jobs:
         with:
           node-version: 16
 
+      - name: Clean NPM Cache
+        run: npm cache clean --force
+
+      - name: Remove Node Modules
+        run: rm -rf frontend/node_modules
+
       - name: Install Node Dependencies
         run: |
           cd frontend
           npm install
+
+      - name: Debug Node Modules
+        run: |
+          cd frontend
+          ls -R node_modules/cross-spawn || echo "cross-spawn module is missing"
 
       - name: Build React App
         run: |
