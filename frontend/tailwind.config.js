@@ -26,8 +26,12 @@ module.exports = {
           '100%': { transform: 'translateX(-100%)' },
         },
       },
+
+      fontSize: {
+        base: '20px',
+      },
       fontFamily: {
-        sans: ['Roboto', 'Helvetica', 'Arial', 'sans-serif'], // Set your preferred sans-serif fonts
+        sans: ['Trebuchet MS', 'Roboto', 'Arial', 'sans-serif'], // Set your preferred sans-serif fonts
         serif: ['Merriweather', 'serif'], // Set your preferred serif fonts
       },
     },
