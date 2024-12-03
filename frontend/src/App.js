@@ -21,7 +21,9 @@ import ThemeSwitch from './ThemeSwitch'; // Import the ThemeSwitch component
 function App() {
   return (
     <SessionInfoProvider>
-      <MainApp />
+      <div className="font-sans">
+        <MainApp /> 
+      </div>
     </SessionInfoProvider>
   );
 }
@@ -41,6 +43,13 @@ function MainApp() {
   const theme = useMemo(
     () =>
       createTheme({
+        typography: {
+          fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+          fontSize: 16, // Base font size for the app
+          body1: {
+            fontSize: 14, // Body text font size
+          },
+        },
         palette: {
           mode: darkMode ? "dark" : "light",
         },

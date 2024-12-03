@@ -26,6 +26,10 @@ module.exports = {
           '100%': { transform: 'translateX(-100%)' },
         },
       },
+      fontFamily: {
+        sans: ['Roboto', 'Helvetica', 'Arial', 'sans-serif'], // Set your preferred sans-serif fonts
+        serif: ['Merriweather', 'serif'], // Set your preferred serif fonts
+      },
     },
   },
   darkMode: 'class', // Enables dark mode with the `class` strategy
