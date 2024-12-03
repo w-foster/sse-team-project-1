@@ -12,6 +12,7 @@ from get_item_text import get_item_description
 from item_views import user_already_viewed_item, insert_item_view, get_most_viewed_items
 from get_high_alch_data import get_high_alch_data
 from get_random_id import get_random_id
+from get_market_index_data import get_market_index_graph_data
 from datetime import datetime
 
 app = Flask(__name__, static_folder='../frontend/build', static_url_path='')  # Update the static folder path
@@ -100,6 +101,18 @@ def get_price_data():
         return jsonify({"error": "Unable to fetch price data for the given item"}), 500
     
     return jsonify(all_price_data)
+
+
+@app.route('/api/market-index', methods=['GET'])
+def get_market_index_data():
+    time_intervals = ["5m", "1h", "24h"]
+    index_data = [get_market_index_graph_data(interval) for interval in time_intervals]
+
+    if any(d is None for d in index_data):
+        return jsonify({"error": "Unable to fetch market index data"}), 500
+
+    return jsonify(index_data)
+
 
 @app.route('/api/getRandomId', methods=['GET'])
 def get_random_item():
