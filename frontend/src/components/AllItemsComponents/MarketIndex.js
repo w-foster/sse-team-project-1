@@ -132,8 +132,8 @@ export default function MarketIndexChart() {
 
   return (
     <>
-      <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-        <h2>Market Index</h2>
+      <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', padding: '15px', paddingBottom: '0px' }}>
+        <h2>Economy of Gielinor Index (EGI)*</h2>
         <ToggleButtonGroup
           value={interval}
           exclusive
@@ -154,13 +154,13 @@ export default function MarketIndexChart() {
 
       <div>
         <LineChart
-          xAxis={[{ data: xAxisData, scaleType: 'band', label: 'Time' }]}
-          yAxis={[{ label: 'Index Value' }]}
+          xAxis={[{ data: xAxisData, scaleType: 'band', label: '' }]}
+          yAxis={[{ label: '' }]}
           series={[
             { data: seriesData.indexValues, label: 'Market Index', yAxisIndex: 0, line: { color: '#42a5f5' } },
           ]}
-          width={window.innerWidth * 0.75}
-          height={window.innerHeight * 0.65}
+          width={1000}
+          height={400}
         />
       </div>
     </>

@@ -5,27 +5,33 @@ import MarketIndexChart from './MarketIndex';
 export default function Dashboard({ favourites, addFavourite, removeFavourite }) {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '30px', height: '100%' }}
-        class="bg-primaryLightBackground dark:bg-primaryDarkBackground
-        fixed top-[8vh] left-[20vw] w-[calc(100vw-20vw)] h-[calc(100vh-8vh)] border-3 border-solid border-green-500 p-5 box-border overflow-y-auto z-0">
-            <div className="text-slate-900 dark:text-white">
-                <h2>All Items</h2>
-                <div class="bg-primaryLightBackground dark:bg-secondaryDarkBackground">
-                    <ItemGrid
-                        favourites={favourites}
-                        addFavourite={addFavourite}
-                        removeFavourite={removeFavourite} 
-                    />
-                </div>
-                {/* Hot Items List */}
-                <div style={{ marginTop: '20px', marginBottom: '100px'}}>
-                    <h2>Hot Items!</h2>
-                    <div >
-                        <HotItemGrid />
-                    </div>
-                </div>
-                <div className="bg-primaryLightBackground dark:bg-secondaryDarkBackground">
+            className="bg-primaryLightBackground dark:bg-primaryDarkBackground
+            fixed top-[8vh] left-[20vw] w-[calc(100vw-20vw)] h-[calc(100vh-8vh)] p-5 box-border overflow-y-auto z-0
+            text-slate-900 dark:text-white">
+            
+            {/* Top row: Market Index Chart (left) and Hot Items (right) */}
+            <div style={{ display: 'flex', flexDirection: 'row', gap: '20px', marginBottom: '15px' }}>
+                <div style={{ flex: 3 }}
+                    className="bg-primaryLightBackground dark:bg-secondaryDarkBackground border border-neutral-700">
                     <MarketIndexChart />
                 </div>
+
+                <div style={{ flex: 1,
+                             display: 'flex', flexDirection: 'column', gap: '20px', justifyContent: 'space-between', paddingTop: '30px'}}
+                    className="bg-primaryLightBackground dark:bg-secondaryDarkBackground border border-neutral-700">
+                    <h2 style={{ display: 'flex', justifyContent: 'center' }}>Hot Items!</h2>
+                    <HotItemGrid />
+                </div>
+            </div>
+
+            {/* Below the top row: All Items */}
+            <h2>All Items</h2>
+            <div className="bg-primaryLightBackground dark:bg-secondaryDarkBackground">
+                <ItemGrid
+                    favourites={favourites}
+                    addFavourite={addFavourite}
+                    removeFavourite={removeFavourite} 
+                />
             </div>
         </div>
     );
