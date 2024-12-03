@@ -7,7 +7,7 @@ import ThemeSwitch from './ThemeSwitcher';
 export default function TitleBar() {
 
     return (
-        <div className="fixed mx-auto flex justify-between items-center gap-12 p-2.5 w-full">
+        <div className="bg-white dark:bg-slate-800 fixed mx-auto flex justify-between items-center gap-12 p-2.5 w-full">
             <div className="flex flex-1 items-center pl-5 mr-[50px]">
                 <TitleAndLogo />
             </div>

@@ -13,11 +13,11 @@ export default function SideBar({ itemList, favourites, removeFavourite }) {
     }
 
     return (
-        <div className="border-[4px] border-red-500 fixed top-[10vh] left-0 w-[20vw] h-[calc(100vh-10vh)] bg-[#f4f4f4] p-5 box-border overflow-y-auto z-10">
+        <div className="bg-white dark:bg-slate-800 border-[4px] border-red-500 fixed top-[10vh] left-0 w-[20vw] h-[calc(100vh-10vh)] bg-[#f4f4f4] p-5 box-border overflow-y-auto z-10">
             <div className="flex flex-col items-center justify-center space-y-4">
                 {userId &&
                     <>
-                    <h2>Favourites</h2>
+                    <h2 className="text-slate-900 dark:text-white">Favourites</h2>
                     <FavouritesList 
                         itemList={itemList}
                         favourites={favourites}

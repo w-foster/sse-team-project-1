@@ -3,18 +3,20 @@ import HotItemGrid from './HotItems';
 
 export default function Dashboard({ favourites, addFavourite, removeFavourite }) {
     return (
-        <div className="debug-main-content" style={{ display: 'flex', flexDirection: 'column', gap: '30px', height: '100%' }}>
-            <h2>All Items</h2>
-            <ItemGrid
-                favourites={favourites}
-                addFavourite={addFavourite}
-                removeFavourite={removeFavourite} 
-            />
-            
-            {/* Hot Items List */}
-            <div style={{ marginTop: '20px', marginBottom: '100px'}}>
-                <h2>Hot Items!</h2>
-                <HotItemGrid />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '30px', height: '100%' }} class="bg-white dark:bg-slate-800 fixed top-[10vh] left-[20vw] w-[calc(100vw-20vw)] h-[calc(100vh-10vh)] border-3 border-solid border-green-500 p-5 box-border overflow-y-auto z-0">
+            <div className="text-slate-900 dark:text-white">
+                <h2>All Items</h2>
+                <ItemGrid
+                    favourites={favourites}
+                    addFavourite={addFavourite}
+                    removeFavourite={removeFavourite} 
+                />
+                
+                {/* Hot Items List */}
+                <div style={{ marginTop: '20px', marginBottom: '100px'}}>
+                    <h2>Hot Items!</h2>
+                    <HotItemGrid />
+                </div>
             </div>
         </div>
     );

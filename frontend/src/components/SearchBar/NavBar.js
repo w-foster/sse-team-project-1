@@ -37,7 +37,7 @@ export default function NavBar({ className }) {
 
   // If randomItem is null, display loading message or spinner
   if (!randomItem) {
-    return <div>Loading...</div>; // Or replace with a spinner/loading indicator
+    return <div className="text-slate-900 dark:text-white">Loading...</div>; // Or replace with a spinner/loading indicator
   }
 
   // Define your nav items with the dynamic random item ID

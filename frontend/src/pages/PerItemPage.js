@@ -40,7 +40,7 @@ export default function PerItemPage({ itemList, idToNameMap }) {
     }, [userId, itemId]);
     
     return (
-        <div className="debug-main-content">
+        <div class="bg-white dark:bg-slate-800 fixed top-[10vh] left-[20vw] w-[calc(100vw-20vw)] h-[calc(100vh-10vh)] border-3 border-solid border-green-500 p-5 box-border overflow-y-auto z-0">
             <h2>{idToNameMap.get(Number(itemId))}</h2>
             <Graph itemId={itemId} itemList={itemList} />
             <MovingTextBar itemId={itemId} />
