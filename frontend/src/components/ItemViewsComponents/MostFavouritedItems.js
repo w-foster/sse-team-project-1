@@ -34,7 +34,7 @@ export default function MostFavouritedItems({ idToNameMap }) {
     const chartSetting = {
         xAxis: [
             {
-                label: 'Views',
+                label: 'Favourites',
             },
         ],
         width: 600, // Adjust width
@@ -70,6 +70,9 @@ export default function MostFavouritedItems({ idToNameMap }) {
                         ]}
                         layout="horizontal" // Horizontal bar layout
                         {...chartSetting}
+                        width={window.innerWidth * 0.7}
+                        height={window.innerHeight * 0.65}
+                        margin={{ left: 150 }}
                     />
                 ) : (
                     <p>Loading favourited items...</p>

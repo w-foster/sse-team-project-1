@@ -228,6 +228,7 @@ export default function Graph({ itemList, itemId }) {
             ]}
             width={window.innerWidth * 0.75}
             height={window.innerHeight * 0.65}
+            margin={{ left: 150 }}
           />
         )}
       </div>

@@ -70,8 +70,9 @@ export default function ItemViews({ idToNameMap }) {
                         ]}
                         layout="horizontal" // Horizontal bar layout
                         {...chartSetting}
-                        width={window.innerWidth * 0.35}
+                        width={window.innerWidth * 0.75}
                         height={window.innerHeight * 0.65}
+                        margin={{ left: 150 }}
                     />
                 ) : (
                     <p>Loading popular items...</p>
