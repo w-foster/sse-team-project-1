@@ -14,7 +14,7 @@ module.exports = {
         primaryDark: 'white', // Primary text color for dark mode
         secondaryDark: 'black', // Secondary text color for dark mode
         primaryDarkBackground: 'black', // Dark mode background color
-        secondaryDarkBackground: 'white', // Dark mode background color
+        secondaryDarkBackground: 'black', // Dark mode background color
         accentDarkBackground: 'black', // indigo-800
       },
       animation: {
@@ -28,7 +28,7 @@ module.exports = {
       },
 
       fontSize: {
-        base: '20px',
+        base: '16px',
       },
       fontFamily: {
         sans: ['Trebuchet MS', 'Roboto', 'Arial', 'sans-serif'], // Set your preferred sans-serif fonts

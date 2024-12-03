@@ -45,8 +45,7 @@ function MainApp() {
       createTheme({
         typography: {
           fontFamily: "'Trebuchet MS', 'Roboto', 'Arial', sans-serif",
-          fontSize: 20, // Base font size for the app
-          
+          fontSize: 16, // Base font size for the app
         },
         palette: {
           mode: darkMode ? "dark" : "light",
