@@ -83,22 +83,22 @@ export default function MarketIndexChart() {
         }
         console.log(data)
         // Reverse data arrays once during fetch, similar to original logic
-        const reversedData = {
+        const allIntervalsData = {
           '5m': {
             ...data[0],
-            indexValues: [...data[0].indexValues].reverse(),
+            indexValues: [...data[0].indexValues]
           },
           '1h': {
             ...data[1],
-            indexValues: [...data[1].indexValues].reverse(),
+            indexValues: [...data[1].indexValues]
           },
           '24h': {
             ...data[2],
-            indexValues: [...data[2].indexValues].reverse(),
+            indexValues: [...data[2].indexValues]
           },
         };
 
-        setIndexData(reversedData);
+        setIndexData(allIntervalsData);
         setError(null);
       } catch (err) {
         setError(err.message || 'Error fetching index data');

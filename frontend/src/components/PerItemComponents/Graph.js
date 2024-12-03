@@ -93,31 +93,31 @@ export default function Graph({ itemList, itemId }) {
         }
 
         // Reverse data arrays once during fetch
-        const reversedData = {
+        const allIntervalsData = {
           '5m': {
             ...data[0],
-            avgHighPrice: [...data[0].avgHighPrice].reverse(),
-            avgLowPrice: [...data[0].avgLowPrice].reverse(),
-            highPriceVolume: [...data[0].highPriceVolume].reverse(),
-            lowPriceVolume: [...data[0].lowPriceVolume].reverse(),
+            avgHighPrice: [...data[0].avgHighPrice],
+            avgLowPrice: [...data[0].avgLowPrice],
+            highPriceVolume: [...data[0].highPriceVolume],
+            lowPriceVolume: [...data[0].lowPriceVolume],
           },
           '1h': {
             ...data[1],
-            avgHighPrice: [...data[1].avgHighPrice].reverse(),
-            avgLowPrice: [...data[1].avgLowPrice].reverse(),
-            highPriceVolume: [...data[1].highPriceVolume].reverse(),
-            lowPriceVolume: [...data[1].lowPriceVolume].reverse(),
+            avgHighPrice: [...data[1].avgHighPrice],
+            avgLowPrice: [...data[1].avgLowPrice],
+            highPriceVolume: [...data[1].highPriceVolume],
+            lowPriceVolume: [...data[1].lowPriceVolume],
           },
           '24h': {
             ...data[2],
-            avgHighPrice: [...data[2].avgHighPrice].reverse(),
-            avgLowPrice: [...data[2].avgLowPrice].reverse(),
-            highPriceVolume: [...data[2].highPriceVolume].reverse(),
-            lowPriceVolume: [...data[2].lowPriceVolume].reverse(),
+            avgHighPrice: [...data[2].avgHighPrice],
+            avgLowPrice: [...data[2].avgLowPrice],
+            highPriceVolume: [...data[2].highPriceVolume],
+            lowPriceVolume: [...data[2].lowPriceVolume],
           },
         };
 
-        setPriceData(reversedData);
+        setPriceData(allIntervalsData);
         setError(null);
       } catch (err) {
         setError(err.message || 'Error fetching price data');
