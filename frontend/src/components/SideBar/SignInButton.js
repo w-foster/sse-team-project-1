@@ -1,12 +1,11 @@
-import Button from '@mui/material/Button';
 
 export default function SignInButton({ handleClick }) {
   return (
     <>
         <p>Login to see favourites!</p>
-        <Button variant="contained" onClick={handleClick} >
+        <button variant="contained" onClick={handleClick} className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" >
         Sign In
-        </Button>
+        </button>
     </>
   );
 }
