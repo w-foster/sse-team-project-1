@@ -1,4 +1,5 @@
 import ItemViews from "../components/ItemViewsComponents/ItemViews.js";
+import MostFavouritedItems from "../components/ItemViewsComponents/MostFavouritedItems.js";
 
 export default function ItemViewsPage({ idToNameMap }) {
   return (
@@ -6,6 +7,7 @@ export default function ItemViewsPage({ idToNameMap }) {
   bg-primaryLightBackground dark:bg-primaryDarkBackground
   text-primaryLight dark:text-primaryDark">
       <ItemViews idToNameMap={idToNameMap} />
+      <MostFavouritedItems idToNameMap={idToNameMap} />
     </div>
   );
 }

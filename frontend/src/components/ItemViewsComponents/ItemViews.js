@@ -28,7 +28,7 @@ export default function ItemViews({ idToNameMap }) {
                 console.error("Error fetching popular items:", error);
             }
         }
-        fetchItemViews(5);
+        fetchItemViews(10);
     }, [url, idToNameMap]); // Include dependencies
 
     const chartSetting = {

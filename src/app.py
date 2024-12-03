@@ -3,7 +3,7 @@ from flask_cors import CORS
 import os
 from db_client import supabase
 from get_favourites_data import get_favourites_data
-from get_most_favourited import get_most_favourited
+from get_most_favourited import get_most_favourited_items
 from get_item_data import get_api_data_items
 from get_hot_items import get_api_hot_items
 from update_favourites import insert_favourite, delete_favourite
@@ -14,10 +14,8 @@ from get_high_alch_data import get_high_alch_data
 from get_random_id import get_random_id
 from datetime import datetime
 
-
 app = Flask(__name__, static_folder='../frontend/build', static_url_path='')  # Update the static folder path
 CORS(app)
-
 
 @app.route("/", defaults={'path': ''})
 @app.route('/<path:path>')
@@ -29,12 +27,10 @@ def serve_react(path):
         # Otherwise, serve index.html (the React app)
         return send_from_directory(app.static_folder, 'index.html')
 
-
 # Serve static files (e.g., JavaScript, CSS)
 @app.route('/static/<path:filename>')
 def serve_static(filename):
     return send_from_directory(os.path.join(app.static_folder, 'static'), filename)
-
 
 # Get favourite item data for the logged in user
 @app.route('/api/favourites', methods=['GET'])
@@ -55,7 +51,6 @@ def get_favourites():
     item_ids = [item['item_id'] for item in item_data]
     return jsonify(item_ids)
 
-
 # Add a row to DB containing a user_id and a new favourite item_id
 @app.route('/api/favourites', methods=['POST'])
 def add_favourite():
@@ -71,7 +66,6 @@ def add_favourite():
 
     return jsonify({'message': 'Favourite added to DB successfully'}), 201
 
-
 # Remove a row from DB, according to user_id and item_id specified
 @app.route('/api/favourites/<int:item_id>', methods=['DELETE'])
 def remove_favourite(item_id):
@@ -84,12 +78,10 @@ def remove_favourite(item_id):
 
     return jsonify({'message': 'Favourite removed from DB successfully'}), 201
 
-
 # Add the /items endpoint using the get_api_data function from get_item_data.py
 @app.route('/api/items', methods=['GET'])
 def items():
     return jsonify(get_api_data_items())
-
 
 # Route to handle incoming price data requests from React
 @app.route('/api/price', methods=['GET'])
@@ -108,7 +100,6 @@ def get_price_data():
         return jsonify({"error": "Unable to fetch price data for the given item"}), 500
     
     return jsonify(all_price_data)
-
 
 @app.route('/api/getRandomId', methods=['GET'])
 def get_random_item():
@@ -138,8 +129,6 @@ def item_description(item_id):
 
     return jsonify({"description": description})
 
-
-
 @app.route('/api/itemview', methods=['POST'])
 def item_view():
     data = request.json
@@ -160,7 +149,6 @@ def item_view():
 
     return jsonify({'message': 'successfully processed item view'}), 200
 
-
 @app.route('/api/popular-items', methods=['GET'])
 def popular_items():
     num_of_items = request.args.get('num_of_items')
@@ -176,13 +164,12 @@ def favourited_items():
     if not num_of_items:
         return jsonify({'error': 'num_of_items is reqiured'}), 400
     
-    response = get_most_favourited(num_of_items)
+    response = get_most_favourited_items(num_of_items)
     return jsonify(response)
 
 @app.route('/<path:path>')
 def catchall(path):
     return send_from_directory(app.static_folder, "index.html")
-
 
 if __name__ == "__main__":
     app.run(debug=True)
