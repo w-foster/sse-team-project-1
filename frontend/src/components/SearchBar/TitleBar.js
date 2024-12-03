@@ -6,7 +6,7 @@ export default function TitleBar() {
 
     return (
         <div className="fixed mx-auto flex justify-between items-center gap-12 p-2.5 w-full
-        bg-primaryLightBackground dark:bg-primaryDarkBackground
+        bg-accentLightBackground dark:bg-accentDarkBackground
         text-primaryLight dark:text-primaryDark">
         
             <div className="flex flex-1 items-center pl-5 mr-[50px]">

@@ -5,15 +5,17 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primaryLight: 'black', // Green-500 for light mode
-        secondaryLight: 'white', // Gray-100 for light mode
-        primaryLightBackground: 'white', // White for light mode
-        secondaryLightBackground: 'black', // Gray-800 for light mode
+        primaryLight: 'black',
+        secondaryLight: 'white',
+        primaryLightBackground: 'white',
+        secondaryLightBackground: 'black',
+        accentLightBackground: 'white', // indigo-600
 
         primaryDark: 'white', // Primary text color for dark mode
         secondaryDark: 'black', // Secondary text color for dark mode
         primaryDarkBackground: 'black', // Dark mode background color
         secondaryDarkBackground: 'white', // Dark mode background color
+        accentDarkBackground: 'black', // indigo-800
       },
       animation: {
         'scroll-left': 'scroll-left 10s linear infinite',
