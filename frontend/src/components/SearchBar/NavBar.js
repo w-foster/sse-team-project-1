@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import './styles/NavBar.css';
 
 export default function NavBar({ className }) {
 
@@ -52,8 +51,8 @@ export default function NavBar({ className }) {
 
   return (
     <div className={className}>
-      <div className="nav-container">
-        <Stack direction='row' spacing={2} className='nav-list'>
+      <div className="m-0 flex justify-center items-center">
+        <Stack direction='row' spacing={2} className="flex justify-evenly list-none items-center m-0 p-0">
           {navItems.map((button) => (
             <Button
               key={button.path}

@@ -13,7 +13,7 @@ export default function SideBar({ itemList, favourites, removeFavourite }) {
     }
 
     return (
-        <div className="debug-sidebar">
+        <div className="border-[4px] border-red-500 fixed top-[10vh] left-0 w-[20vw] h-[calc(100vh-10vh)] bg-[#f4f4f4] p-5 box-border overflow-y-auto z-10">
             {userId &&
                 <>
                 <h2>Favourites</h2>
