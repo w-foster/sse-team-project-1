@@ -3,6 +3,7 @@ import { useSessionInfo } from "../SessionInfoContext";
 import Graph from '../components/PerItemComponents/Graph';
 import MovingTextBar from '../components/PerItemComponents/MovingTextBar';
 import { useEffect } from 'react';
+import { mainGraphContainer } from '../utils/tailwindClasses';
 
 
 export default function PerItemPage({ itemList, idToNameMap }) {
@@ -40,9 +41,7 @@ export default function PerItemPage({ itemList, idToNameMap }) {
     }, [userId, itemId]);
     
     return (
-        <div class="fixed top-[8vh] left-[20vw] w-[calc(100vw-20vw)] h-[calc(100vh-8vh)] border-3 border-solid border-green-500 p-5 box-border overflow-y-auto z-0
-        bg-primaryLightBackground dark:bg-primaryDarkBackground
-        text-primaryLight dark:text-primaryDark">
+        <div class={mainGraphContainer}>
             <h2>{idToNameMap.get(Number(itemId))}</h2>
             <Graph itemId={itemId} itemList={itemList} />
             <MovingTextBar itemId={itemId} />

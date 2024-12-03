@@ -42,7 +42,7 @@ export default function MostFavouritedItems({ idToNameMap }) {
     };
 
     return (
-            <div className="debug-graph-content">
+            <div>
                 <h1>Most Favourited Items (Real Time)</h1>
                 {chartData.length > 0 ? (
                     <BarChart
