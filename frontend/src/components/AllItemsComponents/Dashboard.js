@@ -7,7 +7,8 @@ export default function Dashboard({ favourites, addFavourite, removeFavourite })
         <div style={{ display: 'flex', flexDirection: 'column', gap: '30px', height: '100%' }}
             className="bg-primaryLightBackground dark:bg-primaryDarkBackground
             fixed top-[8vh] left-[20vw] w-[calc(100vw-20vw)] h-[calc(100vh-8vh)] p-5 box-border overflow-y-auto z-0
-            text-slate-900 dark:text-white">
+            text-slate-900 dark:text-white
+            border-solid border-t border-neutral-700">
             
             {/* Top row: Market Index Chart (left) and Hot Items (right) */}
             <div style={{ display: 'flex', flexDirection: 'row', gap: '20px', marginBottom: '15px' }}>

@@ -13,7 +13,7 @@ export const mainAlchemyContainer = `
 `;
 
 export const about = `
-    fixed top-[8vh] w-[100vw] h-[calc(100vh-8vh)] p-5 box-border overflow-y-auto z-0 border-[3px] border-cyan-800
+    fixed top-[8vh] w-[100vw] h-[calc(100vh-8vh)] p-5 box-border overflow-y-auto z-0 border-t border-zinc-700
     bg-primaryLightBackground dark:bg-primaryDarkBackground
     text-primaryLight dark:text-primaryDark
 `;

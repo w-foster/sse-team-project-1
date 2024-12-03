@@ -21,7 +21,7 @@ import ThemeSwitch from './ThemeSwitch'; // Import the ThemeSwitch component
 function App() {
   return (
     <SessionInfoProvider>
-      <div className="font-sans">
+      <div className="font-sans" style={{ scrollbarColor: '#6e6e6e #302F2E' }}>
         <MainApp /> 
       </div>
     </SessionInfoProvider>

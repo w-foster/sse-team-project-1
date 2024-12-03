@@ -2,6 +2,7 @@
     body {
       @apply text-base font-sans;
     }
+
     .light-div {
       @apply text-black; /* Default text color for light mode */
       @apply bg-white; /* Default background color for light mode */
@@ -10,5 +11,20 @@
     .dark-div {
       @apply text-white; /* Default text color for dark mode */
       @apply bg-slate-800; /* Default background color for dark mode */
+          /* Firefox scrollbar properties */
+      scrollbar-width: thin;
+      scrollbar-color: gray #302F2E;
+
+      /* WebKit-based browsers */
+      ::-webkit-scrollbar {
+        @apply w-2;
+      }
+      ::-webkit-scrollbar-thumb {
+        @apply bg-gray-700 rounded;
+      }
+      ::-webkit-scrollbar-track {
+        @apply bg-gray-500;
+      }
     }
+
   }
