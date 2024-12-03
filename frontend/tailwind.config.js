@@ -14,7 +14,7 @@ module.exports = {
         primaryDark: 'white', // Primary text color for dark mode
         secondaryDark: 'black', // Secondary text color for dark mode
         primaryDarkBackground: 'black', // Dark mode background color
-        secondaryDarkBackground: 'black', // Dark mode background color
+        secondaryDarkBackground: '#12100d', // Dark mode background color
         accentDarkBackground: 'black', // indigo-800
       },
       animation: {

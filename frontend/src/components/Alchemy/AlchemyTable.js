@@ -131,7 +131,7 @@ export default function AlchemyTable({ favourites, addFavourite, removeFavourite
   };
 
   return (
-    <div style={{ width: '100%', height: 400 }}> {/* Set fixed height for grid container */}
+    <div className="bg-primaryLightBackground dark:bg-secondaryDarkBackground" style={{ width: '100%', height: 400 }}> {/* Set fixed height for grid container */}
       {/* Data Grid with pagination and no autoHeight */}
       <DataGrid
         rows={rows}
