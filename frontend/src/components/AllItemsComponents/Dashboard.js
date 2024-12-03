@@ -1,5 +1,6 @@
 import ItemGrid from './ItemGrid';
 import HotItemGrid from './HotItems';
+import MarketIndexChart from './MarketIndex';
 
 export default function Dashboard({ favourites, addFavourite, removeFavourite }) {
     return (
@@ -21,6 +22,9 @@ export default function Dashboard({ favourites, addFavourite, removeFavourite })
                     <div >
                         <HotItemGrid />
                     </div>
+                </div>
+                <div>
+                    <MarketIndexChart />
                 </div>
             </div>
         </div>
