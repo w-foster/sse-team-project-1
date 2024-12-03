@@ -23,7 +23,7 @@ export default function Dashboard({ favourites, addFavourite, removeFavourite })
                         <HotItemGrid />
                     </div>
                 </div>
-                <div>
+                <div className="bg-primaryLightBackground dark:bg-secondaryDarkBackground">
                     <MarketIndexChart />
                 </div>
             </div>

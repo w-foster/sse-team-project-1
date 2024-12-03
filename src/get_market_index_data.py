@@ -2,7 +2,8 @@ from get_price_data import get_graph_data
 
 def get_market_index_graph_data(timestep: str = "5m"):
     # Define the basket of item IDs for the market index
-    basket_of_items = [4151, 2]  # Example item IDs
+    #basket_of_items = [4151, 2]  # Example item IDs
+    basket_of_items = [453, 2353, 444, 561, 560, 7936, 1515, 1513, 1739, 377, 7944, 1799, 1761, 225, 231, 3000, 263, 4151, 11840, 13024, 10034, 8778, 385, 1753, 536, 2, 11284]
     
     # Fetch data for each item
     item_data_list = []
