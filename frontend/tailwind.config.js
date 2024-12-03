@@ -15,6 +15,15 @@ module.exports = {
         primaryDarkBackground: 'black', // Dark mode background color
         secondaryDarkBackground: 'white', // Dark mode background color
       },
+      animation: {
+        'scroll-left': 'scroll-left 10s linear infinite',
+      },
+      keyframes: {
+        'scroll-left': {
+          '0%': { transform: 'translateX(100%)' },
+          '100%': { transform: 'translateX(-100%)' },
+        },
+      },
     },
   },
   darkMode: 'class', // Enables dark mode with the `class` strategy

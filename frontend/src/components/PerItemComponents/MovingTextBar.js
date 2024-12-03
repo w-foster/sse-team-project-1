@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import './styles/MovingTextBar.css'; // Ensure the correct CSS file path
 
 const MovingTextBar = ({ itemId }) => {
     const [description, setDescription] = useState('');
@@ -27,9 +26,13 @@ const MovingTextBar = ({ itemId }) => {
     }, [itemId]);
 
     return (
-        <div className="moving-text-bar">
-            <span>{description || 'Select an item to view its description'}</span>
-        </div>
+            <div class="relative overflow-hidden w-full h-[40px] border border-[#ddd] flex items-center justify-start box-border
+                bg-primaryLightBackground dark:bg-primaryDarkBackground
+                text-primaryLight dark:text-primaryDark">
+                <span class="inline-block whitespace-nowrap animate-scroll-left">
+                    {description || 'Select an item to view its description'}
+                </span>
+            </div>
     );
 };
 
