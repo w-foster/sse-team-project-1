@@ -1,0 +1,11 @@
+@layer base {
+    .light-div {
+      @apply text-black; /* Default text color for light mode */
+      @apply bg-white; /* Default background color for light mode */
+    }
+  
+    .dark-div {
+      @apply text-white; /* Default text color for dark mode */
+      @apply bg-slate-800; /* Default background color for dark mode */
+    }
+  }

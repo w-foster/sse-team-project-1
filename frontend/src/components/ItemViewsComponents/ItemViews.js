@@ -42,8 +42,8 @@ export default function ItemViews({ idToNameMap }) {
     };
 
     return (
-        <div className='debug-main-content'>
-                <h1>Most Popular Items (All Time)</h1>
+        <div>
+            <h1>Most Popular Items (All Time)</h1>
                 {chartData.length > 0 ? (
                     <BarChart
                         dataset={chartData}

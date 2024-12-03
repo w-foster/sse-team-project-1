@@ -1,10 +1,8 @@
+import { useState, useEffect, useMemo } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import { ThemeProvider, createTheme, CssBaseline } from "@mui/material";
 import "./App.css";
 import "./styles/tailwind.css";
-// STANDARD COMPONENTS
-
-// PAGE COMPONENTS
 import PageWithHeader from './pages/PageWithHeader';
 import AboutPage from './pages/AboutPage';
 import SignInPage from './pages/SignInPage';
@@ -14,119 +12,120 @@ import PerItemPage from './pages/PerItemPage';
 import AllItemsPage from './pages/AllItemsPage';
 import ItemViewsPage from "./pages/ItemViewsPage";
 import Notfound from './pages/404';
-// IMPORT ITEM LIST ONCE, PASSED DOWN AS PROP
+import AlchemyPage from "./pages/AlchemyPage";
 import { itemList } from './ItemList';
 import { SessionInfoProvider } from "./SessionInfoContext";
 import { useSessionInfo } from "./SessionInfoContext";
-import AlchemyPage from "./pages/AlchemyPage";
-
+import ThemeSwitch from './ThemeSwitch'; // Import the ThemeSwitch component
 
 function App() {
-	return (
-		<SessionInfoProvider>
-			<MainApp />
-		</SessionInfoProvider>
-	);
+  return (
+    <SessionInfoProvider>
+      <MainApp />
+    </SessionInfoProvider>
+  );
 }
 
-
 function MainApp() {
-	const url = process.env.NODE_ENV === "development"
-    ? "http://127.0.0.1:5000"
+  const [darkMode, setDarkMode] = useState(false); // State to toggle theme
+
+  // Sync theme from localStorage or system preference
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    setDarkMode(savedTheme ? savedTheme === 'dark' : prefersDarkMode);
+  }, []);
+
+  // Create the MUI theme based on darkMode state
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: darkMode ? "dark" : "light",
+        },
+      }),
+    [darkMode]
+  );
+
+  const toggleTheme = (newMode) => {
+    setDarkMode(newMode);
+  };
+
+  useEffect(() => {
+    // Sync both MUI theme and Tailwind CSS dark mode class
+    if (darkMode) {
+      document.body.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.body.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [darkMode]);
+
+  const url = process.env.NODE_ENV === "development" 
+    ? "http://127.0.0.1:5000" 
     : "https://runescape-tracker.impaas.uk";
 
-	const { userId } = useSessionInfo();
-	console.log(`Current user ID: ${userId}`);
+  const { userId } = useSessionInfo();
+  const idToNameMap = useMemo(() => {
+    const map = new Map();
+    itemList.forEach((item) => {
+      map.set(Number(item.id), item.name);
+    });
+    return map;
+  }, []);
 
-	// Create mapping {item ID: item name}, to be passed around as a prop
-	const idToNameMap = React.useMemo(() => {
-		const map = new Map();
-		itemList.forEach((item) => {
-			map.set(Number(item.id), item.name);
-		});
-		return map;
-	}, []);
+  const [favourites, setFavourites] = useState([]);
+  const fetchFavourites = async () => {
+    if (!userId) return;
+    try {
+      const response = await fetch(`${url}/api/favourites?user_id=${userId}`);
+      const data = await response.json();
+      setFavourites(data);
+    } catch (error) {
+      console.error("Error fetching favourites:", error);
+    }
+  };
 
+  useEffect(() => {
+    fetchFavourites();
+  }, [userId]);
 
-	// === STATE HOOKS ===
-	const [favourites, setFavourites] = useState([]);
+  const addFavourite = async (itemId) => {
+    if (!userId) return;
+    try {
+      setFavourites((prev) => [...prev, itemId]);
+      await fetch(`${url}/api/favourites`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user_id: userId, item_id: itemId }),
+      });
+    } catch (error) {
+      console.error('Error adding favourite:', error);
+      setFavourites((prev) => prev.filter((id) => id !== itemId));
+    }
+  };
 
+  const removeFavourite = async (itemId) => {
+    if (!userId) return;
+    try {
+      setFavourites((prev) => prev.filter((id) => id !== itemId));
+      await fetch(`${url}/api/favourites/${itemId}?user_id=${userId}`, {
+        method: 'DELETE',
+      });
+    } catch (error) {
+      console.error("Error removing favourite:", error);
+      setFavourites((prev) => [...prev, itemId]);
+    }
+  };
 
-	// Flask API call helper functions
-	async function fetchFavourites() {
-		if (!userId) {
-			console.log("Could not fetch faves -- user is null");
-			return null; // idk
-		}
-		try {
-			const response = await fetch(`${url}/api/favourites?user_id=${userId}`, {
-				method: 'GET'
-			});
-			const data = await response.json();
-			setFavourites(data);  // assumes response is array of item_ids
-		}
-		catch (error) {
-			console.error("Error fetching favourites:", error);
-		}
-	}
-
-	// === Effect Hooks ===
-	useEffect(() => {
-		console.log('useEffect called, fetching favourites...');
-		fetchFavourites();
-	}, [userId]);
-
-	// === Handlers === 
-	// Adds a favourite item (first to state, then to DB)
-	const addFavourite = async (itemId) => {
-		if (!userId) {
-			console.log("Could not fetch faves -- user is null");
-			return null; // idk
-		}
-		try {
-			// 'Optimistic' update (faster for UI)
-			setFavourites((prev) => [...prev, itemId]);
-			// Update the DB after
-			await fetch(`${url}/api/favourites`, {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json'},
-				body: JSON.stringify({ user_id: userId, item_id: itemId}),
-			});
-		} catch (error) {
-			console.error('Error adding favourite:', error);
-			// Rollback favourites in State if error adding to DB
-			setFavourites((prev) => prev.filter((id) => id !== itemId));
-		}
-	};
-
-	// Remove a favourite item
-	const removeFavourite = async (itemId) => {
-		if (!userId) {
-			console.log("Could not fetch faves -- user is null");
-			return null; // idk
-		}
-		try {
-			// Optimistic update (faster for UI)
-			setFavourites((prev) => prev.filter((id) => id !== itemId));
-			// Update DB afterwards
-			await fetch(`${url}/api/favourites/${itemId}?user_id=${userId}`, {
-				method: 'DELETE',
-			});
-		} catch (error) {
-			console.error("Error removing favourite:", error);
-			// Rollback State
-			setFavourites((prev) => [...prev, itemId]);
-		}
-	};
-
-	/**
-	 * STRUCTURE: 
-	 */
-	return (
-		
-		<div>
-
-			<Routes>
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <div>
+        {/* Pass toggleTheme function as a prop */}
+		<Routes>
 				{/* PAGES WITHOUT HEADER or TITLE BAR */}
 				<Route path="/signin" element={<SignInPage />} />
 				<Route path="/signup" element={<NewUserPage />} />
@@ -198,9 +197,13 @@ function MainApp() {
 				{/* Fallback for undefined routes */}
 				<Route path="*" element={<Notfound />} />
 			</Routes>
-		</div>
-		
-	);
+			<div className="absolute top-0 right-0 m-4">
+				<ThemeSwitch onThemeChange={toggleTheme} darkMode={darkMode} />
+			</div>
+
+      </div>
+    </ThemeProvider>
+  );
 }
 
 export default App;
