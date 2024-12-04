@@ -166,19 +166,21 @@ def item_view():
 def popular_items():
     num_of_items = request.args.get('num_of_items')
     if not num_of_items:
-        return jsonify({'error': 'num_of_items is reqiured'}), 400
+        return jsonify({'error': 'num_of_items is required'}), 400
     
     response = get_most_viewed_items(num_of_items)
     return jsonify(response)
+
 
 @app.route('/api/most_favourited', methods=['GET'])
 def favourited_items():
     num_of_items = request.args.get('num_of_items')
     if not num_of_items:
-        return jsonify({'error': 'num_of_items is reqiured'}), 400
+        return jsonify({'error': 'num_of_items is required'}), 400
     
     response = get_most_favourited_items(num_of_items)
     return jsonify(response)
+
 
 @app.route('/<path:path>')
 def catchall(path):

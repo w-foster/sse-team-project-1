@@ -81,13 +81,14 @@ def filter_none_values(t_series, x_series, y_series, z_series, w_series):
             if x is not None and y is not None and z is not None and w is not None]
 
 
-def get_graph_data(item_id: int, timestep: str = "5m"):
+def get_graph_data(item_id: int, timestep: str="5m", filter: bool=True):
     """
     Retrieves and formats the graph data for a given item and timestep.
 
     Args:
         item_id (int): The ID of the item to fetch data for.
         timestep (str): The timestep for the data ('5m', '1h', '24h').
+        filter (bool): If True filters out None values. Default to True.
 
     Returns:
         Optional[Dict[str, List[int] or List[float]]]: A dictionary containing the time series, 
@@ -108,15 +109,16 @@ def get_graph_data(item_id: int, timestep: str = "5m"):
     highPriceVolume = highPriceVolume[:time_series_length]
     lowPriceVolume = lowPriceVolume[:time_series_length]
 
-    filtered_data = filter_none_values(time_series, avgHighPrice, avgLowPrice, highPriceVolume, lowPriceVolume)
-    filtered_time_series, filtered_avgHighPrice, filtered_avgLowPrice, filtered_highPriceVolume, filtered_lowPriceVolume = zip(*filtered_data) if filtered_data else ([], [], [], [], [])
+    if filter == True:
+        filtered_data = filter_none_values(time_series, avgHighPrice, avgLowPrice, highPriceVolume, lowPriceVolume)
+        time_series, avgHighPrice, avgLowPrice, highPriceVolume, lowPriceVolume = zip(*filtered_data) if filtered_data else ([], [], [], [], [])
     
     return {
-        "time_series": filtered_time_series,
-        "avgHighPrice": filtered_avgHighPrice,
-        "avgLowPrice": filtered_avgLowPrice,
-        "highPriceVolume": filtered_highPriceVolume,
-        "lowPriceVolume": filtered_lowPriceVolume
+        "time_series": time_series,
+        "avgHighPrice": avgHighPrice,
+        "avgLowPrice": avgLowPrice,
+        "highPriceVolume": highPriceVolume,
+        "lowPriceVolume": lowPriceVolume
     }
 
 
