@@ -17,6 +17,8 @@ import { itemList } from './ItemList';
 import { SessionInfoProvider } from "./SessionInfoContext";
 import { useSessionInfo } from "./SessionInfoContext";
 import ThemeSwitch from './ThemeSwitch'; // Import the ThemeSwitch component
+import CorrelationPage from "./pages/CorrelationPage";
+import { dark } from "@mui/material/styles/createPalette";
 
 function App() {
   return (
@@ -179,6 +181,18 @@ function MainApp() {
 							path="alchemy"
 							element={
 								<AlchemyPage
+									favourites={favourites}
+									addFavourite={addFavourite}
+									removeFavourite={removeFavourite}  
+									idToNameMap={idToNameMap}
+								/>
+							}
+						/>
+            <Route
+							path="analysis"
+							element={
+								<CorrelationPage
+                  darkMode={darkMode}
 									favourites={favourites}
 									addFavourite={addFavourite}
 									removeFavourite={removeFavourite}  
