@@ -217,9 +217,8 @@ function MainApp() {
 				{/* Fallback for undefined routes */}
 				<Route path="*" element={<Notfound />} />
 			</Routes>
-			<div className="absolute top-0 right-0 m-4">
-				<ThemeSwitch onThemeChange={toggleTheme} darkMode={darkMode} />
-			</div>
+			
+      <ThemeSwitch onThemeChange={toggleTheme} darkMode={darkMode} />
 
       </div>
     </ThemeProvider>

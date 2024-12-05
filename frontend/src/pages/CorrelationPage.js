@@ -1,5 +1,5 @@
 import CorrelationDiagram from "../components/Correlation/CorrelationDiagram";
-import { mainAlchemyContainer } from "../utils/tailwindClasses";
+import { mainContainer } from "../utils/tailwindClasses";
 
 const mockMatrix = [
   [ 0.00,  0.35, -0.20,  0.80, -0.10],
@@ -23,7 +23,7 @@ const labels = ["Item A", "Item B", "Item C", "Item D", "Item E"];
 export default function CorrelationPage({ darkMode }) {
 
     return (
-        <div className={mainAlchemyContainer}
+        <div className={mainContainer}
             style={{ display: 'flex', justifyContent: 'center' }}
         >
             <CorrelationDiagram 

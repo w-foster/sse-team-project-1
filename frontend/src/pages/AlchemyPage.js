@@ -1,11 +1,11 @@
 import AlchemyTable from '../components/Alchemy/AlchemyTable';
-import { mainAlchemyContainer } from '../utils/tailwindClasses';
+import { mainContainer } from '../utils/tailwindClasses';
 
 export default function AlchemyPage({ favourites, addFavourite, removeFavourite }) {
 
 
     return (
-        <div class={mainAlchemyContainer}>
+        <div class={mainContainer}>
             <AlchemyTable 
                 favourites={favourites}
                 addFavourite={addFavourite}
