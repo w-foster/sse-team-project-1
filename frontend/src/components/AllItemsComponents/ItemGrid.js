@@ -91,7 +91,7 @@ export default function ItemGrid({ favourites, addFavourite, removeFavourite }) 
   };
 
   return (
-    <div style={{ width: '100%', height: 400 }}> {/* Set fixed height for grid container */}
+    <div style={{ width: '100%', height: 800 }}> {/* Set fixed height for grid container */}
       {/* Data Grid with pagination and no autoHeight */}
       <DataGrid
         rows={rows}

@@ -57,7 +57,7 @@ export default function HotItemGrid({}) {
     return (
       <div>
         {/* Data Grid */}
-        <div class="bg-primaryLightBackground dark:bg-secondaryDarkBackground" style={{ height: '300px', width: '400px', margin: 'auto' }}>
+        <div class="bg-primaryLightBackground dark:bg-secondaryDarkBackground" style={{ height: '400px', width: '400px', margin: 'auto' }}>
           <DataGrid
             rows={rows}
             columns={columns}

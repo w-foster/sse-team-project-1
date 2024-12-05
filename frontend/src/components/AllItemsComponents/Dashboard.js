@@ -20,13 +20,12 @@ export default function Dashboard({ favourites, addFavourite, removeFavourite })
                 <div style={{ flex: 1,
                              display: 'flex', flexDirection: 'column', gap: '20px', justifyContent: 'space-between', paddingTop: '30px'}}
                     className="bg-primaryLightBackground dark:bg-secondaryDarkBackground border border-neutral-700">
-                    <h2 style={{ display: 'flex', justifyContent: 'center' }}>Hot Items!</h2>
+                    <h2 style={{ display: 'flex', justifyContent: 'center' }}>Volume Leaders</h2>
                     <HotItemGrid />
                 </div>
             </div>
 
             {/* Below the top row: All Items */}
-            <h2>All Items</h2>
             <div className="bg-primaryLightBackground dark:bg-secondaryDarkBackground">
                 <ItemGrid
                     favourites={favourites}
@@ -34,6 +33,9 @@ export default function Dashboard({ favourites, addFavourite, removeFavourite })
                     removeFavourite={removeFavourite} 
                 />
             </div>
+            <br/>
+            <br/>
+            <br/>
         </div>
     );
 }
