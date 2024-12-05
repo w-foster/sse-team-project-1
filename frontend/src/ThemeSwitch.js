@@ -6,7 +6,7 @@ const ThemeSwitch = ({ onThemeChange, darkMode }) => {
   };
 
   return (
-    <div className="fixed top-0 right-0 m-[2vh]">
+    <div className="fixed top-0 right-0 m-[3vh]">
       <button
         onClick={toggleTheme}
         className="w-[4vh] h-[4vh] flex items-center justify-center rounded-md"

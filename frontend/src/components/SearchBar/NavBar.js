@@ -51,9 +51,17 @@ export default function NavBar({ className }) {
   ];
 
   return (
-    <div className={className}>
-      <div className="m-0 flex justify-center items-center">
-        <Stack direction='row' spacing={2} className="flex justify-evenly list-none items-center m-0 p-0">
+    <div className={className} style={{ width: '50vw', display: 'flex', justifyContent: 'flex-start' }}>
+      <div className="m-0 flex justify-center items-center" style={{ width: '100%' }}>
+        <Stack
+          direction='row'
+          spacing={2}
+          className="m-0 p-0"
+          sx={{
+            width: '100%',
+            gap: '0.25vw', // You can adjust this based on how much spacing you want between buttons
+          }}
+        >
           {navItems.map((button) => (
             <Button
               key={button.path}
@@ -61,6 +69,11 @@ export default function NavBar({ className }) {
               component={Link}
               to={button.path}
               onClick={button.onClick} // Add the onClick event to the Curious? button
+              sx={{
+                fontSize: '1.25vw', // Adjust font size to be responsive to the viewport
+                padding: '0.4vh 0.8vw', // Padding based on vh and vw for scaling
+                minWidth: '3vw',  // Minimum button width
+              }}
             >
               {button.label}
             </Button>

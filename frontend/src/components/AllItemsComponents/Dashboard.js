@@ -6,7 +6,7 @@ export default function Dashboard({ favourites, addFavourite, removeFavourite })
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '30px', height: '100%' }}
             className="bg-primaryLightBackground dark:bg-primaryDarkBackground
-            fixed top-[8vh] left-[20vw] w-[calc(100vw-20vw)] h-[calc(100vh-8vh)] p-5 box-border overflow-y-auto z-0
+            fixed top-[10vh] left-[20vw] w-[calc(100vw-20vw)] h-[calc(100vh-10vh)] p-5 box-border overflow-y-auto z-0
             text-slate-900 dark:text-white
             border-solid border-t border-neutral-700">
             
