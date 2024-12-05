@@ -171,7 +171,8 @@ const StyledAutocompleteRoot = styled('div')(
   gap: 5px;
   padding-right: 5px;
   overflow: hidden;
-  width: 320px;
+  width: 22vw;
+  height: 6vh;
 
   &.focused {
     border-color: ${blue[400]};
@@ -209,7 +210,7 @@ const StyledInput = styled('input')(
 const StyledPopper = styled('div')`
   position: relative;
   z-index: 1001;
-  width: 320px;
+  width: 22vw;
 `;
 
 const StyledListbox = styled('ul')(
@@ -219,11 +220,11 @@ const StyledListbox = styled('ul')(
   box-sizing: border-box;
   padding: 6px;
   margin: 12px 0;
-  min-width: 320px;
+  min-width: 22vw;
   border-radius: 12px;
   overflow: auto;
   outline: 0;
-  max-height: 300px;
+  max-height: 45vh;
   z-index: 1;
   background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
   border: 1px solid ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};

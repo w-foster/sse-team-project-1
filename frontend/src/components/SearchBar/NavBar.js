@@ -73,6 +73,7 @@ export default function NavBar({ className }) {
                 fontSize: '1.25vw', // Adjust font size to be responsive to the viewport
                 padding: '0.4vh 0.8vw', // Padding based on vh and vw for scaling
                 minWidth: '3vw',  // Minimum button width
+                borderWidth: '0.1vw', // Border width based on viewport width
               }}
             >
               {button.label}
