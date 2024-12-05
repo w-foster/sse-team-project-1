@@ -17,7 +17,7 @@ import { itemList } from './ItemList';
 import { SessionInfoProvider } from "./SessionInfoContext";
 import { useSessionInfo } from "./SessionInfoContext";
 import ThemeSwitch from './ThemeSwitch'; // Import the ThemeSwitch component
-import CorrelationPage from "./pages/CorrelationPage";
+import AnalysisPage from "./pages/AnalysisPage";
 import { dark } from "@mui/material/styles/createPalette";
 
 function App() {
@@ -191,7 +191,7 @@ function MainApp() {
             <Route
 							path="analysis"
 							element={
-								<CorrelationPage
+								<AnalysisPage
                   darkMode={darkMode}
 									favourites={favourites}
 									addFavourite={addFavourite}

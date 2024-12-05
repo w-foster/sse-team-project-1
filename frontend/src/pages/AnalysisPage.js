@@ -1,4 +1,4 @@
-import CorrelationDiagram from "../components/Correlation/CorrelationDiagram";
+import CorrelationDiagram from "../components/Analysis/CorrelationDiagram";
 import { mainContainer } from "../utils/tailwindClasses";
 
 const mockMatrix = [
@@ -20,7 +20,7 @@ const mockMatrix2 = [
 const labels = ["Item A", "Item B", "Item C", "Item D", "Item E"];
 
 
-export default function CorrelationPage({ darkMode }) {
+export default function AnalysisPage({ darkMode }) {
 
     return (
         <div className={mainContainer}
