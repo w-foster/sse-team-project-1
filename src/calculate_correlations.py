@@ -2,9 +2,11 @@ from get_price_data import get_graph_data
 import json
 import numpy as np
 import pandas as pd
+import pickle
 
 
-def get_correlations(print_nan_stats: bool=False, filter_amount: int=100):
+def calculate_correlations(print_nan_stats: bool=False, filter_amount: int=100):
+    print('DEBUGGING. FUNC ENTERED')
     """
     Computes pairwise correlations between time series data for items listed in a JSON file.
     
@@ -91,12 +93,15 @@ def get_correlations(print_nan_stats: bool=False, filter_amount: int=100):
         'Item2': [pair[1] for pair in pairs],
         'Correlation': correlations
     })
-    
+
+    # save the python object to a pickle file, for debugging
+    correlation_pairs_df.to_pickle('correlations.pkl')
+    # return the df to caller func
     return correlation_pairs_df
    
  
 # example usage:
 if __name__ == "__main__":
-    df = get_correlations(print_nan_stats=True)
+    df = calculate_correlations(print_nan_stats=True)
     print(df.head())
     print(df.shape)
