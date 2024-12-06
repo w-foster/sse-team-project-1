@@ -1,10 +1,21 @@
-# from get_item_data import get_api_data_items
 from get_price_data import get_graph_data
 import json
 import numpy as np
 import pandas as pd
 
-def get_correlations(print_nan_stats: bool=False):
+
+def get_correlations(print_nan_stats: bool=False, filter_amount: int=100):
+    """
+    Computes pairwise correlations between time series data for items listed in a JSON file.
+    
+    Args:
+        print_nan_stats (bool): Whether to print statistics about NaN counts in the data.
+        filter_amount (int): Maximum number of NaN values allowed per row. Rows exceeding 
+                             this threshold are filtered out.
+    
+    Returns:
+        pd.DataFrame: A DataFrame containing pairs of item IDs and their correlation coefficients.
+    """
     file_path = "ItemList.json"
 
     with open(file_path, 'r') as file:
@@ -54,6 +65,10 @@ def get_correlations(print_nan_stats: bool=False):
         }
         print(f"\nNaN Counts Statistics (with {df.shape[0]} items)", na_stats, "\n")
         print(f"")
+    
+    if filter_amount:
+        # filter for rows with too many na values
+        df = df[df.isna().sum(axis=1) <= filter_amount]
 
     # transpose dataframe
     df_t = df.T
@@ -78,7 +93,8 @@ def get_correlations(print_nan_stats: bool=False):
     })
     
     return correlation_pairs_df
-    
+   
+ 
 # example usage:
 if __name__ == "__main__":
     df = get_correlations(print_nan_stats=True)
