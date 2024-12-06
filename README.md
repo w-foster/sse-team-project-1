@@ -59,7 +59,7 @@ pip install -r requirements.txt
 Run the Flask development server to start the backend:
 
 ```bash
-python app.py
+python src/app.py
 ```
 
 This will start the backend server on `http://localhost:5000`.
@@ -107,6 +107,9 @@ The frontend provides the following features:
 - A list of RuneScape items and their current prices.
 - A search function to look up individual items.
 - Real-time updates using API calls to the Flask backend.
+- Graphs showing price changes in 5m, 1h and 24h intervals.
+- Favourites tab that is specific to your login information.
+- Data analysis on the number of most viewed and favourited items by all users.
 
 ---
 
