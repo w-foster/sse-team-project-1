@@ -11,23 +11,22 @@ const mockMatrix = [
     [-0.10,  0.00,  0.55, -0.30,  0.00]
 ];
 
-const mockMatrix2 = [
-    [ 0.00,  0.10,  0.10,  0.10,  0.10],
-    [ 0.10,  0.00,  0.10,  0.10,  0.10],
-    [ 0.10,  0.10,  0.00,  0.10,  0.10],
-    [ 0.10,  0.10,  0.10,  0.00,  0.10],
-    [ 0.10,  0.10,  0.10,  0.10,  0.00]
-];
-
-const mockLabels = ["Item A", "Item B", "Item C", "Item D", "Item E"];
+const mockLabels = ["12", "3215", "14", "4364", "1234"];
 
 
-export default function AnalysisPage({ darkMode, itemList }) {
+export default function AnalysisPage({ darkMode, itemList, idToNameMap }) {
+    const url = process.env.NODE_ENV === "development"
+    ? "http://127.0.0.1:5000"
+    : "https://runescape-tracker.impaas.uk";
+
     const [labels, setLabels] = useState([]);
-    const [corrMatrix, setCorrMatrix] = useState([]);
+    const [corrMatrix, setCorrMatrix] = useState([[]]);
 
     const fetchCorrelations = async (newItemId) => {
-        const response = await fetch('/api/correlations', {
+        console.log('NEW ID: ', newItemId);
+        console.log('LABELS:', labels);
+
+        const response = await fetch(`${url}/api/correlations`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -36,16 +35,19 @@ export default function AnalysisPage({ darkMode, itemList }) {
             })
         })
         const newCorrelations = await response.json();
+
+        console.log('NEW CORRELATIONS:', newCorrelations);
         return newCorrelations;
     }
     
     const updateMatrix = (newItemId, correlations) => {
-
         setCorrMatrix((prev) => {
             const newRow = []  // empty list for new item's row
 
             const newMatrix = prev.map((row, i) => {
-                const newCorr = correlations[labels[i]];
+                const corrMapValue = correlations[labels[i]];
+                // If there is no corr data for the ID, just assume no corr exists
+                const newCorr = corrMapValue !== undefined ? corrMapValue : 0.00;
                 newRow.push(newCorr);  // also push corr to new item's row
                 return [...row, newCorr];
             })
@@ -63,11 +65,14 @@ export default function AnalysisPage({ darkMode, itemList }) {
     }
 
     const handleOptionSelect = async (itemId) => {
+        console.log('HANDLING SELECT', itemId);
         if (itemId) {
             // If first item, just add it to the matrix (no fetch needed)
-            if (corrMatrix.length() == 0) {
-                setCorrMatrix([0.00]);
+            if (corrMatrix[0].length == 0) {
+                console.log('CORR MATRIX EMPTY');
+                setCorrMatrix([[0.00]]);
                 setLabels([itemId]);
+                console.log("LABELS FROM OPTION SELECT: ", labels);
                 return;
             }
             // Get relevant correlation data
@@ -94,8 +99,9 @@ export default function AnalysisPage({ darkMode, itemList }) {
             <div >
                 <CorrelationDiagram 
                     darkMode={darkMode}
-                    corrMatrix={mockMatrix}
+                    corrMatrix={corrMatrix}
                     labels={labels}
+                    idToNameMap={idToNameMap}
                 />
             </div>
             
