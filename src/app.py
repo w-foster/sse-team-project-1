@@ -13,6 +13,7 @@ from item_views import user_already_viewed_item, insert_item_view, get_most_view
 from get_high_alch_data import get_high_alch_data
 from get_random_id import get_random_id
 from get_market_index_data import get_market_index_graph_data
+from get_correlation_data import get_correlation_data
 from datetime import datetime
 
 app = Flask(__name__, static_folder='../frontend/build', static_url_path='')  # Update the static folder path
@@ -181,10 +182,19 @@ def favourited_items():
     response = get_most_favourited_items(num_of_items)
     return jsonify(response)
 
+@app.route('/api/correlations', methods=['POST'])
+def correlations():
+    data = request.json
 
-@app.route('/<path:path>')
-def catchall(path):
-    return send_from_directory(app.static_folder, "index.html")
+    target_item_id = data['target_item_id']
+    item_id_list = data['item_id_list']
+    correlation_map = get_correlation_data(target_item_id, item_id_list)
+
+    if correlation_map is None:
+        return jsonify({'error': 'Failed to fetch correlation data.'})
+    return jsonify(correlation_map)
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)

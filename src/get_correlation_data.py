@@ -44,9 +44,9 @@ def get_correlation_data(target_item_id, item_id_list):
             non_target_id = row['item_id_1']
             correlation_map[non_target_id] = row['correlation']
         else:
-            return jsonify({'error': 'Found row without target item.'})
+            return None
 
-    return jsonify(correlation_map)
+    return correlation_map
 
 
     
