@@ -26,6 +26,9 @@ __pycache__/
 /node_modules
 node_modules/
 
+# Pickle files
+*.pkl
+
 # Distribution / packaging
 .Python
 develop-eggs/

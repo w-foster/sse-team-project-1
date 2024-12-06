@@ -19,7 +19,7 @@ const mockMatrix2 = [
     [ 0.10,  0.10,  0.10,  0.10,  0.00]
 ];
 
-const labels = ["Item A", "Item B", "Item C", "Item D", "Item E"];
+const mockLabels = ["Item A", "Item B", "Item C", "Item D", "Item E"];
 
 
 export default function AnalysisPage({ darkMode, itemList }) {
@@ -31,8 +31,8 @@ export default function AnalysisPage({ darkMode, itemList }) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                newItemId: newItemId,
-                currentItemIds: labels,
+                target_item_id: newItemId,
+                item_id_list: labels
             })
         })
         const newCorrelations = await response.json();
@@ -40,37 +40,23 @@ export default function AnalysisPage({ darkMode, itemList }) {
     }
     
     const updateMatrix = (newItemId, correlations) => {
-        // Add item to chord diagram
-        /**
-         * {
-                "newItem": "ItemX",
-                "correlations": [
-                    { "item": "ItemA", "value": 0.35 },
-                    { "item": "ItemB", "value": -0.20 },
-                    { "item": "ItemC", "value": 0.50 }
-                ]
-            }
-
-        */
-        // Shld this be before or after ?
-        setLabels((prev) => [...prev, ]);
 
         setCorrMatrix((prev) => {
+            const newRow = []  // empty list for new item's row
+
             const newMatrix = prev.map((row, i) => {
-                const corrObj = correlations.find(corr => corr.itemId === labels[i]);
-                return [...row, corrObj ? corrObj.value : 0.00];
-            });
-        
-
-            const newRow = labels.map(label => {
-                const corrObj = correlations.find(corr => corr.itemId === label);
-                return corrObj ? corrObj.value : 0;
-            });
-
-            // Add corr with itself -- assumes this is not part of Flask response
-            newRow.push(1.00);
-
+                const newCorr = correlations[labels[i]];
+                newRow.push(newCorr);  // also push corr to new item's row
+                return [...row, newCorr];
+            })
+            
+            // Add self-corr to the new item's row (not part of Flask response)
+            // (using 0.00 not 1.00 to force d3 diagram to ignore it)
+            newRow.push(0.00);
+            // Add the new item row to the matrix
             newMatrix.push(newRow);
+            // Add the new item to the end of the labels list
+            setLabels((prev) => [...prev, newItemId]);
 
             return newMatrix;
         });
@@ -78,12 +64,18 @@ export default function AnalysisPage({ darkMode, itemList }) {
 
     const handleOptionSelect = async (itemId) => {
         if (itemId) {
-
+            // If first item, just add it to the matrix (no fetch needed)
+            if (corrMatrix.length() == 0) {
+                setCorrMatrix([0.00]);
+                setLabels([itemId]);
+                return;
+            }
+            // Get relevant correlation data
             const newCorrelations = await fetchCorrelations(itemId);
-            
+            // Update the matrix to reflect the new data
             updateMatrix(itemId, newCorrelations);
-            
-          return;
+        } else {
+            console.log('Option select failed.')
         }
     };
 
