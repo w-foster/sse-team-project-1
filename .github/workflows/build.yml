@@ -24,7 +24,7 @@ jobs:
 
       - name: Run flake8 (linting)
         run: |
-          flake8 . --max-line-length=90  # Ensure this matches black's line-length
+          flake8 . # Ensure this matches black's line-length
 
   deploy-to-impaas:
     needs: python-formatting
