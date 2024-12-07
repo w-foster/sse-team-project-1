@@ -1,6 +1,6 @@
 import pytest
 from db_client import supabase
-from get_item_data import get_item_description  # Replace with your actual module name
+from get_item_text import get_item_description  # Replace with your actual module name
 
 # Predefined constants for test
 TEST_ITEM_ID = 123
