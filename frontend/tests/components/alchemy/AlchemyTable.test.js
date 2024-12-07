@@ -1,41 +1,12 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { BrowserRouter as Router } from 'react-router-dom'; // Mocking the router for navigation
-import AlchemyTable from './AlchemyTable'; // Adjust the import path as necessary
-import * as reactRouterDom from 'react-router-dom'; // Mocking useNavigate
-import '@testing-library/jest-dom'; // For the "toBeInTheDocument" matcher
+import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import '@testing-library/jest-dom'; // Provides matchers like "toBeInTheDocument"
+import AlchemyTable from '../../../src/components/alchemy/AlchemyTable';
 
-// Mocking the dependencies
-jest.mock('@mui/x-data-grid', () => ({
-  DataGrid: ({ rows, columns, onRowClick }) => (
-    <table>
-      <thead>
-        <tr>
-          {columns.map((col) => (
-            <th key={col.field}>{col.headerName}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {rows.map((row) => (
-          <tr key={row.id} onClick={() => onRowClick({ row })}>
-            {columns.map((col) => (
-              <td key={col.field}>{row[col.field]}</td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  ),
-}));
+global.fetch = jest.fn(); // Mock global fetch API
 
-// Mocking fetch
-global.fetch = jest.fn();
-
-// Mocking the useNavigate hook
-const mockNavigate = jest.fn();
-jest.spyOn(reactRouterDom, 'useNavigate').mockImplementation(() => mockNavigate);
-
-describe('AlchemyTable', () => {
+describe('AlchemyTable Component', () => {
   const mockAddFavourite = jest.fn();
   const mockRemoveFavourite = jest.fn();
 
@@ -44,112 +15,105 @@ describe('AlchemyTable', () => {
     fetch.mockReset();
   });
 
-  it('renders the table with data from API', async () => {
-    // Mock the API responses
-    fetch.mockResolvedValueOnce({
-      json: () => Promise.resolve([{ id: 1, name: 'Item 1', highalch: 100, high: 90, low: 50, icon: 'item1.png' }]),
-    }); // Mock /api/items response
-    fetch.mockResolvedValueOnce({
-      json: () => Promise.resolve([{ id: 1, highalch: 120 }]),
-    }); // Mock /api/high-alch response
+  const mockFavourites = [1, 3]; // Mock favorite item IDs
 
-    // Render the component inside a Router to handle navigation
+  const mockPriceData = [
+    { id: 1, name: 'Item 1', high: 200, low: 150, icon: 'icon1.png' },
+    { id: 2, name: 'Item 2', high: 300, low: 250, icon: 'icon2.png' },
+  ];
+
+  const mockHighAlchData = [
+    { id: 1, highalch: 400 },
+    { id: 2, highalch: 500 },
+  ];
+
+  it('renders the DataGrid with data', async () => {
+    // Mock fetch responses
+    fetch
+      .mockResolvedValueOnce({
+        json: jest.fn().mockResolvedValue(mockPriceData),
+      }) // Mock /api/items
+      .mockResolvedValueOnce({
+        json: jest.fn().mockResolvedValue(mockHighAlchData),
+      }); // Mock /api/high-alch
+
+    // Render component with necessary props
     render(
-      <Router>
+      <BrowserRouter>
         <AlchemyTable
-          favourites={[]}
+          favourites={mockFavourites}
           addFavourite={mockAddFavourite}
           removeFavourite={mockRemoveFavourite}
         />
-      </Router>
+      </BrowserRouter>
     );
 
-    // Wait for data to load and check if it's rendered
-    await waitFor(() => screen.getByText('Item 1'));
-
-    expect(screen.getByText('Item 1')).toBeInTheDocument();
-    expect(screen.getByText('100')).toBeInTheDocument();
-    expect(screen.getByText('90')).toBeInTheDocument();
+    // Wait for the fetch to resolve and rows to populate
+    expect(await screen.findByText('Item 1')).toBeInTheDocument();
+    expect(await screen.findByText('Item 2')).toBeInTheDocument();
+    expect(screen.getByText('High Margin')).toBeInTheDocument();
   });
 
-  it('calls addFavourite when the star icon is clicked', async () => {
-    fetch.mockResolvedValueOnce({
-      json: () => Promise.resolve([{ id: 1, name: 'Item 1', highalch: 100, high: 90, low: 50, icon: 'item1.png' }]),
-    });
-    fetch.mockResolvedValueOnce({
-      json: () => Promise.resolve([{ id: 1, highalch: 120 }]),
-    });
-
+  it('handles adding a favorite', async () => {
     render(
-      <Router>
+      <BrowserRouter>
         <AlchemyTable
-          favourites={[]}
+          favourites={mockFavourites}
           addFavourite={mockAddFavourite}
           removeFavourite={mockRemoveFavourite}
         />
-      </Router>
+      </BrowserRouter>
     );
 
-    await waitFor(() => screen.getByText('Item 1'));
+    // Wait for the rows to render
+    const favoriteButton = await screen.findAllByRole('button', { name: /favorite/i });
+    fireEvent.click(favoriteButton[1]); // Simulate clicking the favorite button on the second item
 
-    const starButton = screen.getByRole('button');
-    fireEvent.click(starButton);
-
-    // Check if the addFavourite function was called
-    expect(mockAddFavourite).toHaveBeenCalledTimes(1);
+    // Verify addFavourite was called with the correct ID
+    expect(mockAddFavourite).toHaveBeenCalledWith(2);
   });
 
-  it('calls removeFavourite when the star icon is clicked again', async () => {
-    fetch.mockResolvedValueOnce({
-      json: () => Promise.resolve([{ id: 1, name: 'Item 1', highalch: 100, high: 90, low: 50, icon: 'item1.png' }]),
-    });
-    fetch.mockResolvedValueOnce({
-      json: () => Promise.resolve([{ id: 1, highalch: 120 }]),
-    });
-
+  it('handles removing a favorite', async () => {
     render(
-      <Router>
+      <BrowserRouter>
         <AlchemyTable
-          favourites={[1]} // Pass in this item as a favourite
+          favourites={mockFavourites}
           addFavourite={mockAddFavourite}
           removeFavourite={mockRemoveFavourite}
         />
-      </Router>
+      </BrowserRouter>
     );
 
-    await waitFor(() => screen.getByText('Item 1'));
+    // Wait for the rows to render
+    const favoriteButton = await screen.findAllByRole('button', { name: /favorite/i });
+    fireEvent.click(favoriteButton[0]); // Simulate clicking the favorite button on the first item
 
-    const starButton = screen.getByRole('button');
-    fireEvent.click(starButton);
-
-    // Check if the removeFavourite function was called
-    expect(mockRemoveFavourite).toHaveBeenCalledTimes(1);
+    // Verify removeFavourite was called with the correct ID
+    expect(mockRemoveFavourite).toHaveBeenCalledWith(1);
   });
 
-  it('navigates to the correct page when a row is clicked', async () => {
-    fetch.mockResolvedValueOnce({
-      json: () => Promise.resolve([{ id: 1, name: 'Item 1', highalch: 100, high: 90, low: 50, icon: 'item1.png' }]),
-    });
-    fetch.mockResolvedValueOnce({
-      json: () => Promise.resolve([{ id: 1, highalch: 120 }]),
-    });
+  it('navigates to item detail page on row click', async () => {
+    const mockNavigate = jest.fn();
+    jest.mock('react-router-dom', () => ({
+      ...jest.requireActual('react-router-dom'),
+      useNavigate: () => mockNavigate,
+    }));
 
     render(
-      <Router>
+      <BrowserRouter>
         <AlchemyTable
-          favourites={[]}
+          favourites={mockFavourites}
           addFavourite={mockAddFavourite}
           removeFavourite={mockRemoveFavourite}
         />
-      </Router>
+      </BrowserRouter>
     );
 
-    await waitFor(() => screen.getByText('Item 1'));
+    // Wait for the rows to render
+    const row = await screen.findByText('Item 1');
+    fireEvent.click(row); // Simulate clicking the row
 
-    const row = screen.getByText('Item 1').closest('tr');
-    fireEvent.click(row);
-
-    // Check if navigate was called with the correct path
+    // Verify navigate was called with the correct route
     expect(mockNavigate).toHaveBeenCalledWith('/items/1');
   });
 });
