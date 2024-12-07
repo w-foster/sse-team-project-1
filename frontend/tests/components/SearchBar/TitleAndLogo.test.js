@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom'; // Provides matchers like toBeInTheDocument
-import TitleAndLogo from '../../../src/components/TitleAndLogo'; // Adjust the path as necessary
+import TitleAndLogo from '../../../src/components/SearchBar/TitleAndLogo'; // Adjust the path as necessary
 
 describe('TitleAndLogo Component', () => {
   it('renders with the correct className', () => {
