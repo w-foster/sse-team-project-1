@@ -5,7 +5,7 @@ from get_favourites_data import get_favourites_data
 # Real user id for a pre-existing test user in the Auth table
 TEST_USER_ID = "563cb0d8-57df-4f01-befe-6b7cee3452c6"
 # Selection of item IDs to test with
-TEST_ITEM_IDS = [2, 10344, 8]
+TEST_ITEM_IDS = [2, 8, 10344]
 
 
 @pytest.fixture
