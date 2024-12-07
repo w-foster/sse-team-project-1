@@ -51,12 +51,10 @@ def get_favourites():
         return jsonify({"error": "user_id is reqiured"}), 400
 
     # Call helper function to get favourites data from DB
-    supabase_response = get_favourites_data(user_id)
+    item_data = get_favourites_data(user_id)
 
     # HANDLE ERROR HERE SOMEHOW ? not with .get('error) it broke it
 
-    # Extract 'data' (array of objects)
-    item_data = supabase_response.data
     # Build array of item_ids and return jsonified version
     item_ids = [item["item_id"] for item in item_data]
     return jsonify(item_ids)

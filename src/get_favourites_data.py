@@ -9,7 +9,7 @@ def get_favourites_data(user_id):
     )
     # Return raw data
     # (error handling + data processing done by caller)
-    return response
+    return response.data
 
 
 # Example usage:
