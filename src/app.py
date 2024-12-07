@@ -1,7 +1,6 @@
-from flask import Flask, render_template, send_from_directory, request, jsonify
+from flask import Flask, send_from_directory, request, jsonify
 from flask_cors import CORS
 import os
-from db_client import supabase
 from get_favourites_data import get_favourites_data
 from get_most_favourited import get_most_favourited_items
 from get_item_data import get_api_data_items

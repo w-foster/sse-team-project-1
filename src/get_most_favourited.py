@@ -9,7 +9,7 @@ def get_most_favourited_items(num_of_items):
         num_of_items (int): The number of items to retrieve.
 
     Returns:
-        list[dict]: A list of dictionaries containing item_id and total_fav for the most favorited items.
+        list[dict]: A list of dictionaries containing item_id and total_fav.
     """
     try:
         # Call the `get_most_favourited_items` stored function

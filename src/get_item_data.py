@@ -1,5 +1,4 @@
 import requests
-from flask import jsonify
 import re
 import json
 from headers import headers  # import headers

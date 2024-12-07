@@ -15,7 +15,10 @@ def get_api_data(item_id: int, timestep: str):
         Optional[List[Dict[str, float]]]: The price data for the item,
                                           or None if an error occurred.
     """
-    api_url = f"https://prices.runescape.wiki/api/v1/osrs/timeseries?timestep={timestep}&id={item_id}"
+    api_url = (
+        "https://prices.runescape.wiki/api/v1/osrs/"
+        f"timeseries?timestep={timestep}&id={item_id}"
+    )
 
     try:
         response = requests.get(api_url, headers=headers)
@@ -56,7 +59,7 @@ def get_price_and_volume(data: List[Dict[str, float]]):
     Extracts price and volume data from the raw API response.
 
     Args:
-        data (List[Dict[str, float]]): A list of dictionaries containing the price and volume data.
+        data (List[Dict[str, float]]): Containing the price and volume data.
 
     Returns:
         Tuple[List[float], List[float], List[int], List[int]]:
@@ -92,9 +95,9 @@ def get_graph_data(item_id: int, timestep: str = "5m", filter: bool = True):
         filter (bool): If True filters out None values. Default to True.
 
     Returns:
-        Optional[Dict[str, List[int] or List[float]]]: A dictionary containing the time series,
-                                                      average high/low prices, and volumes,
-                                                      or None if an error occurred.
+        Optional[Dict[str, List[int] or List[float]]]: Containing time series,
+                                                average high/low prices, and volumes,
+                                                or None if an error occurred.
     """
     data = get_api_data(item_id, timestep)
     if not data:
@@ -112,7 +115,7 @@ def get_graph_data(item_id: int, timestep: str = "5m", filter: bool = True):
     highPriceVolume = highPriceVolume[:time_series_length]
     lowPriceVolume = lowPriceVolume[:time_series_length]
 
-    if filter == True:
+    if filter:
         filtered_data = filter_none_values(
             time_series,
             avgHighPrice,

@@ -8,7 +8,8 @@ import pickle
 def calculate_correlations(print_nan_stats: bool = False, filter_amount: int = 100):
     print("DEBUGGING. FUNC ENTERED")
     """
-    Computes pairwise correlations between time series data for items listed in a JSON file.
+    Computes pairwise correlations between time series data
+    for items listed in a JSON file.
     
     Args:
         print_nan_stats (bool): Whether to print statistics about NaN counts in the data.
@@ -16,7 +17,8 @@ def calculate_correlations(print_nan_stats: bool = False, filter_amount: int = 1
                              this threshold are filtered out.
     
     Returns:
-        pd.DataFrame: A DataFrame containing pairs of item IDs and their correlation coefficients.
+        pd.DataFrame: A DataFrame containing pairs of item IDs
+                    and their correlation coefficients.
     """
     file_path = "ItemList.json"
 

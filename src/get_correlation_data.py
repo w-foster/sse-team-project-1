@@ -1,15 +1,14 @@
 from db_client import supabase
-import json
-from flask import jsonify
 
 """
 target_item_id - the id for which you are getting correlation data
-item_id_list - the list of ids for which you want to see the correlations with target_item_id
+item_id_list - the list of ids for which you want to see
+                the correlations with target_item_id
 
 Example supabase rpc response:
 [   
-    {'item_id_1': 10344, 'item_id_2': 10350, 'correlation': 0.857418145514517}, 
-    {'item_id_1': 10344, 'item_id_2': 12426, 'correlation': 0.434874799394743}, 
+    {'item_id_1': 10344, 'item_id_2': 10350, 'correlation': 0.857418145514517},
+    {'item_id_1': 10344, 'item_id_2': 12426, 'correlation': 0.434874799394743},
     {'item_id_1': 10344, 'item_id_2': 26233, 'correlation': -0.783021972980298}
 ]
 

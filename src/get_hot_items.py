@@ -1,7 +1,4 @@
 import requests
-from flask import jsonify
-import re
-import json
 from headers import headers  # import headers
 from get_item_data import add_name
 

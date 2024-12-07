@@ -1,5 +1,4 @@
 from db_client import supabase
-from typing import Optional, Dict
 
 
 def get_item_description(item_id):
