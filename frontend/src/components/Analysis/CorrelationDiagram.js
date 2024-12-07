@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
 
-const ChordDiagram = ({ corrMatrix, labels, darkMode }) => {
+const ChordDiagram = ({ corrMatrix, labels, darkMode, idToNameMap }) => {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -62,12 +62,6 @@ const ChordDiagram = ({ corrMatrix, labels, darkMode }) => {
             .attr("opacity", ribbonD =>
             ribbonD.source.index === d.index || ribbonD.target.index === d.index ? 1 : 0.1
             );
-
-        // Fade other arcs
-        svg.selectAll(".arc")
-            .transition()
-            .duration(200)
-            .attr("opacity", arcD => arcD.index === d.index ? 1 : 0.1);
       })
       .on("mouseout", () => {
         svg.selectAll(".ribbon")
@@ -94,7 +88,7 @@ const ChordDiagram = ({ corrMatrix, labels, darkMode }) => {
       .attr('fill', () => {
         return darkMode ? '#fff' : '#000'
       })
-      .text(d => labels[d.index])
+      .text(d => idToNameMap.get(Number(labels[d.index])))
       .on("mouseover", (event, d) => {
         console.log("MOUSEOVER PATH");
         // Highlight ribbons associated with this arc
@@ -104,12 +98,6 @@ const ChordDiagram = ({ corrMatrix, labels, darkMode }) => {
             .attr("opacity", ribbonD =>
             ribbonD.source.index === d.index || ribbonD.target.index === d.index ? 1 : 0.1
             );
-
-        // Fade other arcs
-        svg.selectAll(".arc")
-            .transition()
-            .duration(200)
-            .attr("opacity", arcD => arcD.index === d.index ? 1 : 0.1);
       })
       .on("mouseout", () => {
         svg.selectAll(".ribbon")
@@ -144,7 +132,7 @@ const ChordDiagram = ({ corrMatrix, labels, darkMode }) => {
       .data(chords)
       .join("path")
       .attr("class", "ribbon")
-      .attr("fill", d => colourScale(corrMatrix[d.source.index][d.target.index])) // You can change color by sign later
+      .attr("fill", d => colourScale(corrMatrix[d.source.index][d.target.index])) 
       .attr("stroke", d => colourScale(corrMatrix[d.source.index][d.target.index]))
       .attr("d", ribbon)
       .on("mouseover", (event, d) => {
