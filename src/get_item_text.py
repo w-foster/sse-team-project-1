@@ -1,6 +1,7 @@
 from db_client import supabase
 from typing import Optional, Dict
 
+
 def get_item_description(item_id):
     """
     Query Supabase to fetch the item description based on the item_id.
@@ -17,8 +18,8 @@ def get_item_description(item_id):
         # Query Supabase for the description
         response = (
             supabase.table("mapping_data")  # Replace with your table name
-            .select("examine")              # Replace with your column name
-            .eq("id", item_id)              # Replace "id" if your column name differs
+            .select("examine")  # Replace with your column name
+            .eq("id", item_id)  # Replace "id" if your column name differs
             .execute()
         )
 
@@ -39,4 +40,4 @@ def get_item_description(item_id):
 
 
 if __name__ == "__main__":
-     get_item_description()
+    get_item_description()

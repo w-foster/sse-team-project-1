@@ -4,7 +4,12 @@ import json
 
 # CHANGE THIS TO TSURU ENV VARS LATER!
 SUPABASE_URL = "https://lacstwcjmfdrnebmmpdl.supabase.co"
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxhY3N0d2NqbWZkcm5lYm1tcGRsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzI1NTE1NzgsImV4cCI6MjA0ODEyNzU3OH0.tankWlViseqQUzaR5wxQfuJoc8WxTLl28jBOotlBPbY"
+SUPABASE_KEY = (
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9."
+    "eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxhY3N0d2NqbWZkcm5"
+    "lYm1tcGRsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzI1NTE1Nzg"
+    "sImV4cCI6MjA0ODEyNzU3OH0.tankWlViseqQUzaR5wxQfuJoc8WxTLl28jBOotlBPbY"
+)
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 api_url = "https://prices.runescape.wiki/api/v1/osrs/mapping"
@@ -25,7 +30,9 @@ try:
     filtered_data = [{"id": item["id"], "name": item["name"]} for item in data]
 
     with open("frontend/runescape-tracker/src/SearchBar/ItemList.js", "w") as js_file:
-        js_file.write(f"export const itemList = {json.dumps(filtered_data, indent=2)};\n")
+        js_file.write(
+            f"export const itemList = {json.dumps(filtered_data, indent=2)};\n"
+        )
 
     print("Data has been written to ItemList.js")
 

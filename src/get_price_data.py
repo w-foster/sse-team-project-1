@@ -1,5 +1,5 @@
 import requests
-from typing import List, Dict, Optional, Tuple
+from typing import List, Dict
 from headers import headers
 
 
@@ -12,12 +12,10 @@ def get_api_data(item_id: int, timestep: str):
         timestep (str): The timestep for the data (e.g., '5m', '1h', '24h').
 
     Returns:
-        Optional[List[Dict[str, float]]]: The price data for the item as a list of dictionaries,
+        Optional[List[Dict[str, float]]]: The price data for the item,
                                           or None if an error occurred.
     """
     api_url = f"https://prices.runescape.wiki/api/v1/osrs/timeseries?timestep={timestep}&id={item_id}"
-
-    
 
     try:
         response = requests.get(api_url, headers=headers)
@@ -77,11 +75,14 @@ def get_price_and_volume(data: List[Dict[str, float]]):
 
 def filter_none_values(t_series, x_series, y_series, z_series, w_series):
     # Filter out None values from all series
-    return [(t, x, y, z, w) for t, x, y, z, w in zip(t_series, x_series, y_series, z_series, w_series) 
-            if x is not None and y is not None and z is not None and w is not None]
+    return [
+        (t, x, y, z, w)
+        for t, x, y, z, w in zip(t_series, x_series, y_series, z_series, w_series)
+        if x is not None and y is not None and z is not None and w is not None
+    ]
 
 
-def get_graph_data(item_id: int, timestep: str="5m", filter: bool=True):
+def get_graph_data(item_id: int, timestep: str = "5m", filter: bool = True):
     """
     Retrieves and formats the graph data for a given item and timestep.
 
@@ -91,7 +92,7 @@ def get_graph_data(item_id: int, timestep: str="5m", filter: bool=True):
         filter (bool): If True filters out None values. Default to True.
 
     Returns:
-        Optional[Dict[str, List[int] or List[float]]]: A dictionary containing the time series, 
+        Optional[Dict[str, List[int] or List[float]]]: A dictionary containing the time series,
                                                       average high/low prices, and volumes,
                                                       or None if an error occurred.
     """
@@ -100,7 +101,9 @@ def get_graph_data(item_id: int, timestep: str="5m", filter: bool=True):
         return None
 
     time_series = get_time_series(timestep)
-    avgHighPrice, avgLowPrice, highPriceVolume, lowPriceVolume = get_price_and_volume(data)
+    avgHighPrice, avgLowPrice, highPriceVolume, lowPriceVolume = get_price_and_volume(
+        data
+    )
 
     time_series_length = len(time_series)
 
@@ -110,19 +113,39 @@ def get_graph_data(item_id: int, timestep: str="5m", filter: bool=True):
     lowPriceVolume = lowPriceVolume[:time_series_length]
 
     if filter == True:
-        filtered_data = filter_none_values(time_series, avgHighPrice, avgLowPrice, highPriceVolume, lowPriceVolume)
-        time_series, avgHighPrice, avgLowPrice, highPriceVolume, lowPriceVolume = zip(*filtered_data) if filtered_data else ([], [], [], [], [])
-    
+        filtered_data = filter_none_values(
+            time_series,
+            avgHighPrice,
+            avgLowPrice,
+            highPriceVolume,
+            lowPriceVolume,
+        )
+        (
+            time_series,
+            avgHighPrice,
+            avgLowPrice,
+            highPriceVolume,
+            lowPriceVolume,
+        ) = (
+            zip(*filtered_data) if filtered_data else ([], [], [], [], [])
+        )
+
     return {
         "time_series": time_series,
         "avgHighPrice": avgHighPrice,
         "avgLowPrice": avgLowPrice,
         "highPriceVolume": highPriceVolume,
-        "lowPriceVolume": lowPriceVolume
+        "lowPriceVolume": lowPriceVolume,
     }
 
 
 # Example usage:
 if __name__ == "__main__":
     data = get_graph_data(4151, "5m")
-    print(len(data["time_series"]), len(data["avgHighPrice"]), len(data["avgLowPrice"]), len(data["highPriceVolume"]), len(data["lowPriceVolume"]))
+    print(
+        len(data["time_series"]),
+        len(data["avgHighPrice"]),
+        len(data["avgLowPrice"]),
+        len(data["highPriceVolume"]),
+        len(data["lowPriceVolume"]),
+    )

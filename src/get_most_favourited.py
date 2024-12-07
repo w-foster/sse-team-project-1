@@ -1,19 +1,22 @@
 from db_client import supabase
 
+
 def get_most_favourited_items(num_of_items):
     """
     Fetches the most favorited items from the database.
-    
+
     Args:
         num_of_items (int): The number of items to retrieve.
-        
+
     Returns:
         list[dict]: A list of dictionaries containing item_id and total_fav for the most favorited items.
     """
     try:
         # Call the `get_most_favourited_items` stored function
-        response = supabase.rpc('get_most_favourited_items', {'num_of_items': num_of_items}).execute()
-        
+        response = supabase.rpc(
+            "get_most_favourited_items", {"num_of_items": num_of_items}
+        ).execute()
+
         if response.data:
             print(f"Most Favorited Items: {response.data}")
             return response.data

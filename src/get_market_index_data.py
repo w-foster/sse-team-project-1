@@ -1,10 +1,39 @@
 from get_price_data import get_graph_data
 
+
 def get_market_index_graph_data(timestep: str = "5m"):
     # Define the basket of item IDs for the market index
-    #basket_of_items = [4151, 2]  # Example item IDs
-    basket_of_items = [453, 2353, 444, 561, 560, 7936, 1515, 1513, 1739, 377, 7944, 1799, 1761, 225, 231, 3000, 263, 4151, 11840, 13024, 10034, 8778, 385, 1753, 536, 2, 11284]
-    
+    # basket_of_items = [4151, 2]  # Example item IDs
+    basket_of_items = [
+        453,
+        2353,
+        444,
+        561,
+        560,
+        7936,
+        1515,
+        1513,
+        1739,
+        377,
+        7944,
+        1799,
+        1761,
+        225,
+        231,
+        3000,
+        263,
+        4151,
+        11840,
+        13024,
+        10034,
+        8778,
+        385,
+        1753,
+        536,
+        2,
+        11284,
+    ]
+
     # Fetch data for each item
     item_data_list = []
     for item_id in basket_of_items:
@@ -31,7 +60,7 @@ def get_market_index_graph_data(timestep: str = "5m"):
         return None
 
     # Determine base prices:
-    # We want a base price from a specific date. Since 24h data goes back 365 days, 
+    # We want a base price from a specific date. Since 24h data goes back 365 days,
     # let's assume we're using that dataset as the source of base prices.
     # For now, just pick the first point in the current dataset as a placeholder.
     # If we want a stable base (e.g., from exactly one year ago), we could:
@@ -60,8 +89,7 @@ def get_market_index_graph_data(timestep: str = "5m"):
 
     # Filter again in case some items don't have a base price
     filtered_item_data = [
-        (item_id, d) for (item_id, d) in filtered_item_data 
-        if item_id in base_prices
+        (item_id, d) for (item_id, d) in filtered_item_data if item_id in base_prices
     ]
 
     if not filtered_item_data:
@@ -82,7 +110,7 @@ def get_market_index_graph_data(timestep: str = "5m"):
             current_low = d["avgLowPrice"][i]
             current_price = (current_high + current_low) / 2.0
             base_price = base_prices[item_id]
-            
+
             if base_price > 0:
                 ratio = current_price / base_price
                 ratios_at_time_i.append(ratio)
@@ -98,10 +126,7 @@ def get_market_index_graph_data(timestep: str = "5m"):
     # Filter out any None values if needed, or assume all are good
     # For simplicity, we assume all have data. Otherwise, you'd need a filtering step.
 
-    return {
-        "time_series": reference_time_series,
-        "indexValues": indexValues
-    }
+    return {"time_series": reference_time_series, "indexValues": indexValues}
 
 
 # Example usage:

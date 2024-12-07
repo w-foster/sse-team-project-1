@@ -1,5 +1,6 @@
 from db_client import supabase
 
+
 def get_high_alch_data():
     try:
         data = []

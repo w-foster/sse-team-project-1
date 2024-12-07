@@ -22,31 +22,27 @@ Structure of json payload:
 where id is an id from item_id_list, and correlation is the value of 
 that item's correlation with the target item (target_item_id)
 """
+
+
 def get_correlation_data(target_item_id, item_id_list):
     response = supabase.rpc(
-        'get_correlation_data',
-        {
-            'target_id': target_item_id,
-            'item_ids': item_id_list
-        }
+        "get_correlation_data",
+        {"target_id": target_item_id, "item_ids": item_id_list},
     ).execute()
-    
+
     print(response.data)
     correlation_data = response.data
 
     correlation_map = {}
 
     for row in correlation_data:
-        if row['item_id_1'] == target_item_id:
-            non_target_id = row['item_id_2']
-            correlation_map[non_target_id] = row['correlation']
-        elif row['item_id_2'] == target_item_id:
-            non_target_id = row['item_id_1']
-            correlation_map[non_target_id] = row['correlation']
+        if row["item_id_1"] == target_item_id:
+            non_target_id = row["item_id_2"]
+            correlation_map[non_target_id] = row["correlation"]
+        elif row["item_id_2"] == target_item_id:
+            non_target_id = row["item_id_1"]
+            correlation_map[non_target_id] = row["correlation"]
         else:
             return None
 
     return correlation_map
-
-
-    
