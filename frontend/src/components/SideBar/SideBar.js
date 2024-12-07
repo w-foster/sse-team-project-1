@@ -1,3 +1,4 @@
+import React from 'react';
 import FavouritesList from './FavouritesList';
 import SignInButton from './SignInButton';
 import { useNavigate } from 'react-router-dom';

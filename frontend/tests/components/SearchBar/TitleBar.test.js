@@ -1,9 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import TitleBar from '../../../src/components/SearchBar/TitleBar';
-import NavBar from '../../../src/components/SearchBar/NavBar';
-import SearchBar from '../../../src/components/SearchBar/SearchBar';
-import TitleAndLogo from '../../../src/components/SearchBar/TitleAndLogo';
 
 // Mock the child components
 jest.mock('../../../src/components/SearchBar/NavBar', () => jest.fn(() => <div>NavBar</div>));
