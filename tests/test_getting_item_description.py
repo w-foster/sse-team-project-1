@@ -3,7 +3,7 @@ from db_client import supabase
 from get_item_text import get_item_description  # Replace with your actual module name
 
 # Predefined constants for test
-TEST_ITEM_ID = 123
+TEST_ITEM_ID = 123456
 TEST_ITEM_DESCRIPTION = "This is a test description."
 
 
