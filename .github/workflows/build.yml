@@ -64,10 +64,12 @@ jobs:
 
       - name: Install dependencies
         run: |
+          cd frontend
           npm install
 
       - name: Run Jest tests
         run: |
+          cd frontend
           npm test -- --ci --runInBand  # Ensure tests run in CI mode
 
   deploy-to-impaas:
