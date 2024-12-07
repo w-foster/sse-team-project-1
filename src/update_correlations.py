@@ -1,6 +1,3 @@
-import pickle
-import pandas as pd
-import numpy as np
 from db_client import supabase
 from calculate_correlations import calculate_correlations
 
@@ -36,13 +33,11 @@ def update_correlations():
         # Prepare batch as a list of dictionaries
         rows = batch.to_dict(orient="records")
 
-        try:
-            response = (
-                supabase.table("correlations").upsert(rows).execute()  # Batch upsert
-            )
-            print(f"Upserted batch {i // BATCH_SIZE + 1}")
-        except Exception as e:
-            print(f"Failed to upsert batch {i // BATCH_SIZE + 1}: {e}")
+    try:
+        supabase.table("correlations").upsert(rows).execute()  # Batch upsert
+        print(f"Upserted batch {i // BATCH_SIZE + 1}")
+    except Exception as e:
+        print(f"Failed to upsert batch {i // BATCH_SIZE + 1}: {e}")
 
 
 if __name__ == "__main__":

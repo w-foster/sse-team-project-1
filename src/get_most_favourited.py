@@ -30,6 +30,6 @@ def get_most_favourited_items(num_of_items):
 
 if __name__ == "__main__":
     # Example usage
-    most_favourited = get_most_favourited_items(num_of_items)
+    most_favourited = get_most_favourited_items(5)
     for item in most_favourited:
         print(f"Item ID: {item['item_id']}, Total Favorites: {item['total_fav']}")

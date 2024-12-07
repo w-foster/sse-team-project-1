@@ -6,7 +6,7 @@ item_id_list - the list of ids for which you want to see
                 the correlations with target_item_id
 
 Example supabase rpc response:
-[   
+[
     {'item_id_1': 10344, 'item_id_2': 10350, 'correlation': 0.857418145514517},
     {'item_id_1': 10344, 'item_id_2': 12426, 'correlation': 0.434874799394743},
     {'item_id_1': 10344, 'item_id_2': 26233, 'correlation': -0.783021972980298}
@@ -18,7 +18,7 @@ Structure of json payload:
     id: correlation,
     id: correlation
 }
-where id is an id from item_id_list, and correlation is the value of 
+where id is an id from item_id_list, and correlation is the value of
 that item's correlation with the target item (target_item_id)
 """
 

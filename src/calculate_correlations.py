@@ -2,7 +2,6 @@ from get_price_data import get_graph_data
 import json
 import numpy as np
 import pandas as pd
-import pickle
 
 
 def calculate_correlations(print_nan_stats: bool = False, filter_amount: int = 100):
@@ -10,12 +9,12 @@ def calculate_correlations(print_nan_stats: bool = False, filter_amount: int = 1
     """
     Computes pairwise correlations between time series data
     for items listed in a JSON file.
-    
+
     Args:
         print_nan_stats (bool): Whether to print statistics about NaN counts in the data.
-        filter_amount (int): Maximum number of NaN values allowed per row. Rows exceeding 
-                             this threshold are filtered out.
-    
+        filter_amount (int): Maximum number of NaN values allowed per row. Rows exceeding
+                            this threshold are filtered out.
+
     Returns:
         pd.DataFrame: A DataFrame containing pairs of item IDs
                     and their correlation coefficients.
@@ -72,7 +71,7 @@ def calculate_correlations(print_nan_stats: bool = False, filter_amount: int = 1
             na_stats,
             "\n",
         )
-        print(f"")
+        print("")
 
     if filter_amount:
         # filter for rows with too many na values
