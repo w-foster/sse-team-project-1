@@ -7,10 +7,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: 3.12
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install black flake8
+
+      - name: Run black (code formatting)
+        run: |
+          black . # Adjust the line length if necessary
+
+      - name: Run flake8 (linting)
+        run: |
+          flake8 . --max-line-length=90  # Ensure this matches black's line-length
 
   deploy-to-impaas:
     needs: python-formatting
