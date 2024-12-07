@@ -26,7 +26,7 @@ jobs:
         run: |
           flake8 . # Ensure this matches black's line-length
 
-  tests:
+  backend-tests:
     needs: python-formatting
     runs-on: ubuntu-latest
     steps:
@@ -50,8 +50,28 @@ jobs:
         run: |
           pytest ./tests
           
-  deploy-to-impaas:
+  frontend-tests:
     needs: python-formatting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'  # Or the version of Node.js you are using
+
+      - name: Install dependencies
+        run: |
+          npm install
+
+      - name: Run Jest tests
+        run: |
+          npm test -- --ci --runInBand  # Ensure tests run in CI mode
+
+  deploy-to-impaas:
+    needs: [python-formatting, backend-tests, frontend-tests]  # Ensure all jobs pass before deployment
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
