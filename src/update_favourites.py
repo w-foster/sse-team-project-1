@@ -35,5 +35,3 @@ def delete_favourite(user_id, item_id):
     except Exception as e:
         print(f"Error deleting favourite: {e}")
         return []
-
-

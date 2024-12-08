@@ -1,11 +1,64 @@
 import { about } from "../utils/tailwindClasses";
+import { LinkIcon } from '@heroicons/react/24/outline';
+import clsx from 'clsx';
+import { Container } from '../components/Container';
+import { GitHubIcon } from '../components/SocialIcons';
+
+function SocialLink({ className, href, children, icon: Icon }) {
+  return (
+    <li className={clsx(className, 'flex')}>
+      <a
+        href={href}
+        className="group flex text-sm font-medium text-zinc-800 transition hover:text-teal-500 dark:text-zinc-200 dark:hover:text-teal-500"
+      >
+        <Icon className="h-6 w-6 flex-none fill-zinc-500 transition group-hover:fill-teal-500" />
+        <span className="ml-4">{children}</span>
+      </a>
+    </li>
+  )
+}
+
+export const metadata = {
+  title: 'About',
+  description:
+    'RuneScape Price Tracker is a web application that allows users to track the prices of items in the popular MMORPG RuneScape.',
+}
 
 export default function AboutPage() {
-    return (
-        <div className={about}>
-            <div>
-                <h1>ABOUT PAGE!!!</h1>
-            </div>
+  return (
+    <div className={about}>
+    <Container className="mt-16 sm:mt-32">
+      <div className="grid grid-cols-1 gap-y-16 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:gap-y-12">
+        <div className="lg:pl-20">
+          <div className="max-w-xs px-2.5 lg:max-w-none">
+          </div>
         </div>
-    );
+        <div className="lg:order-first lg:row-span-2">
+          <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
+            RuneScape Price Tracker
+          </h1>
+          <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
+            <p>
+                RuneScape Price Tracker is a web application that allows users to track the prices of items in the popular MMORPG RuneScape.
+            </p>
+          </div>
+        </div>
+        <div className="lg:pl-20">
+          <ul role="list">
+            <SocialLink href="https://github.com/w-foster/sse-team-project-1" icon={GitHubIcon} className="mt-4">
+              Follow on GitHub
+            </SocialLink>
+            <SocialLink
+              href="https://oldschool.runescape.wiki/w/RuneScape:Real-time_Prices"
+              icon={LinkIcon}
+              className="mt-8 border-t border-zinc-100 pt-8 dark:border-zinc-700/40"
+            >
+              RuneScape API
+            </SocialLink>
+          </ul>
+        </div>
+      </div>
+    </Container>
+    </div>
+  )
 }
