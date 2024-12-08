@@ -14,6 +14,7 @@ def insert_favourite(user_id, item_id):
         else:
             return []
     except Exception as e:
+        print(f"Error inserting favourite: {e}")
         return []
 
 
@@ -32,6 +33,7 @@ def delete_favourite(user_id, item_id):
         else:
             return []
     except Exception as e:
+        print(f"Error deleting favourite: {e}")
         return []
 
 
