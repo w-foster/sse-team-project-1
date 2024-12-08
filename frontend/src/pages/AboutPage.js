@@ -27,7 +27,7 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <div className={about}>
-    <Container className="mt-16 sm:mt-32">
+    <Container className="mt-4 sm:mt-8">
       <div className="grid grid-cols-1 gap-y-16 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:gap-y-12">
         <div className="lg:pl-20">
           <div className="max-w-xs px-2.5 lg:max-w-none">
@@ -42,6 +42,17 @@ export default function AboutPage() {
                 RuneScape Price Tracker is a web application that allows users to track the prices of items in the popular MMORPG RuneScape.
             </p>
           </div>
+          <h3 className="mt-6 text-2xl font-bold tracking-tight text-zinc-800 sm:text-2xl dark:text-zinc-100">
+            Features Implemented:
+          </h3>
+          <ul className="mt-4 list-disc list-inside text-base text-zinc-600 dark:text-zinc-400">
+            <li>Search for specific items with ease.</li>
+            <li>View historical price/volume trends and charts.</li>
+            <li>User login system to save your favourites list and track items.</li>
+            <li>Alchemy table and item correlation analysis.</li>
+            <li>View most popular items among other users.</li>
+            <li>Dark mode and light mode support.</li>
+          </ul>
         </div>
         <div className="lg:pl-20">
           <ul role="list">
