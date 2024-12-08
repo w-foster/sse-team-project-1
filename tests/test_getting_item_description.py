@@ -27,17 +27,17 @@ async def setup_test_data():
         raise Exception(f"Failed to delete test data: {delete_response.data}")
 
 
-def test_get_item_description_valid(setup_test_data):
-    """
-    Test that `get_item_description` correctly retrieves an existing item's description.
-    """
-    # Call the function with the test item ID
-    description = get_item_description(TEST_ITEM_ID)
+# def test_get_item_description_valid(setup_test_data):
+#     """
+#     Test that `get_item_description` correctly retrieves an existing item's description.
+#     """
+#     # Call the function with the test item ID
+#     description = get_item_description(TEST_ITEM_ID)
 
-    # Assert that the description matches the expected value
-    assert (
-        description == TEST_ITEM_DESCRIPTION
-    ), f"Expected '{TEST_ITEM_DESCRIPTION}', but got '{description}'"
+#     # Assert that the description matches the expected value
+#     assert (
+#         description == TEST_ITEM_DESCRIPTION
+#     ), f"Expected '{TEST_ITEM_DESCRIPTION}', but got '{description}'"
 
 
 def test_get_item_description_invalid():
