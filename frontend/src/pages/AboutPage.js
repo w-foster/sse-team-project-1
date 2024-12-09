@@ -58,7 +58,7 @@ export default function AboutPage() {
             </h3>
             <ul className="mt-4 list-disc list-inside text-base text-zinc-600 dark:text-zinc-400">
               <li>
-                <strong>Geilinor Index:</strong> Displays an aggregate of 27 key items, summarizing their prices to give an overall market trend.
+                <strong>Gielinor Index:</strong> Displays an aggregate of 27 key items, summarizing their prices to give an overall market trend.
               </li>
               <li>
                 <strong>Volume Leaders:</strong> Highlights the top 10 items with the highest traded daily volume.

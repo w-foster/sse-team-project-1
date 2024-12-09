@@ -14,7 +14,7 @@ const demoItems = [8008, 11943, 64, 9416, 4151, 10344, 5044, 5046, 12437, 563]
 
 export default function AnalysisPage({ darkMode, itemList, idToNameMap }) {
     const [labels, setLabels] = useState([]);
-    const [corrMatrix, setCorrMatrix] = useState([[]]);
+    const [corrMatrix, setCorrMatrix] = useState([]);
 
 
     const fetchCorrelations = async (newItemId) => {
@@ -57,7 +57,7 @@ export default function AnalysisPage({ darkMode, itemList, idToNameMap }) {
     const handleOptionSelect = async (itemId) => {
         if (itemId) {
             // If first item, just add it to the matrix (no fetch needed)
-            if (Array.isArray(corrMatrix) && corrMatrix[0].length == 0) {
+            if (Array.isArray(corrMatrix) && corrMatrix.length == 0) {
                 setCorrMatrix([[0.00]]);
                 setLabels([itemId]);
             } else {
