@@ -76,7 +76,7 @@ const ChordDiagram = ({ corrMatrix, labels, darkMode, idToNameMap }) => {
       });
 
 
-    group.append("text")
+      group.append("text")
       .each(d => { d.angle = (d.startAngle + d.endAngle) / 2; })
       .attr("dy", "0.35em")
       .attr("transform", d => `
@@ -86,30 +86,41 @@ const ChordDiagram = ({ corrMatrix, labels, darkMode, idToNameMap }) => {
       `)
       .attr("text-anchor", d => d.angle > Math.PI ? "end" : "start")
       .attr('fill', () => {
-        return darkMode ? '#fff' : '#000'
+        return darkMode ? '#fff' : '#000';
       })
-      .text(d => idToNameMap.get(Number(labels[d.index])))
+      .each(function(d) {
+        const text = idToNameMap.get(Number(labels[d.index])) || ""; // Fallback to an empty string
+        const words = text.split(/\s+/); // Split text into words
+        const lineHeight = 1.1; // Adjust line height as needed
+        const tspan = d3.select(this)
+          .selectAll("tspan")
+          .data(words)
+          .join("tspan")
+          .text(word => word)
+          .attr("x", 0)
+          .attr("dy", (word, i) => `${i === 0 ? 0 : lineHeight}em`); // Position subsequent lines
+      })
       .on("mouseover", (event, d) => {
-        console.log("MOUSEOVER PATH");
-        // Highlight curved-paths associated with this arc
         svg.selectAll(".curvedpath")
-            .transition()
-            .duration(200)
-            .attr("opacity", curvedPathD =>
+          .transition()
+          .duration(200)
+          .attr("opacity", curvedPathD =>
             curvedPathD.source.index === d.index || curvedPathD.target.index === d.index ? 1 : 0.1
-            );
+          );
       })
       .on("mouseout", () => {
         svg.selectAll(".curvedpath")
           .transition()
           .duration(200)
           .attr("opacity", 0.7);
-    
+
         svg.selectAll(".arc")
           .transition()
           .duration(200)
           .attr("opacity", 1);
       });
+
+    
 
     
     const dynamicBlue = darkMode ? "#498df3" : "#024ebf";
