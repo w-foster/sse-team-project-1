@@ -1,31 +1,23 @@
 import CorrelationDiagram from "../components/Analysis/CorrelationDiagram";
 import SelectionBar from "../components/Analysis/SelectionBar";
+import CorrelationLegend from "../components/Analysis/CorrelationLegend";
+import SelectedItemList from "../components/Analysis/SelectedItemList";
 import { mainContainer } from "../utils/tailwindClasses";
 import { useState, useEffect } from 'react';
 
-const mockMatrix = [
-    [ 0.00,  0.35, -0.20,  0.80, -0.10],
-    [ 0.35,  0.00,  0.60, -0.45,  0.00],
-    [-0.20,  0.60,  0.00,  0.25,  0.55],
-    [ 0.80, -0.45,  0.25,  0.00, -0.30],
-    [-0.10,  0.00,  0.55, -0.30,  0.00]
-];
+const url = process.env.NODE_ENV === "development"
+? "http://127.0.0.1:5000"
+: "https://runescape-tracker.impaas.uk";
 
-const mockLabels = ["12", "3215", "14", "4364", "1234"];
-
+// EXAMPLE SELECTION OF ITEMS FOR GRAPH
+const demoItems = [8008, 11943, 64, 9416, 4151, 10344, 5044, 5046, 12437, 563]
 
 export default function AnalysisPage({ darkMode, itemList, idToNameMap }) {
-    const url = process.env.NODE_ENV === "development"
-    ? "http://127.0.0.1:5000"
-    : "https://runescape-tracker.impaas.uk";
-
     const [labels, setLabels] = useState([]);
     const [corrMatrix, setCorrMatrix] = useState([[]]);
 
-    const fetchCorrelations = async (newItemId) => {
-        console.log('NEW ID: ', newItemId);
-        console.log('LABELS:', labels);
 
+    const fetchCorrelations = async (newItemId) => {
         const response = await fetch(`${url}/api/correlations`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -35,8 +27,6 @@ export default function AnalysisPage({ darkMode, itemList, idToNameMap }) {
             })
         })
         const newCorrelations = await response.json();
-
-        console.log('NEW CORRELATIONS:', newCorrelations);
         return newCorrelations;
     }
     
@@ -65,34 +55,56 @@ export default function AnalysisPage({ darkMode, itemList, idToNameMap }) {
     }
 
     const handleOptionSelect = async (itemId) => {
-        console.log('HANDLING SELECT', itemId);
         if (itemId) {
             // If first item, just add it to the matrix (no fetch needed)
-            if (corrMatrix[0].length == 0) {
-                console.log('CORR MATRIX EMPTY');
+            if (Array.isArray(corrMatrix) && corrMatrix[0].length == 0) {
                 setCorrMatrix([[0.00]]);
                 setLabels([itemId]);
-                console.log("LABELS FROM OPTION SELECT: ", labels);
-                return;
+            } else {
+                // Get relevant correlation data
+                const newCorrelations = await fetchCorrelations(itemId);
+                // Update the matrix to reflect the new data
+                updateMatrix(itemId, newCorrelations);
             }
-            // Get relevant correlation data
-            const newCorrelations = await fetchCorrelations(itemId);
-            // Update the matrix to reflect the new data
-            updateMatrix(itemId, newCorrelations);
+
         } else {
             console.log('Option select failed.')
         }
     };
+
+    const handleClickDelete = (itemId) => {
+        if (itemId) {
+            // Remove item id from labels
+            setLabels((prev) => (
+                prev.filter(item => item !== itemId)
+            ));
+            // Remove each item's corr. with deleted item in corrMatrix
+            const index = labels.findIndex(label => label === itemId);
+            setCorrMatrix((prev) =>
+                prev
+                .filter((_, i) => i !== index) // remove index-th row
+                .map(row => row.filter((_, i) => i !== index)) // remove index-th col
+            );
+
+        } else {
+            console.log('Item delete failed.')
+        }
+    }
 
 
     return (
         <div className={mainContainer}
             style={{ display: 'flex', justifyContent: 'space-between' }}
         >
-            <div >
+            <div style={{display: 'flex', flexDirection: 'column'}}>
                 <SelectionBar
                     itemList={itemList}
                     handleOptionSelect={handleOptionSelect}
+                />
+                <SelectedItemList 
+                    selectedItems={labels}
+                    handleClickDelete={handleClickDelete}
+                    idToNameMap={idToNameMap}
                 />
             </div>
             
@@ -106,7 +118,10 @@ export default function AnalysisPage({ darkMode, itemList, idToNameMap }) {
             </div>
             
             <div >
-                <h1>Selected items list go here</h1>
+                <br />
+                <CorrelationLegend 
+                    darkMode={darkMode}
+                />
             </div>
             
         </div>

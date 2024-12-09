@@ -55,16 +55,16 @@ const ChordDiagram = ({ corrMatrix, labels, darkMode, idToNameMap }) => {
       .attr("stroke", "#75587a")
       .on("mouseover", (event, d) => {
         console.log("MOUSEOVER PATH");
-        // Highlight ribbons associated with this arc
-        svg.selectAll(".ribbon")
+        // Highlight curved-paths associated with this arc
+        svg.selectAll(".curvedpath")
             .transition()
             .duration(200)
-            .attr("opacity", ribbonD =>
-            ribbonD.source.index === d.index || ribbonD.target.index === d.index ? 1 : 0.1
+            .attr("opacity", curvedPathD =>
+            curvedPathD.source.index === d.index || curvedPathD.target.index === d.index ? 1 : 0.1
             );
       })
       .on("mouseout", () => {
-        svg.selectAll(".ribbon")
+        svg.selectAll(".curvedpath")
           .transition()
           .duration(200)
           .attr("opacity", 0.7);
@@ -91,16 +91,16 @@ const ChordDiagram = ({ corrMatrix, labels, darkMode, idToNameMap }) => {
       .text(d => idToNameMap.get(Number(labels[d.index])))
       .on("mouseover", (event, d) => {
         console.log("MOUSEOVER PATH");
-        // Highlight ribbons associated with this arc
-        svg.selectAll(".ribbon")
+        // Highlight curved-paths associated with this arc
+        svg.selectAll(".curvedpath")
             .transition()
             .duration(200)
-            .attr("opacity", ribbonD =>
-            ribbonD.source.index === d.index || ribbonD.target.index === d.index ? 1 : 0.1
+            .attr("opacity", curvedPathD =>
+            curvedPathD.source.index === d.index || curvedPathD.target.index === d.index ? 1 : 0.1
             );
       })
       .on("mouseout", () => {
-        svg.selectAll(".ribbon")
+        svg.selectAll(".curvedpath")
           .transition()
           .duration(200)
           .attr("opacity", 0.7);
@@ -111,54 +111,138 @@ const ChordDiagram = ({ corrMatrix, labels, darkMode, idToNameMap }) => {
           .attr("opacity", 1);
       });
 
-    // Add the chords (the connections)
-    // const colourScale = d3.scaleDiverging(d3.interpolateRdBu)
-    // .domain([-1, 0, 1]);
-
+    
+    const dynamicBlue = darkMode ? "#498df3" : "#024ebf";
+    const dynamicRed = darkMode ? "#f74d4d" : "#ad0000";
+    const dynamicNeutral = darkMode ? "#261a25" : "#ede1ec";
+    // FOR RIBBON DIAGRAM
     const colourScale = d3.scaleLinear()
     .domain([-0.75, -0.2, 0.2, 0.75]) // Negative, zero, positive correlation
-    .range(["#ad0000", "#ede1ec", "#ede1ec", "#024ebf"])
+    .range([dynamicRed, dynamicNeutral, dynamicNeutral, dynamicBlue])
     .interpolate(d3.interpolateRgb);
 
+    // FOR NON-RIBBON DIAGRAM
     // const colourScale = d3.scaleLinear()
-    // .domain([-1,1])
-    // .range(["coral","steelblue"]);
+    // .domain([-1, 0, 1]) // Negative, neutral, positive correlation
+    // .range([dynamicRed, dynamicNeutral, dynamicBlue]); // Red, white, blue
 
 
 
-    svg.append("g")
-      .attr("fill-opacity", 0.7)
+
+    // svg.append("g")
+    //   .attr("fill-opacity", 0.7)
+    //   .selectAll("path")
+    //   .data(chords)
+    //   .join("path")
+    //   .attr("class", "ribbon")
+    //   .attr("fill", d => colourScale(corrMatrix[d.source.index][d.target.index])) 
+    //   .attr("stroke", d => colourScale(corrMatrix[d.source.index][d.target.index]))
+    //   .attr("d", ribbon)
+    //   .on("mouseover", (event, d) => {
+    //     svg.selectAll(".ribbon")
+    //       .transition()
+    //       .duration(200)
+    //       .attr("opacity", ribbonD => ribbonD === d ? 1 : 0.1);
+    
+    //     svg.selectAll(".arc")
+    //       .transition()
+    //       .duration(200)
+    //       .attr("opacity", arcD =>
+    //         arcD.index === d.source.index || arcD.index === d.target.index ? 1 : 0.1
+    //       );
+    //   })
+    //   .on("mouseout", () => {
+    //     svg.selectAll(".ribbon")
+    //       .transition()
+    //       .duration(200)
+    //       .attr("opacity", 0.7);
+    
+    //     svg.selectAll(".arc")
+    //       .transition()
+    //       .duration(200)
+    //       .attr("opacity", 1);
+    //   });
+
+    function getArcPosition(index) {
+      const angle = (chords.groups[index].startAngle + chords.groups[index].endAngle) / 2;
+      const x = Math.cos(angle - Math.PI / 2) * innerRadius;
+      const y = Math.sin(angle - Math.PI / 2) * innerRadius;
+      return { x, y };
+    }
+
+    const strokeWidthScale = d3.scalePow()
+      .exponent(2.75) // Squaring makes stronger correlations much thicker
+      .domain([0, 1]) // Input range: correlation values
+      .range([0.4, 10]); // Output range: thickness (adjust these values as needed)
+
+    
+    // svg.append("g")
+    //   .selectAll("line")
+    //   .data(chords)
+    //   .join("line")
+    //   .attr("class", "edge")
+    //   .attr("x1", d => getArcPosition(d.source.index).x)
+    //   .attr("y1", d => getArcPosition(d.source.index).y)
+    //   .attr("x2", d => getArcPosition(d.target.index).x)
+    //   .attr("y2", d => getArcPosition(d.target.index).y)
+    //   .attr("stroke-width", d => 
+    //     strokeWidthScale(Math.abs(corrMatrix[d.source.index][d.target.index]))
+    //   )
+    //   .attr("stroke", d => colourScale(corrMatrix[d.source.index][d.target.index])) // Color by correlation
+    //   .attr("opacity", 0.7)
+    //   .on("mouseover", (event, d) => {
+    //     // Highlight only the hovered line
+    //     svg.selectAll(".edge")
+    //       .transition()
+    //       .duration(200)
+    //       .attr("opacity", lineD => (lineD === d ? 1 : 0.1));
+    //   })
+    //   .on("mouseout", () => {
+    //     svg.selectAll(".edge")
+    //       .transition()
+    //       .duration(200)
+    //       .attr("opacity", 0.7);
+    //   });
+
+      svg.append("g")
       .selectAll("path")
       .data(chords)
       .join("path")
-      .attr("class", "ribbon")
-      .attr("fill", d => colourScale(corrMatrix[d.source.index][d.target.index])) 
+      .attr("class", "curvedpath")
+      .attr("d", d => {
+        const source = getArcPosition(d.source.index);
+        const target = getArcPosition(d.target.index);
+        const tightness = 0.85;  // Adjust to tweak curve tightness
+
+        const controlPoint1 = {
+          x: source.x * tightness, 
+          y: source.y * tightness
+        };
+        const controlPoint2 = {
+          x: target.x * tightness,
+          y: target.y * tightness
+        };
+
+        return `M${source.x},${source.y} C${controlPoint1.x},${controlPoint1.y} ${controlPoint2.x},${controlPoint2.y} ${target.x},${target.y}`;
+      })
+      .attr("stroke-width", d => strokeWidthScale(Math.abs(corrMatrix[d.source.index][d.target.index])))
       .attr("stroke", d => colourScale(corrMatrix[d.source.index][d.target.index]))
-      .attr("d", ribbon)
+      .attr("fill", "none")
+      .attr("opacity", 0.7)
       .on("mouseover", (event, d) => {
-        svg.selectAll(".ribbon")
+        svg.selectAll("path")
           .transition()
           .duration(200)
-          .attr("opacity", ribbonD => ribbonD === d ? 1 : 0.1);
-    
-        svg.selectAll(".arc")
-          .transition()
-          .duration(200)
-          .attr("opacity", arcD =>
-            arcD.index === d.source.index || arcD.index === d.target.index ? 1 : 0.1
-          );
+          .attr("opacity", pathD => (pathD === d ? 1 : 0.1));
       })
       .on("mouseout", () => {
-        svg.selectAll(".ribbon")
+        svg.selectAll("path")
           .transition()
           .duration(200)
           .attr("opacity", 0.7);
-    
-        svg.selectAll(".arc")
-          .transition()
-          .duration(200)
-          .attr("opacity", 1);
       });
+
+
 
 
   }, [corrMatrix, labels, darkMode]);
