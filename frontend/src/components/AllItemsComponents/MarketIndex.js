@@ -159,7 +159,7 @@ export default function MarketIndexChart() {
           series={[
             { data: seriesData.indexValues, label: 'Market Index', yAxisIndex: 0, line: { color: '#42a5f5' } },
           ]}
-          width={1000}
+          width={800}
           height={400}
         />
       </div>

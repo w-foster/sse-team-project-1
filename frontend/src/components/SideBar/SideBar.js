@@ -18,11 +18,11 @@ export default function SideBar({ itemList, favourites, removeFavourite }) {
         bg-secondaryLightBackground dark:bg-secondaryDarkBackground
         text-primaryLight dark:text-primaryDark 
         border-solid border border-accentDarkBackground">
-            <div className="flex flex-col items-center justify-center space-y-4">
+            <div className="flex flex-col items-center justify-center space-y-4 pt-8">
                 {userId &&
                     <>
-                    <h2>Favourites</h2>
-                    <FavouritesList 
+                    <h2 className="text-2xl"><strong>Favourites</strong></h2>
+                    <FavouritesList
                         itemList={itemList}
                         favourites={favourites}
                         removeFavourite={removeFavourite}

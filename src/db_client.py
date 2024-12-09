@@ -1,4 +1,5 @@
 import os
+from dotenv import load_dotenv
 from supabase import create_client
 
 # CHANGE THIS TO TSURU ENV VARS LATER!
@@ -10,6 +11,10 @@ from supabase import create_client
 #     "LCJpYXQiOjE3MzI1NTE1NzgsImV4cCI6MjA0ODE"
 #     "yNzU3OH0.tankWlViseqQUzaR5wxQfuJoc8WxTLl28jBOotlBPbY"
 # )
+
+# Load environment variables from .env file (for local development)
+if os.getenv("TSURU_APPNAME") is None:  # Check if running in Tsuru
+    load_dotenv()
 
 # Retrieve the Supabase URL and Key from environment variables
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
