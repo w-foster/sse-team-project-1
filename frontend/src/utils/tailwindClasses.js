@@ -8,6 +8,6 @@ export const mainContainer = `
 
 export const about = `
     fixed top-[10vh] w-[100vw] h-[calc(100vh-10vh)] p-5 box-border overflow-y-auto z-0 border-t border-zinc-700
-    bg-primaryLightBackground dark:bg-primaryDarkBackground
+    bg-secondaryLightBackground dark:bg-secondaryDarkBackground
     text-primaryLight dark:text-primaryDark
 `;

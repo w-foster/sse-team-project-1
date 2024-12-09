@@ -7,15 +7,15 @@ module.exports = {
       colors: {
         primaryLight: 'black',
         secondaryLight: 'white',
-        primaryLightBackground: 'white',
-        secondaryLightBackground: 'black',
+        primaryLightBackground: '#fafafa',
+        secondaryLightBackground: 'white',
         accentLightBackground: 'white', // indigo-600
 
         primaryDark: 'white', // Primary text color for dark mode
         secondaryDark: 'black', // Secondary text color for dark mode
         primaryDarkBackground: 'black', // Dark mode background color
-        secondaryDarkBackground: '#171614', // Dark mode background color
-        accentDarkBackground: 'black', // indigo-800
+        secondaryDarkBackground: '#18181b', // Dark mode background color
+        accentDarkBackground: '#18181b', // indigo-800
       },
       animation: {
         'scroll-left': 'scroll-left 10s linear infinite',

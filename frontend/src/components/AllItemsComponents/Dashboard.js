@@ -13,20 +13,20 @@ export default function Dashboard({ favourites, addFavourite, removeFavourite })
             {/* Top row: Market Index Chart (left) and Hot Items (right) */}
             <div style={{ display: 'flex', flexDirection: 'row', gap: '20px', marginBottom: '15px' }}>
                 <div style={{ flex: 3 }}
-                    className="bg-primaryLightBackground dark:bg-secondaryDarkBackground border border-neutral-700">
+                    className="bg-secondaryLightBackground dark:bg-secondaryDarkBackground border border-neutral-700">
                     <MarketIndexChart />
                 </div>
 
                 <div style={{ flex: 1,
                              display: 'flex', flexDirection: 'column', gap: '20px', justifyContent: 'space-between', paddingTop: '30px'}}
-                    className="bg-primaryLightBackground dark:bg-secondaryDarkBackground border border-neutral-700">
+                    className="bg-secondaryLightBackground dark:bg-secondaryDarkBackground border border-neutral-700">
                     <h2 style={{ display: 'flex', justifyContent: 'center' }}>Volume Leaders</h2>
                     <HotItemGrid />
                 </div>
             </div>
 
             {/* Below the top row: All Items */}
-            <div className="bg-primaryLightBackground dark:bg-secondaryDarkBackground">
+            <div className="bg-secondaryLightBackground dark:bg-secondaryDarkBackground">
                 <ItemGrid
                     favourites={favourites}
                     addFavourite={addFavourite}
