@@ -31,7 +31,7 @@ function App() {
 }
 
 function MainApp() {
-  const [darkMode, setDarkMode] = useState(false); // State to toggle theme
+  const [darkMode, setDarkMode] = useState(true); // State to toggle theme
 
   // Sync theme from localStorage or system preference
   useEffect(() => {
