@@ -6,6 +6,11 @@ BATCH_SIZE = 1000
 
 
 def update_correlations():
+    """
+    Updates the 'correlations' table in the Supabase database with new correlation data.
+    This function reads a DataFrame of item correlations,
+    and performs batch upserts to efficiently update the table.
+    """
     # Read in the pandas df from the pickle file for debugging
     # correlation_df = pd.read_pickle('correlations.pkl')
 
