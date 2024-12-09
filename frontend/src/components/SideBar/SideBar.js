@@ -17,7 +17,7 @@ export default function SideBar({ itemList, favourites, removeFavourite }) {
         <div className="fixed top-[10vh] left-0 w-[20vw] h-[calc(100vh-10vh)] p-5 box-border overflow-y-auto z-10
         bg-secondaryLightBackground dark:bg-secondaryDarkBackground
         text-primaryLight dark:text-primaryDark 
-        border-solid border border-neutral-700">
+        border-solid border border-accentDarkBackground">
             <div className="flex flex-col items-center justify-center space-y-4">
                 {userId &&
                     <>

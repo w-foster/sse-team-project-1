@@ -6,9 +6,8 @@ import TitleAndLogo from './TitleAndLogo';
 export default function TitleBar() {
     return (
         <div
-            className="fixed mx-auto flex justify-between items-center p-2.5 w-full"
+            className="fixed mx-auto flex bg-primaryLightBackground dark:bg-secondaryDarkBackground justify-between items-center p-2.5 w-full"
             style={{
-                backgroundColor: 'var(--accentLightBackground)', // Apply background color using CSS variable
                 color: 'var(--primaryLight)', // Apply text color using CSS variable
                 display: 'flex',
                 flexDirection: 'row',
