@@ -1,18 +1,24 @@
 import requests
 import re
 import json
-from headers import headers  # import headers
-
-# FOR FIXING TSURU RELATIVE PATH ISSUE
+from headers import headers
 import os
 
-# Get the directory where app.py resides
+# Set path and open relevant file
 current_dir = os.path.dirname(os.path.abspath(__file__))
-# Build the file path
 item_list_file_path = os.path.join(current_dir, "ItemList.js")
 
 
 def get_api_data_items():
+    """
+    Fetches the latest price data from the RuneScape prices API, processes it to include
+    additional information, and enriches it with names from a local JavaScript file.
+
+    Returns:
+        list[dict] or None: A list of dictionaries containing item data with
+                        added attributes like high, low, margin_percentage,
+                        and name, or None if an API error occurs.
+    """
     api_url = "https://prices.runescape.wiki/api/v1/osrs/latest"
     try:
         response = requests.get(api_url, headers=headers)
@@ -39,6 +45,19 @@ def get_api_data_items():
 
 
 def add_other_data(data):
+    """
+    Enhances a list of item data dictionaries with a favorite flag and calculates
+    the percentage price margin between the high and low prices.
+
+    Parameters:
+        data (list of dict): List of item dictionaries
+                             each containing 'high' and 'low' price keys.
+    Returns:
+        list[dict]: The enhanced data list,
+                    with each dictionary now including an 'name' key.
+
+    This function iteratively adds calculation results and flags to original item data.
+    """
     for item in data:
         item["favourite"] = False
         high = item.get("high")
@@ -53,6 +72,16 @@ def add_other_data(data):
 
 
 def add_name(data):
+    """
+    Adds item names to a list of item data dictionaries from a local JavaScript file that
+    contains item information.
+
+    Parameters:
+        data (list of dict): List of item dictionaries that need item names added.
+
+    Returns:
+        list[dict]: Enhanced data list, with each dictionary including a 'name' key.
+    """
     file_path = item_list_file_path
     with open(file_path, "r") as f:
         content = f.read()
@@ -62,15 +91,14 @@ def add_name(data):
     json_content = match.group(1)  # Extract the array
     item_list = json.loads(json_content)
     item_dict = {str(item["id"]): item["name"] for item in item_list}
+
     # Add the "name" field to API data based on the item ID
     for item in data:
         item["icon"] = (
             f"https://services.runescape.com/m=itemdb_rs/obj_sprite.gif?id={item['id']}"
         )
         item_id = item.get("id")
-        item["name"] = item_dict.get(
-            item_id, "Unknown Item"
-        )  # Default to "Unknown Item" if no match is found
+        item["name"] = item_dict.get(item_id, "Unknown Item")
     return data
 
 

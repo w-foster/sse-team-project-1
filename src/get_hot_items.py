@@ -1,9 +1,19 @@
 import requests
-from headers import headers  # import headers
+from headers import headers
 from get_item_data import add_name
 
 
 def get_api_hot_items():
+    """
+    Fetches recent trading data for items from the RuneScape prices API
+    and processes it to identify the hottest items based on trading volume.
+
+    Returns:
+        list[dict] or None: A list of dictionaries containing the hottest items,
+                            enhanced with average price and volume data,
+                            and enriched with item names from a local source,
+                            or None if an API error occurs.
+    """
     api_url = "https://prices.runescape.wiki/api/v1/osrs/1h"
     try:
         response = requests.get(api_url, headers=headers)
