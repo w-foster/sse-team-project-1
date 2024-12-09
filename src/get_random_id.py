@@ -4,6 +4,18 @@ import json
 
 
 def get_random_id():
+    """
+    Retrieves a random item ID from a JSON file containing a list of items.
+
+    The function opens 'ItemList.json'.
+    If the file is found, it reads the list of items and selects one item at random.
+
+    Returns:
+        dict: A dictionary representing the randomly selected item.
+
+    Raises:
+        FileNotFoundError: If 'ItemList.json' cannot be found in the expected paths.
+    """
     this_directory = os.path.dirname(os.path.abspath(__file__))
 
     # Possible locations of ItemList.json

@@ -7,7 +7,7 @@ def get_api_data(item_id: int, timestep: str):
     """
     Fetches price data for a given item from the RuneScape prices API.
 
-    Args:
+    Parameters:
         item_id (int): The ID of the item to fetch data for.
         timestep (str): The timestep for the data (e.g., '5m', '1h', '24h').
 
@@ -36,7 +36,7 @@ def get_time_series(timestep: str):
     """
     Generates a time series based on the given timestep.
 
-    Args:
+    Parameters:
         timestep (str): The timestep for the data ('5m', '1h', '24h').
 
     Returns:
@@ -58,7 +58,7 @@ def get_price_and_volume(data: List[Dict[str, float]]):
     """
     Extracts price and volume data from the raw API response.
 
-    Args:
+    Parameters:
         data (List[Dict[str, float]]): Containing the price and volume data.
 
     Returns:
@@ -77,7 +77,16 @@ def get_price_and_volume(data: List[Dict[str, float]]):
 
 
 def filter_none_values(t_series, x_series, y_series, z_series, w_series):
-    # Filter out None values from all series
+    """
+    Filters out None values from series of time and corresponding data points.
+
+    Parameters:
+        t_series (List): List of time points.
+        x_series, y_series, z_series, w_series (List): Corresponding data series.
+
+    Returns:
+        List[Tuple]: List of tuples containing only the entries where no element is None.
+    """
     return [
         (t, x, y, z, w)
         for t, x, y, z, w in zip(t_series, x_series, y_series, z_series, w_series)
@@ -89,7 +98,7 @@ def get_graph_data(item_id: int, timestep: str = "5m", filter: bool = True):
     """
     Retrieves and formats the graph data for a given item and timestep.
 
-    Args:
+    Parameters:
         item_id (int): The ID of the item to fetch data for.
         timestep (str): The timestep for the data ('5m', '1h', '24h').
         filter (bool): If True filters out None values. Default to True.
@@ -142,7 +151,6 @@ def get_graph_data(item_id: int, timestep: str = "5m", filter: bool = True):
     }
 
 
-# Example usage:
 if __name__ == "__main__":
     data = get_graph_data(4151, "5m")
     print(
