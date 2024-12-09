@@ -21,7 +21,7 @@ from datetime import datetime
 
 app = Flask(
     __name__, static_folder="../frontend/build", static_url_path=""
-)  # Update the static folder path
+)
 CORS(app)
 
 
@@ -52,8 +52,6 @@ def get_favourites():
 
     # Call helper function to get favourites data from DB
     item_data = get_favourites_data(user_id)
-
-    # HANDLE ERROR HERE SOMEHOW ? not with .get('error) it broke it
 
     # Build array of item_ids and return jsonified version
     item_ids = [item["item_id"] for item in item_data]
