@@ -53,6 +53,32 @@ export default function AboutPage() {
             <li>View most popular items among other users.</li>
             <li>Dark mode and light mode support.</li>
           </ul>
+          <h3 className="mt-6 text-2xl font-bold tracking-tight text-zinc-800 sm:text-2xl dark:text-zinc-100">
+              Components:
+            </h3>
+            <ul className="mt-4 list-disc list-inside text-base text-zinc-600 dark:text-zinc-400">
+              <li>
+                <strong>Geilinor Index:</strong> Displays an aggregate of 27 key items, summarizing their prices to give an overall market trend.
+              </li>
+              <li>
+                <strong>Volume Leaders:</strong> Highlights the top 10 items with the highest traded daily volume.
+              </li>
+              <li>
+                <strong>Total Views:</strong> Lists the top 10 most-viewed items by users on the website.
+              </li>
+              <li>
+                <strong>Total Favourites:</strong> Shows the top 10 items that users have favourited the most.
+              </li>
+              <li>
+                <strong>Alchemy:</strong> Calculates the margin between the live Grand Exchange price and the fixed alchemy value, helping users identify profitable alchemy opportunities.
+              </li>
+              <li>
+                <strong>Analysis:</strong> Presents a chord diagram illustrating correlations between various items.
+              </li>
+              <li>
+                <strong>Curious:</strong> Displays a random item's price graph for users looking for interesting insights.
+              </li>
+            </ul>
         </div>
         <div className="lg:pl-20">
           <ul role="list">
