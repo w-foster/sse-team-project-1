@@ -11,7 +11,7 @@ export default function Dashboard({ favourites, addFavourite, removeFavourite })
             border-solid border-t border-neutral-700">
             
             {/* Top row: Market Index Chart (left) and Hot Items (right) */}
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '20px', marginBottom: '15px' }}>
+            <div style={{ display: 'flex', flexDirection: 'row', gap: '20px', marginBottom: '15px', maxWidth: '80vh' }}>
                 <div style={{ flex: 3 }}
                     className="bg-secondaryLightBackground dark:bg-secondaryDarkBackground border border-neutral-700">
                     <MarketIndexChart />
