@@ -110,7 +110,7 @@ The frontend provides the following features:
 - Graphs showing price changes in 5m, 1h and 24h intervals.
 - Favourites tab that is specific to your login information.
 - Data analysis on the number of most viewed and favourited items by all users.
-- Correlation analysis in the form of a dynamic graph
+- Correlation analysis in the form of a dynamic graph.
 
 ---
 
