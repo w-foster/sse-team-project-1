@@ -21,9 +21,7 @@ from get_items_by_slot import get_items_by_slot, prepare_items_for_frontend
 from datetime import datetime
 import json
 
-app = Flask(
-    __name__, static_folder="../frontend/build", static_url_path=""
-)
+app = Flask(__name__, static_folder="../frontend/build", static_url_path="")
 CORS(app)
 
 
@@ -213,6 +211,7 @@ def correlations():
     if correlation_map is None:
         return jsonify({"error": "Failed to fetch correlation data."})
     return jsonify(correlation_map)
+
 
 @app.route("/api/item-stats", methods=["GET"])
 def item_stats():

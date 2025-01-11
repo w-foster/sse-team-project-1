@@ -17,10 +17,7 @@ def get_item_description(item_id):
 
         # Query Supabase for the description
         response = (
-            supabase.table("mapping_data")
-            .select("examine")
-            .eq("id", item_id)
-            .execute()
+            supabase.table("mapping_data").select("examine").eq("id", item_id).execute()
         )
 
         # Print raw response for debugging

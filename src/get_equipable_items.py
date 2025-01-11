@@ -6,9 +6,11 @@ def print_items(items):
     for item in items:
         pprint(item.__dict__)
 
+
 def load_all_items():
     items = items_api.load()
     return items
+
 
 def filter_equipable_items():
     all_db_items = load_all_items()
@@ -17,8 +19,6 @@ def filter_equipable_items():
         if item.equipable_by_player:
             equipable_items.append(item)
     return equipable_items
-    
-
 
 
 if __name__ == "__main__":
