@@ -17,7 +17,9 @@ from get_high_alch_data import get_high_alch_data
 from get_random_id import get_random_id
 from get_market_index_data import get_market_index_graph_data
 from get_correlation_data import get_correlation_data
+from get_items_by_slot import get_items_by_slot, prepare_items_for_frontend
 from datetime import datetime
+import json
 
 app = Flask(
     __name__, static_folder="../frontend/build", static_url_path=""
@@ -211,6 +213,16 @@ def correlations():
     if correlation_map is None:
         return jsonify({"error": "Failed to fetch correlation data."})
     return jsonify(correlation_map)
+
+@app.route("/api/item-stats", methods=["GET"])
+def item_stats():
+    items = get_items_by_slot()
+    json_data = prepare_items_for_frontend(items)
+
+    # Convert JSON string back to Py dictionary first
+    parsed_data = json.loads(json_data)
+    # Then use jsonify to ensure correct format
+    return jsonify(parsed_data)
 
 
 if __name__ == "__main__":

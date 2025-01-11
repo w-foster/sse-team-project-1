@@ -4,6 +4,7 @@ from collections import defaultdict
 from pprint import pprint
 import requests
 import json
+from urllib.parse import quote
 
 def filter_by_slot(allow_quest_items = False):
     items = filter_equipable_items()
@@ -65,6 +66,15 @@ def prepare_items_for_frontend(items_by_slot):
 
         for item in item_list:
             item_dict = item.construct_json()
+            # Add icon link
+            url_safe_name = item.wiki_name.replace(" ", "%20")
+            icon_link = (
+                f"https://tools.runescape.wiki/osrs-dps/cdn/equipment/{url_safe_name}.png"
+            )
+            # print(icon_link)
+            # item_dict["icon"] = (
+            #     f"https://services.runescape.com/m=itemdb_rs/obj_sprite.gif?id={item.id}"
+            # )
             # Add dynamically added attributes manually
             if hasattr(item, "high_price"):
                 item_dict["high_price"] = item.high_price
@@ -82,8 +92,8 @@ def prepare_items_for_frontend(items_by_slot):
 
 
 
-if __name__ == "__main__":
-    items = get_items_by_slot()
-    json_data = prepare_items_for_frontend(items)
+# if __name__ == "__main__":
+#     items = get_items_by_slot()
+#     json_data = prepare_items_for_frontend(items)
     
 

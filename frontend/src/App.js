@@ -19,6 +19,7 @@ import { useSessionInfo } from "./SessionInfoContext";
 import ThemeSwitch from './ThemeSwitch'; // Import the ThemeSwitch component
 import AnalysisPage from "./pages/AnalysisPage";
 import { dark } from "@mui/material/styles/createPalette";
+import CompareItemsPage from "./pages/CompareItemsPage";
 
 function App() {
   return (
@@ -150,6 +151,8 @@ function MainApp() {
 				>
 					<Route index element={<Navigate to="/items" replace />} />
 					<Route path="/about" element={<AboutPage />} />
+          <Route path="/compare" element={<CompareItemsPage />} />
+          {/* PAGES WITH FAVOURITES BAR -- NESTED ROUTES */}
 					<Route
 						path="/items/*"
 						element={

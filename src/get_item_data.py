@@ -3,6 +3,7 @@ import re
 import json
 from headers import headers
 import os
+from urllib.parse import quote
 
 # Set path and open relevant file
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -94,8 +95,9 @@ def add_name(data):
 
     # Add the "name" field to API data based on the item ID
     for item in data:
-        item["icon"] = (
-            f"https://services.runescape.com/m=itemdb_rs/obj_sprite.gif?id={item['id']}"
+        url_safe_name = quote(item.wiki_name)
+        icon_link = (
+            "https://tools.runescape.wiki/osrs-dps/cdn/equipment/{url_safe_name}.png"
         )
         item_id = item.get("id")
         item["name"] = item_dict.get(item_id, "Unknown Item")
