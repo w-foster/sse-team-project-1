@@ -34,6 +34,7 @@ def fetch_price_data():
 def add_price_attribute(items):
     osrs_api_data = fetch_price_data()["data"]
     for slot, item_list in items.items():
+        print(slot)
         for item in item_list:
             item_id = str(item.id)
             if item_id in osrs_api_data:

@@ -151,7 +151,7 @@ function MainApp() {
 				>
 					<Route index element={<Navigate to="/items" replace />} />
 					<Route path="/about" element={<AboutPage />} />
-          <Route path="/compare" element={<CompareItemsPage />} />
+          <Route path="/compare" element={<CompareItemsPage darkMode={darkMode} />} />
           {/* PAGES WITH FAVOURITES BAR -- NESTED ROUTES */}
 					<Route
 						path="/items/*"

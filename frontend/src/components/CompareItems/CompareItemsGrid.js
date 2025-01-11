@@ -2,7 +2,26 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 import { useState, useEffect } from 'react';
-import { active } from 'd3';
+import clsx from 'clsx';
+
+
+const statIcons = {
+  'stabAttack': 'https://tools.runescape.wiki/osrs-dps/_next/static/media/dagger.23b640d2.png',
+  'slashAttack': 'https://tools.runescape.wiki/osrs-dps/_next/static/media/scimitar.9ddfeb9e.png',
+  'crushAttack': 'https://tools.runescape.wiki/osrs-dps/_next/static/media/warhammer.bf1e6866.png',
+  'magicAttack': 'https://tools.runescape.wiki/osrs-dps/_next/static/media/magic.ea5daf44.png',
+  'rangedAttack': 'https://tools.runescape.wiki/osrs-dps/_next/static/media/ranged.bee4115c.png',
+  'stabDefence': 'https://tools.runescape.wiki/osrs-dps/_next/static/media/dagger.23b640d2.png',
+  'slashDefence': 'https://tools.runescape.wiki/osrs-dps/_next/static/media/scimitar.9ddfeb9e.png',
+  'crushDefence': 'https://tools.runescape.wiki/osrs-dps/_next/static/media/warhammer.bf1e6866.png',
+  'magicDefence': 'https://tools.runescape.wiki/osrs-dps/_next/static/media/magic.ea5daf44.png',
+  'rangedDefence': 'https://tools.runescape.wiki/osrs-dps/_next/static/media/ranged.bee4115c.png',
+  'strength': 'https://tools.runescape.wiki/osrs-dps/_next/static/media/strength.588608dd.png',
+  'rangedStrength': 'https://tools.runescape.wiki/osrs-dps/_next/static/media/ranged_strength.b19597e6.png',
+  'magicDamage': 'https://tools.runescape.wiki/osrs-dps/_next/static/media/magic_strength.3bfc40c9.png',
+  'prayer': 'https://tools.runescape.wiki/osrs-dps/_next/static/media/prayer.2f027df7.png',
+}
+
 
 const permaColumns = [
   { field: 'icon', 
@@ -40,20 +59,20 @@ const permaColumns = [
     ),
   },
   { field: 'name', headerName: 'Name', width: 250, editable: false },
-  { field: 'stabAttack', headerName: 'Stab', type: 'number', width: 50, editable: false },
-  { field: 'slashAttack', headerName: 'Slash', type: 'number', width: 50, editable: false },
-  { field: 'crushAttack', headerName: 'Crush', type: 'number', width: 50, editable: false },
-  { field: 'magicAttack', headerName: 'Magic', type: 'number', width: 50, editable: false },
-  { field: 'rangedAttack', headerName: 'Ranged', type: 'number', width: 50, editable: false },
-  { field: 'stabDefence', headerName: 'Stab Def', type: 'number', width: 50, editable: false },
-  { field: 'slashDefence', headerName: 'Slash Def', type: 'number', width: 50, editable: false },
-  { field: 'crushDefence', headerName: 'Crush Def', type: 'number', width: 50, editable: false },
-  { field: 'magicDefence', headerName: 'Magic Def', type: 'number', width: 50, editable: false },
-  { field: 'rangedDefence', headerName: 'Ranged Def', type: 'number', width: 50, editable: false },
-  { field: 'strength', headerName: 'Strength', type: 'number', width: 50, editable: false },
-  { field: 'rangedStrength', headerName: 'Ranged Strength', type: 'number', width: 50, editable: false },
-  { field: 'magicDamage', headerName: 'Magic Damage', type: 'number', width: 50, editable: false },
-  { field: 'prayer', headerName: 'Prayer', type: 'number', width: 50, editable: false },
+  buildStatColumn('stabAttack', 'Stab Attack'),
+  buildStatColumn('slashAttack', 'Slash Attack'),
+  buildStatColumn('crushAttack', 'Crush Attack'),
+  buildStatColumn('magicAttack', 'Magic Attack'),
+  buildStatColumn('rangedAttack', 'Ranged Attack'),
+  buildStatColumn('stabDefence', 'Stab Defence'),
+  buildStatColumn('slashDefence', 'Slash Defence'),
+  buildStatColumn('crushDefence', 'Crush Defence'),
+  buildStatColumn('magicDefence', 'Magic Defence'),
+  buildStatColumn('rangedDefence', 'Ranged Defence'),
+  buildStatColumn('strength', 'Strength'),
+  buildStatColumn('rangedStrength', 'Ranged Strength'),
+  buildStatColumn('magicDamage', 'Magic Damage'),
+  buildStatColumn('prayer', 'Prayer'),
   {
     field: 'gp',
     headerName: 'GP',
@@ -134,8 +153,40 @@ function buildStatCostColumn(newField, newHeaderName) {
   };
 }
 
+function buildStatColumn(newField, newHeaderName) {
+  return { 
+    field: newField, 
+    type: 'number', 
+    width: 54, 
+    editable: false,
+    valueFormatter: (value) => {
+      let result = ''
+      if (value > 0) {
+        result += '+';
+      }
+      result += value;
+      return result;
+    },
+    cellClassName: (params) =>
+      clsx({
+        'cell-negative': params.value < 0,
+        'cell-positive': params.value > 0,
+    }),
+    renderHeader: () => (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <img
+          src={statIcons[newField]} // Dynamically fetch the icon
+          alt={newHeaderName}
+          style={{ objectFit: 'contain' }}
+        />
+      </div>
+    ),
+  };
+}
 
-export default function CompareItemsGrid({ allSlotStats, activeSlot, activeStatCategory }) {
+
+
+export default function CompareItemsGrid({ darkMode, allSlotStats, activeSlot, activeStatCategory }) {
   const [rows, setRows] = useState([]);
   const [columns, setColumns] = useState([]);
   
@@ -192,17 +243,27 @@ export default function CompareItemsGrid({ allSlotStats, activeSlot, activeStatC
     setRows(preparedRows);
   }, [activeSlot, allSlotStats]);
 
-  // height: 105 + 52.5 * rows.length
+  console.log("Active slot", activeSlot);
+  console.log("Active cols", activeStatCategory);
   return (
-    <Box style={{ display: 'flex', flexDirection: 'column' }}>
+    <Box style={{ 
+      display: 'flex', 
+      flexDirection: 'column',
+      '--cell-negative-bg': darkMode ? '#671d1d' : '#e69393', // red
+      '--cell-positive-bg': darkMode ? '#0a4d0a' : '#76e376', // green
+    }}>
       <DataGrid
         rows={rows}
         columns={columns}
         disableRowSelectionOnClick
-        hideFooter          // This hides the pagination + row count UI
-        pagination={false}  // Might be ignored in some versions, but it doesn’t hurt
-        autoHeight
-        style={{ height: '100%', width: '100%' }}
+        sx={{
+          '& .cell-negative': {
+            backgroundColor: 'var(--cell-negative-bg)',
+          },
+          '& .cell-positive': {
+            backgroundColor: 'var(--cell-positive-bg)',
+          },
+        }}
       />
     </Box>
   );

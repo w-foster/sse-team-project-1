@@ -45,7 +45,7 @@ export default function NavBar({ className }) {
     { label: 'Dashboard', path: '/items' },
     { label: 'About', path: '/about' },
     { label: 'Popular', path: '/items/popular' },
-    { label: 'Alchemy', path: '/items/alchemy' },
+    { label: 'Compare', path: '/compare' },
     { label: 'Analysis', path: '/items/analysis' },
     { label: 'Curious?', path: `/items/${randomItem.id}`, onClick: handleCuriousClick }, // Handle click to toggle fetch
   ];
