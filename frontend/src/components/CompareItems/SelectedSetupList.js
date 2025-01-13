@@ -24,7 +24,8 @@ const rows = [
 
 
 export default function SelectedSetupList({ 
-    darkMode, setups, activeEquipmentSetup, permaColumns, extraColumns, activeCategory, gpPer 
+    darkMode, setups, activeEquipmentSetup, permaColumns, extraColumns, 
+    activeCategory, gpPer, handleClickDeleteItem 
 }) {
   const [rows, setRows] = useState([]);
   const [columns, setColumns] = useState([]);
@@ -153,7 +154,6 @@ export default function SelectedSetupList({
             backgroundColor: 'var(--cell-positive-bg)',
           },
         }}
-        
       />
     </Box>
   );

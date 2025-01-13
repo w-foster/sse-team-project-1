@@ -18,6 +18,23 @@ const statCategories = {
     'Defence': 'defence',
 };
 
+const statTypes = [
+    "attack_stab",
+    "attack_slash",
+    "attack_crush",
+    "attack_magic",
+    "attack_ranged",
+    "defence_stab",
+    "defence_slash",
+    "defence_crush",
+    "defence_magic",
+    "defence_ranged",
+    "melee_strength",
+    "ranged_strength",
+    "magic_damage",
+    "prayer",
+]
+
 const slotTypes = {
     'Head': 'head',
     'Neck': 'neck',
@@ -223,8 +240,44 @@ export default function CompareItemsPage({ darkMode }) {
             method: 'GET',
         })
         const newAllSlotStats = await response.json();
-        return newAllSlotStats;
+        return removeDuplicatesFromHashMap(newAllSlotStats);
     };
+
+    function removeDuplicatesFromHashMap(hashmap) {
+        const uniqueItemsMap = {};
+      
+        Object.entries(hashmap).forEach(([slot, items]) => {
+          const seenNames = new Map(); // Use Map to track duplicates based on name or wiki_name
+      
+          uniqueItemsMap[slot] = items.filter((item) => {
+            const key = item.name || item.wiki_name; // Check both .name and .wiki_name
+      
+            if (!key) {
+              // If neither name nor wiki_name exists, keep the item (or decide based on your needs)
+              return true;
+            }
+      
+            if (seenNames.has(key)) {
+              const existingItem = seenNames.get(key);
+      
+              // Prioritize the item with has_price_data === true
+              if (item.has_price_data && !existingItem.has_price_data) {
+                seenNames.set(key, item);
+                return true; // Replace the existing item
+              }
+      
+              // Otherwise, discard the current item
+              return false;
+            }
+      
+            // If it's the first occurrence, add it to the seenNames map
+            seenNames.set(key, item);
+            return true;
+          });
+        });
+      
+        return uniqueItemsMap;
+    }
 
     useEffect(() => {  
         async function fetchData() {
@@ -263,6 +316,9 @@ export default function CompareItemsPage({ darkMode }) {
                 activeCategory={activeStatCategory}
                 handleChangeColumns={handleChangeColumns}
             />
+            <div style={{display: 'flex', justifyContent: 'center', paddingTop: '100px', fontSize: '38px'}}>
+                <h1>ALL ITEMS</h1>
+            </div>
             <div>
                 <ChangeTableButtons 
                     slotTypes={slotTypes}

@@ -2,7 +2,6 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 import { useState, useEffect } from 'react';
-import clsx from 'clsx';
 
 
 export default function CompareItemsGrid({ 
@@ -64,8 +63,7 @@ export default function CompareItemsGrid({
     setRows(preparedRows);
   }, [activeSlot, allSlotStats]);
 
-  console.log("Active slot", activeSlot);
-  console.log("Active cols", activeStatCategory);
+  
   return (
     <Box style={{ 
       display: 'flex', 
