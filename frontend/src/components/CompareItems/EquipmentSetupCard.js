@@ -97,7 +97,6 @@ export default function EquipmentSetupCard({
             return setup; // Return the unchanged setup for other indices
           })
         );
-        console.log(setups);
     }
 
     function handleChangeStatToUpgrade(statType) {
@@ -114,8 +113,9 @@ export default function EquipmentSetupCard({
             />
             <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <EquipmentSelectionBar
-                    itemList={allSlotStats}
+                    allSlotStats={allSlotStats}
                     handleSelectItem={handleSelectItem}
+                    
                 />
             </div>
             <ChangeColumnButtons 

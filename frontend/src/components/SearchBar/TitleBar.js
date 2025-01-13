@@ -2,8 +2,9 @@ import React from "react";
 import NavBar from "./NavBar";
 import SearchBar from "./SearchBar";
 import TitleAndLogo from './TitleAndLogo';
+import { itemList } from "../../ItemList";
 
-export default function TitleBar() {
+export default function TitleBar({ itemList }) {
     return (
         <div
             className="fixed mx-auto flex bg-primaryLightBackground dark:bg-secondaryDarkBackground justify-between items-center p-2.5 w-full"
@@ -29,7 +30,9 @@ export default function TitleBar() {
 
             {/* SearchBar (takes up 30% of the viewport width) */}
             <div style={{ flex: '0 0 30vw', display: 'flex', justifyContent: 'flex-start' }}>
-                <SearchBar />
+                <SearchBar 
+                    itemList={itemList}
+                />
             </div>
         </div>
     );

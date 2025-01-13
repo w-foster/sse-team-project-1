@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useAutocomplete } from '@mui/base/useAutocomplete';
 import { Button } from '@mui/base/Button';
@@ -7,7 +8,7 @@ import { styled } from '@mui/system';
 import { unstable_useForkRef as useForkRef } from '@mui/utils';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ClearIcon from '@mui/icons-material/Clear';
-import { itemList } from '../../ItemList';
+//import { itemList } from '../../ItemList';
 
 
 
@@ -83,7 +84,7 @@ const Autocomplete = React.forwardRef(function Autocomplete(props, ref) {
             {groupedOptions.map((option, index) => {
               const optionProps = getOptionProps({ option, index });
 
-              return <StyledOption {...optionProps}>{option.name}</StyledOption>;
+              return <StyledOption {...optionProps} key={index}>{option.name}</StyledOption>;
             })}
 
             {groupedOptions.length === 0 && (
@@ -114,13 +115,14 @@ Autocomplete.propTypes = {
   readOnly: PropTypes.bool,
 };
 
-export default function AutocompleteIntroduction({ onOptionSelect }) {
+export default function AutocompleteIntroduction({ onOptionSelect, itemList, useWikiName }) {
+  const [selectedValue, setSelectedValue] = useState(null);
+
   const handleOptionSelect = (event, value) => {
     if (value) {
-      onOptionSelect(value.id); // Pass the selected item's ID to the parent
-    } else {
-      onOptionSelect(null); // Handle case where no option is selected
-    }
+      onOptionSelect(value.id);
+      setSelectedValue(null); // Pass the selected item's ID to the parent
+    } // Otherwise just do nothing (change occurred, but no ITEM selection made)
   };
 
   return (
@@ -128,6 +130,7 @@ export default function AutocompleteIntroduction({ onOptionSelect }) {
       options={itemList}
       getOptionLabel={(option) => option.name} // Displays the label in the dropdown
       onChange={handleOptionSelect} // Called when an option is selected
+      value={selectedValue}
     />
   );
 }

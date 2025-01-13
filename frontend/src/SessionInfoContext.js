@@ -5,6 +5,7 @@ const SessionInfoContext = createContext();
 
 export const SessionInfoProvider = ({ children }) => {
     const [userId, setUserId] = useState(null);
+    const [storedSetups, setStoredSetups] = useState([]);
 
     // Check for existing session when app starts
     useEffect(() => {
@@ -24,7 +25,11 @@ export const SessionInfoProvider = ({ children }) => {
         }
     }, []);
 
-    return <SessionInfoContext.Provider value={{ userId }}>{children}</SessionInfoContext.Provider>
+    return (
+        <SessionInfoContext.Provider value={{ userId, storedSetups, setStoredSetups }}>
+            {children}
+        </SessionInfoContext.Provider>
+    );
 };
 
 // Custom hook for other components to access session info
